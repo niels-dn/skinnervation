@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guide — Skinnervation</title>
+<link rel="stylesheet" href="css/skin.css"/>
+<style>
+  #app { display:flex; flex-direction:column; min-height:100vh; }
+  main { flex:1; padding:40px 24px; max-width:700px; margin:0 auto; width:100%; }
+  h1 {
+    font-family:'Libre Baskerville',serif;
+    font-size:1.25rem; font-weight:700; color:var(--text);
+    margin:0 0 24px;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <main class="skin-prose">
+    <h1>Guide</h1>
+    <h3>Browse</h3>
+    <p>
+      Use the region filter buttons to show one body region at a time:
+      Head/Neck, Upper limb, Truncus, or Lower body.
+      Click any node to highlight its pathway from spinal root to terminal cutaneous branch.
+    </p>
+    <h3>Trace a nerve</h3>
+    <p>
+      Clicking a node highlights the complete innervation pathway upstream (toward the spinal cord)
+      and downstream (toward the skin). The info panel shows the nerve's full name,
+      spinal origin, and anatomical index number.
+    </p>
+    <h3>Dashed lines</h3>
+    <p>
+      A dashed border on a node or edge indicates variable innervation —
+      a contribution that is present in some individuals but not all.
+      These are shown in the highlighted pathway when relevant.
+    </p>
+    <h3>Anatomic view</h3>
+    <p>
+      For upper limb nerves, the Anatomic View button in the info panel
+      switches to a schematic of the arm showing the approximate cutaneous
+      territory of the selected nerve. Click Pathway View to return.
+    </p>
+    <h3>Limitations</h3>
+    <p>
+      Skinnervation represents typical innervation patterns based on
+      standard anatomical sources. Significant individual variation exists
+      in cutaneous territories, particularly at territory borders.
+      The anatomic territories shown are approximations and should be
+      interpreted in the context of the clinical examination.
+    </p>
+    <hr/>
+    <p>
+      Questions or corrections? Contact
+      <a href="mailto:comments@skinnervation.com">comments@skinnervation.com</a>
+    </p>
+  </main>
+</div>
+<script src="js/nav.js"></script>
+</body>
+</html>
