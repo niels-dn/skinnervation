@@ -1,6 +1,6 @@
 (function(){
   const pages = [
-    { href: 'app.html',   label: 'App'   },
+    { href: 'app.html',   label: 'Nerves' },
     { href: 'guide.html', label: 'Guide' },
     { href: 'about.html', label: 'About' },
   ];
