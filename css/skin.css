@@ -30,18 +30,13 @@ html, body {
   height: 44px;
 }
 #skin-nav .nav-brand {
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex; align-items: center;
   padding-right: 22px; border-right: 1px solid var(--border);
   margin-right: 14px; text-decoration: none;
+  flex-shrink: 0;
 }
-#skin-nav .nav-brand span:first-child {
-  font-family: 'Libre Baskerville', serif;
-  font-size: .88rem; font-weight: 700; color: var(--text);
-  line-height: 1.2;
-}
-#skin-nav .nav-brand span:last-child {
-  font-family: 'Libre Baskerville', serif;
-  font-size: .68rem; font-style: italic; color: var(--muted);
+#skin-nav .nav-brand svg {
+  height: 30px; width: auto; display: block;
 }
 #skin-nav a.nav-link {
   display: flex; align-items: center;
