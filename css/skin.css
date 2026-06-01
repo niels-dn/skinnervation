@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #f4f1ec;
+  --panel:  #eae6de;
+  --border: #c8bfb0;
+  --text:   #2a2318;
+  --muted:  #7a6f62;
+  --hover:  #ddd7cd;
+  --accent: #5a3a1a;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg); color: var(--text);
+  font-family: 'Source Code Pro', monospace;
+}
+
+/* ── Shared nav ── */
+#skin-nav {
+  flex-shrink: 0;
+  background: var(--panel);
+  border-bottom: 1.5px solid var(--border);
+  padding: 0 18px;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  height: 44px;
+}
+#skin-nav .nav-brand {
+  display: flex; flex-direction: column; justify-content: center;
+  padding-right: 22px; border-right: 1px solid var(--border);
+  margin-right: 14px; text-decoration: none;
+}
+#skin-nav .nav-brand span:first-child {
+  font-family: 'Libre Baskerville', serif;
+  font-size: .88rem; font-weight: 700; color: var(--text);
+  line-height: 1.2;
+}
+#skin-nav .nav-brand span:last-child {
+  font-family: 'Libre Baskerville', serif;
+  font-size: .68rem; font-style: italic; color: var(--muted);
+}
+#skin-nav a.nav-link {
+  display: flex; align-items: center;
+  padding: 0 13px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: .70rem; color: var(--muted);
+  text-decoration: none; border-bottom: 2px solid transparent;
+  transition: color .13s, border-color .13s;
+}
+#skin-nav a.nav-link:hover { color: var(--text); }
+#skin-nav a.nav-link.active {
+  color: var(--text); border-bottom-color: var(--accent);
+}
+
+/* ── Shared card ── */
+.skin-card {
+  background: var(--panel); border: 1.5px solid var(--border);
+  border-radius: 4px; padding: 36px 40px 30px;
+}
+
+/* ── Shared prose ── */
+.skin-prose p {
+  font-size: .70rem; color: #5a5040; line-height: 1.75; margin: 0 0 10px;
+}
+.skin-prose h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: .88rem; font-weight: 700; color: var(--text);
+  margin: 22px 0 8px;
+}
+.skin-prose hr {
+  border: none; border-top: 1px solid #ddd8ce; margin: 22px 0;
+}
+
+/* ── Shared button styles ── */
+.skin-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 18px;
+  background: var(--accent); color: #fff;
+  border: 1px solid var(--accent); border-radius: 3px;
+  font-family: 'Libre Baskerville', serif; font-size: .70rem;
+  text-decoration: none; cursor: pointer;
+  transition: background .13s, border-color .13s;
+}
+.skin-btn:hover { background: #7a5030; border-color: #7a5030; }
+.skin-btn-ghost {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; background: #fff; color: #5a5040;
+  border: 1px solid var(--border); border-radius: 3px;
+  font-family: 'Libre Baskerville', serif; font-size: .68rem;
+  text-decoration: none; cursor: pointer;
+  transition: border-color .13s, color .13s;
+}
+.skin-btn-ghost:hover { border-color: #9a9080; color: var(--text); }
+
+/* ── Credits block ── */
+.skin-credits {
+  border-top: 1px solid #ddd8ce;
+  padding-top: 14px; margin-top: 22px;
+}
+.skin-credits p {
+  margin: 0; font-size: .66rem; color: #5a5040; line-height: 1.75;
+}
+.skin-credits a { color: var(--accent); text-decoration: underline; }
+.skin-credits a:hover { color: #7a5030; }
