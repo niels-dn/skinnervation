@@ -6,55 +6,179 @@
 <title>Skinnervation — Index of Cutaneous Innervation</title>
 <link rel="stylesheet" href="css/skin.css"/>
 <style>
-  #app { display:flex; flex-direction:column; min-height:100vh; }
-  main {
-    flex:1; display:flex; align-items:center; justify-content:center;
-    padding:40px 20px;
+  #app {
+    display: flex; flex-direction: column; min-height: 100vh;
   }
-  .card {
-    max-width:560px; width:100%;
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--panel); border-bottom: 1.5px solid var(--border);
+    padding: 52px 24px 44px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
   }
-  .sp-brand {
-    font-family:'Libre Baskerville',serif;
-    font-size:.75rem; font-weight:700; font-style:italic;
-    color:var(--muted); margin-bottom:6px;
+  .hero .sp-brand {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .75rem; font-weight: 700; font-style: italic;
+    color: var(--muted); margin-bottom: 10px;
+    letter-spacing: .04em;
   }
-  h2 {
-    font-family:'Libre Baskerville',serif;
-    font-size:1.55rem; font-weight:700; color:var(--text);
-    margin:0 0 18px; line-height:1.3;
+  .hero h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.1rem; font-weight: 700; color: var(--text);
+    line-height: 1.2; margin: 0 0 10px;
   }
-  .actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .hero .tagline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .85rem; font-style: italic; color: var(--muted);
+    margin: 0 0 28px;
+  }
+  .hero-actions {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+
+  /* ── Feature grid ── */
+  .features {
+    max-width: 860px; margin: 52px auto; padding: 0 24px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .feature-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: 4px; padding: 22px 24px;
+  }
+  .feature-card .fc-icon {
+    font-size: 1.4rem; margin-bottom: 10px; display: block;
+  }
+  .feature-card h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .82rem; font-weight: 700; color: var(--text);
+    margin: 0 0 8px;
+  }
+  .feature-card p {
+    font-size: .67rem; color: #5a5040; line-height: 1.7; margin: 0;
+  }
+
+  /* ── About strip ── */
+  .about-strip {
+    border-top: 1.5px solid var(--border);
+    background: var(--panel);
+    padding: 36px 24px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 8px;
+  }
+  .about-strip p {
+    font-size: .68rem; color: #5a5040; line-height: 1.75;
+    max-width: 560px; margin: 0;
+  }
+  .about-strip .credits {
+    font-size: .64rem; color: var(--muted); margin-top: 6px;
+  }
+  .about-strip a {
+    color: var(--accent); text-decoration: underline;
+  }
+  .about-strip a:hover { color: #7a5030; }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 6px;
+    font-size: .60rem; color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.5rem; }
+    .features { margin: 32px auto; }
+  }
 </style>
 </head>
 <body>
 <div id="app">
-  <main>
-    <div class="skin-card card skin-prose">
-      <div class="sp-brand">skinnervation.com</div>
-      <h2>We're working on something</h2>
-      <p>
-        Skinnervation will be an interactive reference tool for the cutaneous
-        innervation of the human body, built for clinicians and students
-        working with peripheral nerve anatomy.
-      </p>
-      <p>
-        The site is currently under development. Please check back soon.
-      </p>
-      <div class="actions">
-        <a class="skin-btn-ghost" href="https://buymeacoffee.com/skinnervation"
-           target="_blank" rel="noopener">☕ Buy us a coffee</a>
-        <a class="skin-btn-ghost" href="mailto:comments@skinnervation.com">
-          ✉ comments@skinnervation.com</a>
-      </div>
-      <div class="skin-credits">
-        <p>
-          Niels Dalsgaard Nielsen, consultant in anaesthesiology, PhD.<br/>
-          Nerve Injury Clinic, Aarhus University Hospital, Denmark.
-        </p>
-      </div>
+
+  <section class="hero">
+    <div class="sp-brand">skinnervation.com</div>
+    <h1>Skinnervation</h1>
+    <p class="tagline">Index of Cutaneous Innervation</p>
+    <div class="hero-actions">
+      <a class="skin-btn" href="app.html">Open Skinnervation &rarr;</a>
+      <a class="skin-btn-ghost" href="guide.html">Read the guide</a>
     </div>
-  </main>
+  </section>
+
+  <section class="features">
+
+    <div class="feature-card">
+      <span class="fc-icon">🫀</span>
+      <h3>Complete pathway tracing</h3>
+      <p>
+        Follow any cutaneous nerve from its spinal root through plexus,
+        trunk and terminal branch. Click a node to highlight the full
+        innervation pathway in both directions.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <span class="fc-icon">🖐</span>
+      <h3>Anatomic territory view</h3>
+      <p>
+        Switch to the anatomic view for upper limb nerves to see approximate
+        cutaneous territories overlaid on a schematic of the arm.
+        Further regions coming soon.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <span class="fc-icon">〰️</span>
+      <h3>Variable innervation</h3>
+      <p>
+        Dashed borders indicate variable contributions — present in some
+        individuals but not all. These are shown in context when a
+        pathway is highlighted.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <span class="fc-icon">🔍</span>
+      <h3>Search</h3>
+      <p>
+        Search by nerve name or anatomical index number to jump directly
+        to any nerve in the overview, regardless of which region
+        is currently displayed.
+      </p>
+    </div>
+
+  </section>
+
+  <section class="about-strip">
+    <p>
+      Skinnervation is a free, open-access reference tool for peripheral nerve
+      anatomy, built for clinicians, students, and researchers working with
+      cutaneous innervation. Nomenclature follows the Terminologia Anatomica
+      (TA2) and Terminologia Neuroanatomica (TNA).
+    </p>
+    <p>
+      Questions or corrections are welcome at
+      <a href="mailto:comments@skinnervation.com">comments@skinnervation.com</a>
+    </p>
+    <p class="credits">
+      Niels Dalsgaard Nielsen, consultant in anaesthesiology, PhD. &mdash;
+      Nerve Injury Clinic, Aarhus University Hospital, Denmark.
+    </p>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 Skinnervation</span>
+    <span>
+      Version 1.1 &nbsp;&middot;&nbsp;
+      <a href="about.html">Legal disclaimer</a> &nbsp;&middot;&nbsp;
+      <a href="https://buymeacoffee.com/skinnervation" target="_blank" rel="noopener">☕ Buy us a coffee</a>
+    </span>
+  </footer>
+
 </div>
+<script src="js/nav.js"></script>
 </body>
 </html>
