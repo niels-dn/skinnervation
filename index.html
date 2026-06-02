@@ -94,30 +94,44 @@
     }
   }
 
-  /* ── Mobile warning box ── */
-  .mobile-warning {
+  /* ── Mobile warning splash ── */
+  #mobile-splash {
     display: none;
-    align-items: flex-start; gap: 10px;
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(42, 35, 24, 0.45);
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  #mobile-splash.visible { display: flex; }
+  .mobile-splash-card {
     background: #faf3dc; border: 1.5px solid #e0c96a;
-    border-radius: 4px; padding: 12px 16px;
-    max-width: 540px; width: 100%;
+    border-radius: 4px; padding: 22px 20px 18px;
+    max-width: 340px; width: 100%;
+    display: flex; flex-direction: column; gap: 14px;
   }
-  .mobile-warning-icon {
-    flex-shrink: 0; width: 18px; height: 18px;
-    margin-top: 1px;
+  .mobile-splash-top {
+    display: flex; align-items: flex-start; gap: 10px;
   }
-  .mobile-warning-text { display: flex; flex-direction: column; gap: 4px; }
-  .mobile-warning h4 {
+  .mobile-splash-icon {
+    flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px;
+  }
+  .mobile-splash-text { display: flex; flex-direction: column; gap: 5px; }
+  .mobile-splash-text h4 {
     font-family: 'Libre Baskerville', serif;
-    font-size: .70rem; font-weight: 700; color: #5a4700; margin: 0;
+    font-size: .72rem; font-weight: 700; color: #5a4700; margin: 0;
   }
-  .mobile-warning p {
+  .mobile-splash-text p {
     font-size: .67rem; color: #6b5800; line-height: 1.65;
     margin: 0; text-align: left;
   }
-  @media (max-width: 640px) {
-    .mobile-warning { display: flex; }
+  .mobile-splash-ok {
+    align-self: flex-end;
+    padding: 5px 20px; border-radius: 3px;
+    background: #c8a000; border: none; color: #fff;
+    font-family: 'Libre Baskerville', serif; font-size: .68rem;
+    cursor: pointer; transition: background .13s;
   }
+  .mobile-splash-ok:hover { background: #a88600; }
 </style>
   <!-- Favicons -->
   <link rel="icon" href="favicon.ico" sizes="any"/>
@@ -174,19 +188,6 @@
 
     </div>
 
-    <div class="mobile-warning">
-      <svg class="mobile-warning-icon" viewBox="0 0 24 24" fill="none"
-           stroke="#c8a000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-        <line x1="12" y1="9" x2="12" y2="13"/>
-        <line x1="12" y1="17" x2="12.01" y2="17"/>
-      </svg>
-      <div class="mobile-warning-text">
-        <h4>Best viewed on a larger screen</h4>
-        <p>Skinnervation can be used on a mobile device, but a tablet or desktop will give you a better experience navigating the nerve index.</p>
-      </div>
-    </div>
-
   </div>
 
   </div>
@@ -196,6 +197,28 @@
   
 
 </div>
+<div id="mobile-splash">
+  <div class="mobile-splash-card">
+    <div class="mobile-splash-top">
+      <svg class="mobile-splash-icon" viewBox="0 0 24 24" fill="none"
+           stroke="#c8a000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <div class="mobile-splash-text">
+        <h4>Best viewed on a larger screen</h4>
+        <p>Skinnervation can be used on a mobile device, but a tablet or desktop will give you a better experience navigating the nerve index.</p>
+      </div>
+    </div>
+    <button class="mobile-splash-ok" onclick="document.getElementById('mobile-splash').classList.remove('visible')">Ok</button>
+  </div>
+</div>
+<script>
+  if(window.innerWidth <= 640){
+    document.getElementById('mobile-splash').classList.add('visible');
+  }
+</script>
 <script src="js/nav.js"></script>
 <script src="js/footer.js"></script>
 </body>
