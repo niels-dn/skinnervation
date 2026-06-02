@@ -260,6 +260,9 @@
   }
   #btn-info:hover { border-color:#9a9080; color:var(--text); }
 
+  #legend-row { display:flex; gap:8px; flex-wrap:wrap; padding:4px 18px 15px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; }
+  #legend-row.hidden { display:none !important; }
+
   /* INFO PANEL – static bar below toolbar */
   #tip {
     flex-shrink:0; position:relative;
@@ -2052,7 +2055,7 @@ function switchView(mode){
     anatEl.classList.add('active');
     vtPathway.classList.remove('on');
     vtAnatomy.classList.add('on');
-    if(legendRow) legendRow.style.display = 'none';
+    if(legendRow) legendRow.classList.add('hidden');
     // Use rAF so container has real dimensions before building
     const armNodes = nodes.filter(n=>n.group==='arm' && n.type==='terminal');
     requestAnimationFrame(()=>{ buildAnatView(armNodes); });
@@ -2061,7 +2064,7 @@ function switchView(mode){
     anatEl.classList.remove('active');
     vtPathway.classList.add('on');
     vtAnatomy.classList.remove('on');
-    if(legendRow) legendRow.style.display = '';
+    if(legendRow) legendRow.classList.remove('hidden');
   }
 }
 
