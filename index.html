@@ -55,7 +55,7 @@
     font-size: .67rem; color: #5a5040; line-height: 1.7; margin: 0; flex: 1;
   }
   .view-btns {
-    display: flex; gap: 10px; margin-top: 6px;
+    display: flex; gap: 10px; margin-top: 6px; justify-content: center;
   }
   .view-btn {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -204,15 +204,38 @@
           </a>
           <a class="view-btn" href="app.html?view=anatomic">
             <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Arm outline -->
-            <path d="M20 4 C17 4 15 6 15 9 L14 34 C14 38 16 42 20 43 L22 43 C24 43 25 42 26 40 L28 34 L29 9 C29 6 27 4 24 4 Z"
-                  fill="#eae6de" stroke="#c8bfb0" stroke-width="1.2"/>
-            <!-- Shaded territory (lateral) -->
-            <path d="M25 8 C27 8 29 9 29 9 L28 34 L26 40 C25 42 24 43 22 43 L22 36 L24 18 Z"
-                  fill="#8b6414" fill-opacity="0.25" stroke="none"/>
-            <!-- Nerve line -->
-            <path d="M22 5 C22 12 23 20 22 30 L21 42"
-                  stroke="#8b6414" stroke-width="1.5" stroke-dasharray="2,2"/>
+            <!-- Arm silhouette: shoulder top → upper arm → elbow → forearm → wrist/hand -->
+            <!-- Full arm outline -->
+            <path d="
+              M14 3
+              C11 3 10 5 10 7
+              L10 21
+              C10 24 11 26 13 27
+              L12 38
+              C12 41 13 44 16 45
+              L20 45
+              C22 45 23 44 23 42
+              L24 28
+              C26 27 28 25 28 21
+              L28 7
+              C28 5 27 3 24 3
+              Z"
+              fill="#eae6de" stroke="#2a2318" stroke-width="1.3"/>
+            <!-- Territory highlight on lateral side -->
+            <path d="
+              M24 3
+              C27 3 28 5 28 7
+              L28 21
+              C28 25 26 27 24 28
+              L23 42
+              C23 44 22 45 20 45
+              L19 45
+              L20 28
+              C22 27 24 24 24 21
+              Z"
+              fill="#8b6414" fill-opacity="0.22"/>
+            <!-- Elbow crease line -->
+            <path d="M11 26 Q19 29 28 26" stroke="#2a2318" stroke-width="0.8" stroke-opacity="0.4"/>
           </svg>
             <span>Anatomic view</span>
           </a>
