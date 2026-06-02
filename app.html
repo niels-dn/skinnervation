@@ -31,20 +31,8 @@
   body { display:flex; flex-direction:column; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Source Code Pro',monospace; }
   #app { display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden; }
 
-  /* HEADER */
-  header {
-    flex-shrink:0; padding:6px 18px 4px;
-    background:var(--panel); border-bottom:1.5px solid var(--border);
-    display:flex; flex-direction:column; gap:0;
-  }
-  .header-row {
-    display:flex; flex-direction:column; gap:0;
-  }
-  .header-titles { display:flex; flex-direction:column; gap:1px; }
-  header h1       { font-family:'Libre Baskerville',serif; font-size:.95rem; font-weight:700; color:var(--text); margin:0; }
-  header .subtitle { font-family:'Libre Baskerville',serif; font-size:.80rem; font-weight:700; font-style:italic; color:var(--text); margin:0; }
-  header p         { font-size:.66rem; color:var(--muted); font-style:italic; margin:0; }
-  .legend   { display:flex; gap:6px; flex-wrap:wrap; padding:6px 0 10px 0; }
+  /* header removed */
+  #legend-row { display:flex; gap:8px; flex-wrap:wrap; padding:4px 18px 5px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; }
   .leg      { display:flex; align-items:center; gap:5px; font-size:.63rem; color:var(--muted); }
   .leg-dot  { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
 
@@ -337,21 +325,6 @@
 </div>
 
 <div id="app">
-
-<header>
-  <div class="header-row">
-    <div class="header-titles">
-      <p class="subtitle">Skinnervation</p>
-      <h1>Index of Cutaneous Innervation</h1>
-    </div>
-    <div class="legend">
-      <div class="leg"><div class="leg-dot" style="background:#8b1a1a"></div>Root</div>
-      <div class="leg"><div class="leg-dot" style="background:#1a6b5a"></div>Plexus</div>
-      <div class="leg"><div class="leg-dot" style="background:#2c4a7a"></div>Connecting nerve</div>
-      <div class="leg"><div class="leg-dot" style="background:#7a4a00"></div>Cutaneous innervation</div>
-    </div>
-  </div>
-</header>
 
 <div id="toolbar">
   <span class="fb-label">Show:</span>
