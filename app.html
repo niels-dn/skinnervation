@@ -32,13 +32,13 @@
   #app { display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden; }
 
   /* header removed */
-  #legend-row { display:flex; gap:8px; flex-wrap:wrap; padding:4px 18px 5px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; }
+  #legend-row { display:flex; gap:8px; flex-wrap:wrap; padding:4px 18px 15px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; }
   .leg      { display:flex; align-items:center; gap:5px; font-size:.63rem; color:var(--muted); }
   .leg-dot  { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
 
   /* TOOLBAR */
   #toolbar {
-    flex-shrink:0; padding:20px 18px 8px;
+    flex-shrink:0; padding:15px 18px 8px;
     background:var(--panel);
     display:flex; gap:6px; align-items:center; flex-wrap:wrap;
   }
@@ -51,7 +51,7 @@
   }
   .fb-m:hover { background:var(--hover); color:var(--text); border-color:#9a9080; }
   .fb-m.on { background:#5a3a1a; border-color:#5a3a1a; color:#fff; }
-  .fb-label { font-size:.63rem; color:var(--muted); margin-right:2px; }
+  .fb-label { font-size:.63rem; color:var(--muted); min-width:46px; display:inline-block; }
   .fb {
     padding:4px 12px; border-radius:3px;
     border:1.5px solid var(--border); background:transparent;
