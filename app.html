@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Index of Cutaneous Innervation</title>
+<link rel="stylesheet" href="css/skin.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
@@ -26,8 +27,9 @@
     --c-terminal: #5a4500;
   }
 
-  html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Source Code Pro',monospace; }
-  #app { display:flex; flex-direction:column; height:100vh; }
+  html { height:100%; }
+  body { display:flex; flex-direction:column; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Source Code Pro',monospace; }
+  #app { display:flex; flex-direction:column; flex:1; min-height:0; overflow:hidden; }
 
   /* HEADER */
   header {
