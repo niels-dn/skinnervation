@@ -303,42 +303,14 @@
 </style>
 </head>
 <body>
-<!-- ── MOBILE UI ─────────────────────────────────────────────────────── -->
-<div id="mobile-header">
-  <div>
-    <div class="m-brand">Skinnervation</div>
-    <div class="m-title">Index of Cutaneous Innervation</div>
-  </div>
-  <button id="mobile-menu-btn" title="Menu">☰</button>
-</div>
-
-<div id="mobile-panel">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-    <span style="font-size:.60rem;color:var(--muted);font-family:'Source Code Pro',monospace;">View:</span>
-    <div style="display:flex;gap:0;">
-      <button class="vt-btn on" id="vt-pathway-m">Pathway</button>
-      <button class="vt-btn" id="vt-anatomic-m">Anatomic</button>
-    </div>
-  </div>
-  <div id="mobile-search-wrap">
-    <input id="mobile-search" type="text" placeholder="Search nerve…" autocomplete="off"/>
-  </div>
-  <div id="mobile-filter-row">
-    <button class="fb-m" data-mg="head">Head/Neck</button>
-    <button class="fb-m on" data-mg="arm">Upper limb</button>
-    <button class="fb-m" data-mg="truncus">Truncus</button>
-    <button class="fb-m" data-mg="lowerbody">Lower body</button>
-  </div>
-</div>
-
 <div id="app">
 
 <div id="toolbar">
   <span class="fb-label">Show:</span>
-  <button class="fb" data-g="head">Head / Neck (V, VII, X + C2–C4)</button>
-  <button class="fb on" data-g="arm">Upper limb (C5–T1)</button>
-  <button class="fb" data-g="truncus">Truncus (T2–T11)</button>
-  <button class="fb" data-g="lowerbody">Lower body (T12–)</button>
+  <button class="fb" data-g="head">Head / Neck</button>
+  <button class="fb on" data-g="arm">Upper limb</button>
+  <button class="fb" data-g="truncus">Truncus</button>
+  <button class="fb" data-g="lowerbody">Lower body</button>
   <div id="view-toggle">
   <button class="vt-btn on" id="vt-pathway">Pathway</button>
   <button class="vt-btn" id="vt-anatomic">Anatomic</button>
@@ -348,7 +320,6 @@
   <button id="search-clear" title="Clear">✕</button>
   <div id="search-dropdown"></div>
 </div>
-  <a id="btn-info" href="guide.html" title="Guide">?</a>
   <div id="node-tooltip"></div>
 </div>
 
@@ -2034,9 +2005,7 @@ function switchView(mode){
     anatEl.classList.add('active');
     vtPathway.classList.remove('on');
     vtAnatomy.classList.add('on');
-    if(legendRow) legendRow.classList.add('hidden');
-    document.querySelectorAll('.legend').forEach(el=>el.style.display='none');
-    // Use rAF so container has real dimensions before building
+    if(legendRow) legendRow.classList.add('hidden');    // Use rAF so container has real dimensions before building
     const armNodes = nodes.filter(n=>n.group==='arm' && n.type==='terminal');
     requestAnimationFrame(()=>{ buildAnatView(armNodes); });
   } else {
@@ -2044,9 +2013,7 @@ function switchView(mode){
     anatEl.classList.remove('active');
     vtPathway.classList.add('on');
     vtAnatomy.classList.remove('on');
-    if(legendRow) legendRow.classList.remove('hidden');
-    document.querySelectorAll('.legend').forEach(el=>el.style.display='');
-  }
+    if(legendRow) legendRow.classList.remove('hidden');  }
 }
 
 vtPathway.addEventListener('click', ()=>{ clearHL(); switchView('pathway'); });
