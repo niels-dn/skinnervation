@@ -101,3 +101,16 @@ html, body {
 }
 .skin-credits a { color: var(--accent); text-decoration: underline; }
 .skin-credits a:hover { color: #7a5030; }
+
+/* ── Shared footer ── */
+#skin-footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  padding: 8px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 6px;
+  font-size: .60rem; color: var(--muted);
+  background: var(--panel);
+}
+#skin-footer a { color: var(--muted); text-decoration: underline; }
+#skin-footer a:hover { color: var(--text); }
