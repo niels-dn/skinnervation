@@ -8,22 +8,17 @@
 <style>
   #app { display: flex; flex-direction: column; flex: 1; }
 
-  /* ── Hero ── */
-  .hero {
-    background: var(--panel); border-bottom: 1.5px solid var(--border);
-    padding: 52px 24px 44px;
-    display: flex; flex-direction: column; align-items: center;
-    text-align: center;
+  /* ── Hero image ── */
+  .hero-img-wrap {
+    display: flex; justify-content: center;
+    padding: 48px 24px 12px;
+    background: var(--bg);
   }
   .hero-logo {
     width: 100%;
-    max-width: 520px;
+    max-width: 560px;
     height: auto;
     display: block;
-    margin-bottom: 28px;
-  }
-  .hero-actions {
-    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
   }
 
   /* ── Feature grid ── */
@@ -78,18 +73,14 @@
 <body>
 <div id="app">
 
-  <section class="hero">
+  <div class="hero-img-wrap">
     <picture>
       <source srcset="assets/skinnervation-logo-hero.webp" type="image/webp"/>
       <img src="assets/skinnervation-logo-hero.png"
            alt="Skinnervation — Index of Cutaneous Innervation"
            class="hero-logo"/>
     </picture>
-    <div class="hero-actions">
-      <a class="skin-btn" href="app.html">Open Skinnervation &rarr;</a>
-      <a class="skin-btn-ghost" href="guide.html">Read the guide</a>
-    </div>
-  </section>
+  </div>
 
   <section class="features">
 
