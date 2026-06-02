@@ -12,7 +12,7 @@
   --accent: #5a3a1a;
 }
 
-html { height: 100%; }
+html { height: 100%; scrollbar-gutter: stable; }
 body {
   min-height: 100vh;
   display: flex; flex-direction: column;
