@@ -308,6 +308,7 @@
 </style>
 </head>
 <body>
+<div id="dbg" style="position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a1a1a;color:#0f0;font:11px/1.4 monospace;padding:6px 10px;max-height:45vh;overflow:auto;white-space:pre-wrap;display:none;"></div>
 <div id="app">
 
 <div id="toolbar">
@@ -354,6 +355,20 @@
 </div>
 
 <script>
+// ── TEMPORARY DIAGNOSTICS ─────────────────────────────────────────────────
+window.__dbg = function(msg){
+  var el = document.getElementById('dbg');
+  if(!el) return;
+  el.style.display = 'block';
+  el.textContent += msg + '\n';
+};
+window.addEventListener('error', function(e){
+  window.__dbg('JS ERROR: ' + e.message + ' @ ' + (e.filename||'').split('/').pop() + ':' + e.lineno);
+});
+window.addEventListener('unhandledrejection', function(e){
+  window.__dbg('PROMISE REJECT: ' + (e.reason && e.reason.message ? e.reason.message : e.reason));
+});
+window.__dbg('script start');
 // ═══════════════════════════════════════════════════════════════════════════
 //  DATA MODEL
 //  Groups: head | arm | truncus | lowerbody
@@ -2017,6 +2032,7 @@ const vtPathway = document.getElementById('vt-pathway');
 const vtAnatomy = document.getElementById('vt-anatomic');
 
 function switchView(mode){
+  window.__dbg('switchView(' + mode + ') called');
   const legendRow = document.getElementById('legend-row');
   if(mode === 'anatomic'){
     graphEl.style.display = 'none';
@@ -2024,9 +2040,18 @@ function switchView(mode){
     vtPathway.classList.remove('on');
     vtAnatomy.classList.add('on');
     if(legendRow) legendRow.classList.add('hidden');
-    // Use rAF so container has real dimensions before building
+    const cs = getComputedStyle(anatEl);
+    window.__dbg('anatEl display=' + cs.display + ' w=' + anatEl.clientWidth + ' h=' + anatEl.clientHeight);
     const armNodes = nodes.filter(n=>n.group==='arm' && n.type==='terminal');
-    requestAnimationFrame(()=>{ buildAnatView(armNodes); });
+    window.__dbg('armNodes=' + armNodes.length);
+    requestAnimationFrame(()=>{
+      try {
+        buildAnatView(armNodes);
+        window.__dbg('buildAnatView done; anatEl children=' + anatEl.children.length + ' svg=' + (anatEl.querySelector('svg')?'yes':'no') + ' w=' + anatEl.clientWidth + ' h=' + anatEl.clientHeight);
+      } catch(err){
+        window.__dbg('buildAnatView THREW: ' + err.message);
+      }
+    });
   } else {
     graphEl.style.display = '';
     anatEl.classList.remove('active');
