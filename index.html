@@ -23,18 +23,48 @@
 
   /* ── About strip ── */
   .intro-wrap {
-    padding: 4px 24px 36px;
+    padding: 4px 24px 40px;
     display: flex; flex-direction: column; align-items: center;
-    text-align: center; gap: 20px;
+    text-align: center; gap: 18px;
     background: var(--bg);
-    max-width: 620px; margin: 0 auto; width: 100%;
+    max-width: 640px; margin: 0 auto; width: 100%;
   }
   .intro-text {
-    font-size: .72rem; color: #5a5040; line-height: 1.85;
+    font-size: .72rem; color: #5a5040; line-height: 1.85; margin: 0;
+  }
+  .intro-choose {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .72rem; font-style: italic; color: var(--muted);
     margin: 0;
   }
-  .intro-actions {
-    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  .intro-choices {
+    display: flex; align-items: center; gap: 20px;
+    flex-wrap: wrap; justify-content: center; width: 100%;
+  }
+  .choice-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: 4px; padding: 20px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    flex: 1; min-width: 200px; max-width: 260px; text-align: left;
+  }
+  .choice-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .82rem; font-weight: 700; color: var(--text);
+  }
+  .choice-desc {
+    font-size: .67rem; color: #5a5040; line-height: 1.7; margin: 0; flex: 1;
+  }
+  .choice-btns {
+    display: flex; flex-direction: column; gap: 7px; margin-top: 4px;
+  }
+  .choice-btns .skin-btn,
+  .choice-btns .skin-btn-ghost {
+    justify-content: center; width: 100%;
+  }
+  .choice-divider {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .75rem; font-style: italic; color: var(--muted);
+    flex-shrink: 0;
   }
   .intro-credits {
     font-size: .63rem; color: var(--muted); margin: 0;
@@ -74,10 +104,37 @@
       of the human body. Trace any peripheral nerve from spinal root to skin,
       explore innervation territories, and search across all regions.
     </p>
-    <div class="intro-actions">
-      <a class="skin-btn" href="app.html">Open nerve index &rarr;</a>
-      <a class="skin-btn-ghost" href="guide.html">Read the guide</a>
+
+    <p class="intro-choose">Choose how to get started:</p>
+
+    <div class="intro-choices">
+
+      <div class="choice-card">
+        <div class="choice-title">Nerve index</div>
+        <p class="choice-desc">Browse or search the full nerve overview directly.</p>
+        <div class="choice-btns">
+          <a class="skin-btn" href="app.html">Pathway view &rarr;</a>
+          <a class="skin-btn-ghost" href="app.html?view=anatomic">Anatomic view &rarr;</a>
+        </div>
+      </div>
+
+      <div class="choice-divider">or</div>
+
+      <div class="choice-card">
+        <div class="choice-title">Guide</div>
+        <p class="choice-desc">Learn how to navigate and interpret the nerve index.</p>
+        <div class="choice-btns">
+          <a class="skin-btn-ghost" href="guide.html">Read the guide &rarr;</a>
+        </div>
+      </div>
+
     </div>
+
+    <p class="intro-credits">
+      Niels Dalsgaard Nielsen, consultant in anaesthesiology, PhD. &mdash;
+      Nerve Injury Clinic, Aarhus University Hospital, Denmark.
+    </p>
+  </div>
     <p class="intro-credits">
       Niels Dalsgaard Nielsen, consultant in anaesthesiology, PhD. &mdash;
       Nerve Injury Clinic, Aarhus University Hospital, Denmark.
