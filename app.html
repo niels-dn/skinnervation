@@ -242,26 +242,6 @@
 </style>
 </head>
 <body>
-<!-- ── MOBILE UI ─────────────────────────────────────────────────────── -->
-<div id="mobile-panel">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-    <span style="font-size:.60rem;color:var(--muted);font-family:'Source Code Pro',monospace;">View:</span>
-    <div style="display:flex;gap:0;">
-      <button class="vt-btn on" id="vt-pathway-m">Pathway</button>
-      <button class="vt-btn" id="vt-anatomic-m">Anatomic</button>
-    </div>
-  </div>
-  <div id="mobile-search-wrap">
-    <input id="mobile-search" type="text" placeholder="Search nerve…" autocomplete="off"/>
-  </div>
-  <div id="mobile-filter-row">
-    <button class="fb-m" data-mg="head">Head/Neck</button>
-    <button class="fb-m on" data-mg="arm">Upper limb</button>
-    <button class="fb-m" data-mg="truncus">Truncus</button>
-    <button class="fb-m" data-mg="lowerbody">Lower body</button>
-  </div>
-</div>
-
 <div id="app">
 
 <div id="toolbar">
@@ -1105,9 +1085,7 @@ function fitAll(){
   svg.call(zoom.transform,d3.zoomIdentity.translate((vw-TOTAL_W*sc)/2, ty).scale(sc));
 }
 setTimeout(()=>{ applyGroupFilter('arm'); }, 80);
-// Pass nodes to mobile UI
-window._allNodes = nodes;
-if(window._mobileInit) // Draw links
+// Draw links
 const linkSel=mainG.append('g')
   .selectAll('path')
   .data(edges)
