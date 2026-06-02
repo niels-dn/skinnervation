@@ -106,8 +106,14 @@
     flex-shrink: 0; width: 18px; height: 18px;
     margin-top: 1px;
   }
+  .mobile-warning-text { display: flex; flex-direction: column; gap: 4px; }
+  .mobile-warning h4 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .70rem; font-weight: 700; color: #5a4700; margin: 0;
+  }
   .mobile-warning p {
-    font-size: .67rem; color: #6b5800; line-height: 1.65; margin: 0;
+    font-size: .67rem; color: #6b5800; line-height: 1.65;
+    margin: 0; text-align: left;
   }
   @media (max-width: 640px) {
     .mobile-warning { display: flex; }
@@ -175,7 +181,10 @@
         <line x1="12" y1="9" x2="12" y2="13"/>
         <line x1="12" y1="17" x2="12.01" y2="17"/>
       </svg>
-      <p>Det ser ud til, at du besøger siden på en mobil-enhed. Dette er muligt, men vi anbefaler at bruge en større skærm.</p>
+      <div class="mobile-warning-text">
+        <h4>Best viewed on a larger screen</h4>
+        <p>Skinnervation can be used on a mobile device, but a tablet or desktop will give you a better experience navigating the nerve index.</p>
+      </div>
     </div>
 
   </div>
