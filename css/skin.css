@@ -25,11 +25,18 @@ body {
   flex-shrink: 0;
   background: var(--panel);
   border-bottom: 1.5px solid var(--border);
-  padding: 0 18px;
+  height: 44px;
+  display: flex;
+  align-items: stretch;
+}
+#skin-nav-inner {
   display: flex;
   align-items: stretch;
   gap: 0;
-  height: 44px;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 #skin-nav .nav-brand {
   display: flex; align-items: center;
