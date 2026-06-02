@@ -54,9 +54,20 @@
 
   /* TOOLBAR */
   #toolbar {
-    flex-shrink:0; padding:5px 18px;
-    background:var(--panel); border-bottom:1px solid var(--border);
-    display:flex; gap:6px; align-items:center; flex-wrap:wrap;
+    flex-shrink:0; padding:0;
+    background:var(--panel); border-bottom:none;
+    display:flex; flex-direction:column;
+  }
+  .tb-top {
+    display:flex; align-items:center; gap:6px; flex-wrap:nowrap;
+    padding:10px 18px 6px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .tb-top::-webkit-scrollbar { display:none; }
+  .tb-bottom {
+    display:flex; align-items:center; gap:8px;
+    padding:0 18px 8px;
+    border-bottom:1px solid var(--border);
   }
   .fb-label { font-size:.63rem; color:var(--muted); margin-right:2px; }
   .fb {
@@ -73,9 +84,7 @@
   .fb.on {
     background:#5a3a1a; border-color:#5a3a1a; color:#fff;
   }
-  #search-wrap {
-    margin-left:auto; position:relative; display:flex; align-items:center;
-  }
+  #search-wrap { position:relative; display:flex; align-items:center; flex:1; }
   #search-wrap::before {
     content:'⌕'; position:absolute; left:9px;
     font-size:.80rem; color:#9a9080; pointer-events:none; line-height:1;
@@ -145,8 +154,12 @@
   /* Mobile list view */
 
   @media (max-width: 700px) {
-    #toolbar { flex-wrap:wrap; }
     #app { overflow:hidden; }
+    .tb-top { padding:8px 12px 5px; }
+    .tb-bottom { padding:0 12px 7px; }
+    #legend-row { padding:5px 12px 9px; }
+    .fb { padding:4px 9px; font-size:.60rem; }
+    .fb-label { display:none; }
   }
 
   /* ANATOMIC VIEW */
@@ -216,7 +229,13 @@
   }
   #btn-info:hover { border-color:#9a9080; color:var(--text); }
 
-  #legend-row { display:flex; gap:8px; flex-wrap:wrap; padding:4px 18px 15px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; }
+  #legend-row {
+    display:flex; align-items:center; gap:8px; flex-wrap:nowrap;
+    padding:6px 18px 12px; background:var(--panel);
+    border-bottom:1px solid var(--border); flex-shrink:0;
+    overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  #legend-row::-webkit-scrollbar { display:none; }
   #legend-row.hidden { display:none !important; }
 
   /* INFO PANEL – static bar below toolbar */
@@ -262,20 +281,24 @@
 <div id="app">
 
 <div id="toolbar">
-  <span class="fb-label">Show:</span>
-  <button class="fb" data-g="head">Head / Neck</button>
-  <button class="fb on" data-g="arm">Upper limb</button>
-  <button class="fb" data-g="truncus">Truncus</button>
-  <button class="fb" data-g="lowerbody">Lower body</button>
-  <div id="view-toggle">
-  <button class="vt-btn on" id="vt-pathway">Pathway</button>
-  <button class="vt-btn" id="vt-anatomic">Anatomic</button>
-</div>
-<div id="search-wrap">
-  <input id="search" type="text" placeholder="Search nerve…" autocomplete="off"/>
-  <button id="search-clear" title="Clear">✕</button>
-  <div id="search-dropdown"></div>
-</div>
+  <div class="tb-top">
+    <span class="fb-label">Show:</span>
+    <button class="fb" data-g="head">Head / Neck</button>
+    <button class="fb on" data-g="arm">Upper limb</button>
+    <button class="fb" data-g="truncus">Truncus</button>
+    <button class="fb" data-g="lowerbody">Lower body</button>
+  </div>
+  <div class="tb-bottom">
+    <div id="view-toggle">
+      <button class="vt-btn on" id="vt-pathway">Pathway</button>
+      <button class="vt-btn" id="vt-anatomic">Anatomic</button>
+    </div>
+    <div id="search-wrap">
+      <input id="search" type="text" placeholder="Search nerve…" autocomplete="off"/>
+      <button id="search-clear" title="Clear">✕</button>
+      <div id="search-dropdown"></div>
+    </div>
+  </div>
   <div id="node-tooltip"></div>
 </div>
 <div id="legend-row">
