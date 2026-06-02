@@ -93,6 +93,25 @@
       width: 100%;
     }
   }
+
+  /* ── Mobile warning box ── */
+  .mobile-warning {
+    display: none;
+    align-items: flex-start; gap: 10px;
+    background: #faf3dc; border: 1.5px solid #e0c96a;
+    border-radius: 4px; padding: 12px 16px;
+    max-width: 540px; width: 100%;
+  }
+  .mobile-warning-icon {
+    flex-shrink: 0; width: 18px; height: 18px;
+    margin-top: 1px;
+  }
+  .mobile-warning p {
+    font-size: .67rem; color: #6b5800; line-height: 1.65; margin: 0;
+  }
+  @media (max-width: 640px) {
+    .mobile-warning { display: flex; }
+  }
 </style>
   <!-- Favicons -->
   <link rel="icon" href="favicon.ico" sizes="any"/>
@@ -149,6 +168,15 @@
 
     </div>
 
+    <div class="mobile-warning">
+      <svg class="mobile-warning-icon" viewBox="0 0 24 24" fill="none"
+           stroke="#c8a000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <p>Det ser ud til, at du besøger siden på en mobil-enhed. Dette er muligt, men vi anbefaler at bruge en større skærm.</p>
+    </div>
 
   </div>
 
