@@ -135,11 +135,6 @@
   .node.hidden   { display:none; }
 
   /* ── MOBILE RESPONSIVE ────────────────────────────────────────────────── */
-  #mobile-header {
-    display:none; flex-shrink:0;
-    background:var(--panel); border-bottom:1.5px solid var(--border);
-    padding:8px 14px; align-items:center; justify-content:space-between;
-  }
   #mobile-header .m-brand {
     font-family:'Libre Baskerville',serif; font-size:.85rem;
     font-weight:700; font-style:italic; color:var(--text);
@@ -147,10 +142,6 @@
   #mobile-header .m-title {
     font-family:'Libre Baskerville',serif; font-size:.75rem;
     font-weight:700; color:var(--text); margin-top:1px;
-  }
-  #mobile-menu-btn {
-    background:none; border:1px solid var(--border); border-radius:3px;
-    padding:4px 8px; font-size:.80rem; color:var(--muted); cursor:pointer;
   }
   #mobile-panel {
     display:none; flex-direction:column;
@@ -178,8 +169,7 @@
   /* Mobile list view */
 
   @media (max-width: 700px) {
-    #mobile-header { display:flex; }
-    header, #toolbar { display:none !important; }
+      header, #toolbar { display:none !important; }
     #app { overflow:hidden; }
   }
 
@@ -280,14 +270,6 @@
 </head>
 <body>
 <!-- ── MOBILE UI ─────────────────────────────────────────────────────── -->
-<div id="mobile-header">
-  <div>
-    <div class="m-brand">Skinnervation</div>
-    <div class="m-title">Index of Cutaneous Innervation</div>
-  </div>
-  <button id="mobile-menu-btn" title="Menu">☰</button>
-</div>
-
 <div id="mobile-panel">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
     <span style="font-size:.60rem;color:var(--muted);font-family:'Source Code Pro',monospace;">View:</span>
@@ -304,12 +286,6 @@
     <button class="fb-m on" data-mg="arm">Upper limb</button>
     <button class="fb-m" data-mg="truncus">Truncus</button>
     <button class="fb-m" data-mg="lowerbody">Lower body</button>
-  </div>
-  <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:#8b1a1a"></div>Root</div>
-    <div class="leg"><div class="leg-dot" style="background:#1a6b5a"></div>Plexus</div>
-    <div class="leg"><div class="leg-dot" style="background:#2c4a7a"></div>Connecting nerve</div>
-    <div class="leg"><div class="leg-dot" style="background:#7a4a00"></div>Cutaneous innervation</div>
   </div>
 </div>
 
@@ -1665,17 +1641,7 @@ function fitVisible(){
   }
 
   const mPanel   = document.getElementById('mobile-panel');
-  const mMenuBtn = document.getElementById('mobile-menu-btn');
-  const mSearch  = document.getElementById('mobile-search');
-  const mFilters = document.querySelectorAll('#mobile-filter-row .fb-m');
-
-  // Show panel by default on mobile
-  mPanel.style.display = 'flex';
-
-  // Menu toggle (hide/show legend + filters)
-  mMenuBtn.addEventListener('click', () => {
-    mPanel.style.display = mPanel.style.display === 'none' ? 'flex' : 'none';
-  });
+    });
 
   // Search: wire to desktop search so results zoom to node
   mSearch.addEventListener('input', function(){
