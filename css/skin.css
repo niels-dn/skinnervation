@@ -126,7 +126,7 @@ body {
 
 /* ── Footer responsive copyright ── */
 .footer-copy-short { display: none; }
-@media (max-width: 540px) {
-  .footer-copy-full  { display: none; }
-  .footer-copy-short { display: inline; }
+@media (max-width: 640px) {
+  .footer-copy-full  { display: none !important; }
+  .footer-copy-short { display: inline !important; }
 }
