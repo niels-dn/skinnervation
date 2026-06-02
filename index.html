@@ -15,21 +15,12 @@
     display: flex; flex-direction: column; align-items: center;
     text-align: center;
   }
-  .hero .sp-brand {
-    font-family: 'Libre Baskerville', serif;
-    font-size: .75rem; font-weight: 700; font-style: italic;
-    color: var(--muted); margin-bottom: 10px;
-    letter-spacing: .04em;
-  }
-  .hero h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 2.1rem; font-weight: 700; color: var(--text);
-    line-height: 1.2; margin: 0 0 10px;
-  }
-  .hero .tagline {
-    font-family: 'Libre Baskerville', serif;
-    font-size: .85rem; font-style: italic; color: var(--muted);
-    margin: 0 0 28px;
+  .hero-logo {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    display: block;
+    margin-bottom: 28px;
   }
   .hero-actions {
     display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
@@ -80,8 +71,7 @@
   footer a { color: var(--muted); text-decoration: underline; }
 
   @media (max-width: 600px) {
-    .hero h1 { font-size: 1.5rem; }
-    .features { margin: 32px auto; }
+      .features { margin: 32px auto; }
   }
 </style>
 </head>
@@ -89,9 +79,12 @@
 <div id="app">
 
   <section class="hero">
-    <div class="sp-brand">skinnervation.com</div>
-    <h1>Skinnervation</h1>
-    <p class="tagline">Index of Cutaneous Innervation</p>
+    <picture>
+      <source srcset="assets/skinnervation-logo-hero.webp" type="image/webp"/>
+      <img src="assets/skinnervation-logo-hero.png"
+           alt="Skinnervation — Index of Cutaneous Innervation"
+           class="hero-logo"/>
+    </picture>
     <div class="hero-actions">
       <a class="skin-btn" href="app.html">Open Skinnervation &rarr;</a>
       <a class="skin-btn-ghost" href="guide.html">Read the guide</a>
