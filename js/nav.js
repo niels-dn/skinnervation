@@ -221,15 +221,18 @@ c18 -11 42 -40 55 -68 87 -178 -73 -646 -246 -719 -134 -56 -235 30 -235 202
 98 109 37 7 52 18 52 42 0 9 -57 12 -250 12 -145 0 -250 -4 -250 -9z"/>
 </g>
 </svg>`;
-  nav.appendChild(brand);
+  const inner = document.createElement('div');
+  inner.id = 'skin-nav-inner';
+  inner.appendChild(brand);
 
   pages.forEach(({href, label}) => {
     const a = document.createElement('a');
     a.className = 'nav-link' + (cur === href ? ' active' : '');
     a.href = href;
     a.textContent = label;
-    nav.appendChild(a);
+    inner.appendChild(a);
   });
 
+  nav.appendChild(inner);
   document.body.insertBefore(nav, document.body.firstChild);
 })();
