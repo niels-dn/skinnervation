@@ -124,9 +124,3 @@ body {
 #skin-footer a { color: var(--muted); text-decoration: underline; }
 #skin-footer a:hover { color: var(--text); }
 
-/* ── Footer responsive copyright ── */
-.footer-copy-short { display: none; }
-@media (max-width: 640px) {
-  .footer-copy-full  { display: none !important; }
-  .footer-copy-short { display: inline !important; }
-}
