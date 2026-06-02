@@ -7,7 +7,7 @@
     <span>
       Version 1.1
       &nbsp;&middot;&nbsp;
-      <a href="about.html">Legal disclaimer</a>
+      <a href="legal.html">Legal disclaimer</a>
       &nbsp;&middot;&nbsp;
       <a href="https://buymeacoffee.com/skinnervation" target="_blank" rel="noopener">&#9749; Buy us a coffee</a>
     </span>
