@@ -1124,7 +1124,12 @@ function fitAll(){
   const ty = 10;  // always top-align
   svg.call(zoom.transform,d3.zoomIdentity.translate((vw-TOTAL_W*sc)/2, ty).scale(sc));
 }
-setTimeout(()=>{ applyGroupFilter('arm'); }, 80);
+setTimeout(()=>{
+  applyGroupFilter('arm');
+  if(new URLSearchParams(location.search).get('view')==='anatomic'){
+    setTimeout(()=>{ switchView('anatomic'); }, 300);
+  }
+}, 80);
 // Pass nodes to mobile UI
 
 // Draw links
