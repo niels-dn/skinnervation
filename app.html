@@ -329,30 +329,9 @@
     <button class="fb-m" data-mg="truncus">Truncus</button>
     <button class="fb-m" data-mg="lowerbody">Lower body</button>
   </div>
-  <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:#8b1a1a"></div>Root</div>
-    <div class="leg"><div class="leg-dot" style="background:#1a6b5a"></div>Plexus</div>
-    <div class="leg"><div class="leg-dot" style="background:#2c4a7a"></div>Connecting nerve</div>
-    <div class="leg"><div class="leg-dot" style="background:#7a4a00"></div>Cutaneous innervation</div>
-  </div>
 </div>
 
 <div id="app">
-
-<header>
-  <div class="header-row">
-    <div class="header-titles">
-      <p class="subtitle">Skinnervation</p>
-      <h1>Index of Cutaneous Innervation</h1>
-    </div>
-    <div class="legend">
-      <div class="leg"><div class="leg-dot" style="background:#8b1a1a"></div>Root</div>
-      <div class="leg"><div class="leg-dot" style="background:#1a6b5a"></div>Plexus</div>
-      <div class="leg"><div class="leg-dot" style="background:#2c4a7a"></div>Connecting nerve</div>
-      <div class="leg"><div class="leg-dot" style="background:#7a4a00"></div>Cutaneous innervation</div>
-    </div>
-  </div>
-</header>
 
 <div id="toolbar">
   <span class="fb-label">Show:</span>
@@ -2056,6 +2035,7 @@ function switchView(mode){
     vtPathway.classList.remove('on');
     vtAnatomy.classList.add('on');
     if(legendRow) legendRow.classList.add('hidden');
+    document.querySelectorAll('.legend').forEach(el=>el.style.display='none');
     // Use rAF so container has real dimensions before building
     const armNodes = nodes.filter(n=>n.group==='arm' && n.type==='terminal');
     requestAnimationFrame(()=>{ buildAnatView(armNodes); });
@@ -2065,6 +2045,7 @@ function switchView(mode){
     vtPathway.classList.add('on');
     vtAnatomy.classList.remove('on');
     if(legendRow) legendRow.classList.remove('hidden');
+    document.querySelectorAll('.legend').forEach(el=>el.style.display='');
   }
 }
 
