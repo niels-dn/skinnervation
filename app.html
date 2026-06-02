@@ -1873,18 +1873,24 @@ function buildAnatView(regionNodes){
   // Posterior: nodes right of arm, labels extend rightward (rx = x)
 
   const svg = d3.select(container).append('svg')
-    .attr('width','100%').attr('height','100%')
+    .attr('width', W).attr('height', H)
+    .attr('viewBox', `0 0 ${W} ${H}`)
+    .style('width','100%').style('height','100%')
     .style('cursor','grab');
 
-  const anatZoom = d3.zoom().scaleExtent([0.1, 8])
+  // Define group BEFORE zoom handler references it
+  const anatG = svg.append('g');
+
+  // Explicit extent avoids reading SVG baseVal (which is unreliable for % sizing)
+  const anatZoom = d3.zoom()
+    .scaleExtent([0.1, 8])
+    .extent([[0, 0], [W, H]])
     .on('zoom', (event)=>{ anatG.attr('transform', event.transform); });
   svg.call(anatZoom);
   window._anatZoom = anatZoom;
   window._anatSvg  = svg;
 
-  const anatG = svg.append('g');
-
-  // Fit full SVG into container
+  // Fit full diagram into container
   const sc0 = Math.min(W/VW, H/VH) * 0.92;
   const tx0 = (W - VW*sc0) / 2;
   const ty0 = (H - VH*sc0) / 2;
