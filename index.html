@@ -282,11 +282,11 @@
         <p>While Skinnervation can be used on a mobile device, a tablet or desktop will give you a better experience navigating the nerve index.</p>
       </div>
     </div>
-    <button class="mobile-splash-ok" onclick="document.getElementById('mobile-splash').classList.remove('visible')">Ok</button>
+    <button class="mobile-splash-ok" onclick="sessionStorage.setItem('splashSeen','1');document.getElementById('mobile-splash').classList.remove('visible')">Ok</button>
   </div>
 </div>
 <script>
-  if(window.innerWidth <= 640){
+  if(window.innerWidth <= 640 && !sessionStorage.getItem('splashSeen')){
     document.getElementById('mobile-splash').classList.add('visible');
   }
 </script>
