@@ -145,13 +145,13 @@
   .mobile-splash-ok:hover { background: #a88600; }
 
   .donate-nudge {
-    font-size: .67rem; color: var(--muted); text-align: center;
-    line-height: 1.7; margin-top: 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    margin-top: 20px;
   }
-  .donate-nudge a {
-    color: var(--accent); text-decoration: underline; white-space: nowrap;
+  .donate-nudge p {
+    font-size: .67rem; color: var(--muted); text-align: center; line-height: 1.7; margin: 0;
   }
-  .donate-nudge a:hover { color: #7a5030; }
+  .donate-btn { font-size: .68rem; }
 </style>
   <!-- Favicons -->
   <link rel="icon" href="favicon.ico" sizes="any"/>
@@ -252,11 +252,13 @@
 
     </div>
 
-    <p class="donate-nudge">
-      Skinnervation is free and open-access. If you find it useful,
-      consider supporting the project &mdash;
-      <a href="https://buymeacoffee.com/skinnervation" target="_blank" rel="noopener">&#9749;&nbsp;buy us a coffee</a>.
-    </p>
+    <div class="donate-nudge">
+      <p>Skinnervation is free and open-access. If you find it useful, consider supporting the project.</p>
+      <a class="skin-btn-ghost donate-btn"
+         href="https://buymeacoffee.com/skinnervation" target="_blank" rel="noopener">
+        &#9749;&nbsp;Buy us a coffee
+      </a>
+    </div>
 
   </div>
 
