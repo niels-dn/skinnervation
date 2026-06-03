@@ -120,21 +120,21 @@
     max-width: 340px; width: 100%;
     display: flex; flex-direction: column; gap: 14px;
   }
-  .mobile-splash-top {
-    display: flex; align-items: flex-start; gap: 10px;
-  }
+  .mobile-splash-body { overflow: hidden; }
   .mobile-splash-icon {
-    flex-shrink: 0; width: 24px; height: 24px; margin-top: 1px;
+    float: right; width: 40px; height: 40px;
+    margin: 0 0 8px 12px;
   }
-  .mobile-splash-text { display: flex; flex-direction: column; gap: 5px; }
-  .mobile-splash-text h4 {
+  .mobile-splash-body h4 {
     font-family: 'Libre Baskerville', serif;
-    font-size: .95rem; font-weight: 700; color: #5a4700; margin: 0;
+    font-size: .95rem; font-weight: 700; color: #5a4700;
+    margin: 0 0 14px;
   }
-  .mobile-splash-text p {
+  .mobile-splash-body p {
     font-size: .85rem; color: #6b5800; line-height: 1.65;
-    margin: 0; text-align: left;
+    margin: 0 0 8px; text-align: left;
   }
+  .mobile-splash-body p:last-child { margin-bottom: 0; }
   .mobile-splash-ok {
     align-self: flex-end;
     padding: 5px 20px; border-radius: 3px;
@@ -272,18 +272,16 @@
 </div>
 <div id="mobile-splash">
   <div class="mobile-splash-card">
-    <div class="mobile-splash-top">
+    <div class="mobile-splash-body">
       <svg class="mobile-splash-icon" viewBox="0 0 24 24" fill="none"
            stroke="#c8a000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
         <line x1="12" y1="9" x2="12" y2="13"/>
         <line x1="12" y1="17" x2="12.01" y2="17"/>
       </svg>
-      <div class="mobile-splash-text">
-        <h4>Welcome to Skinnervation</h4>
-        <p>It looks like you are visiting from a device with a small screen.</p>
-        <p>While Skinnervation can be used on a mobile device, a tablet or desktop will give you a better experience navigating the nerve index.</p>
-      </div>
+      <h4>Welcome to Skinnervation</h4>
+      <p>It looks like you are visiting from a device with a small screen.</p>
+      <p>While Skinnervation can be used on a mobile device, a tablet or desktop will give you a better experience navigating the nerve index.</p>
     </div>
     <button class="mobile-splash-ok" onclick="sessionStorage.setItem('splashSeen','1');document.getElementById('mobile-splash').classList.remove('visible')">Ok</button>
   </div>
