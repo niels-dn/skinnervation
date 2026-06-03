@@ -74,27 +74,30 @@
     border-bottom: 1px solid var(--border);
   }
   .region-row {
-    display: flex; align-items: baseline;
-    padding: 9px 20px; gap: 12px;
+    display: flex; align-items: flex-start;
+    padding: 9px 20px; gap: 16px;
     border-bottom: 1px solid #e8e3da;
   }
   .region-row:last-child { border-bottom: none; }
+  .region-label {
+    display: flex; flex-direction: column; gap: 2px;
+    min-width: 130px; flex-shrink: 0;
+  }
   .region-name {
     font-family: 'Libre Baskerville', serif;
     font-size: .72rem; font-weight: 700; color: var(--text);
-    min-width: 110px; flex-shrink: 0;
   }
   .region-levels {
-    font-size: .66rem; color: var(--muted);
+    font-size: .64rem; color: var(--muted);
     font-family: 'Source Code Pro', monospace;
-    min-width: 130px; flex-shrink: 0;
+    line-height: 1.5;
   }
   .region-desc {
     font-size: .67rem; color: #5a5040; line-height: 1.6;
   }
   @media (max-width: 540px) {
-    .region-row { flex-wrap: wrap; gap: 4px; }
-    .region-levels { min-width: unset; }
+    .region-row { flex-direction: column; gap: 4px; }
+    .region-label { min-width: unset; }
   }
 </style>
   <!-- Favicons -->
@@ -119,23 +122,31 @@
     <div class="region-box">
       <div class="region-box-title">Regions</div>
       <div class="region-row">
-        <span class="region-name">Head / Neck</span>
-        <span class="region-levels">Cranial nerves V, VII and X<br/>Spinal nerves C2–C4</span>
+        <div class="region-label">
+          <span class="region-name">Head / Neck</span>
+          <span class="region-levels">Cranial nerves V, VII and X<br/>Spinal nerves C2–C4</span>
+        </div>
         <span class="region-desc">Trigeminal, facial and vagal cutaneous branches, together with the cervical plexus supplying the posterior scalp, neck and upper shoulder.</span>
       </div>
       <div class="region-row">
-        <span class="region-name">Upper limb</span>
-        <span class="region-levels">Spinal nerves C5–T1</span>
+        <div class="region-label">
+          <span class="region-name">Upper limb</span>
+          <span class="region-levels">Spinal nerves C5–T1</span>
+        </div>
         <span class="region-desc">Brachial plexus derivatives covering the entire arm, forearm, and hand, including medial cutaneous, musculocutaneous, radial, median and ulnar contributions.</span>
       </div>
       <div class="region-row">
-        <span class="region-name">Truncus</span>
-        <span class="region-levels">Spinal nerves T2–T11</span>
+        <div class="region-label">
+          <span class="region-name">Truncus</span>
+          <span class="region-levels">Spinal nerves T2–T11</span>
+        </div>
         <span class="region-desc">Intercostal nerves and their lateral and anterior cutaneous branches, forming segmental dermatomal bands across the thorax and abdomen.</span>
       </div>
       <div class="region-row">
-        <span class="region-name">Lower body</span>
-        <span class="region-levels">Spinal nerves T12–Co</span>
+        <div class="region-label">
+          <span class="region-name">Lower body</span>
+          <span class="region-levels">Spinal nerves T12–Co</span>
+        </div>
         <span class="region-desc">Lumbar, sacral and coccygeal plexus branches supplying the lower abdomen, perineum, gluteal region, and the entire lower limb.</span>
       </div>
     </div>
