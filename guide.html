@@ -73,31 +73,39 @@
     padding: 12px 20px 10px;
     border-bottom: 1px solid var(--border);
   }
-  .region-row {
-    display: flex; align-items: flex-start;
-    padding: 9px 20px; gap: 16px;
+  .region-box-body { display: table; width: 100%; border-collapse: collapse; }
+  .region-row { display: table-row; }
+  .region-row:not(:last-child) .region-label,
+  .region-row:not(:last-child) .region-desc {
     border-bottom: 1px solid #e8e3da;
   }
-  .region-row:last-child { border-bottom: none; }
   .region-label {
-    display: flex; flex-direction: column; gap: 2px;
-    width: 200px; flex-shrink: 0;
+    display: table-cell; vertical-align: top;
+    white-space: nowrap;
+    padding: 9px 16px 9px 20px;
   }
   .region-name {
+    display: block;
     font-family: 'Libre Baskerville', serif;
     font-size: .72rem; font-weight: 700; color: var(--text);
   }
   .region-levels {
+    display: block;
     font-size: .64rem; color: var(--muted);
     font-family: 'Source Code Pro', monospace;
-    line-height: 1.5;
+    line-height: 1.5; white-space: normal;
   }
   .region-desc {
+    display: table-cell; vertical-align: top;
     font-size: .67rem; color: #5a5040; line-height: 1.6;
+    padding: 9px 20px 9px 0;
   }
   @media (max-width: 540px) {
-    .region-row { flex-direction: column; gap: 4px; }
-    .region-label { min-width: unset; }
+    .region-box-body, .region-row,
+    .region-label, .region-desc { display: block; }
+    .region-row:not(:last-child) { border-bottom: 1px solid #e8e3da; }
+    .region-label { padding: 9px 20px 2px; white-space: normal; }
+    .region-desc  { padding: 2px 20px 9px; }
   }
 </style>
   <!-- Favicons -->
@@ -121,6 +129,7 @@
 
     <div class="region-box">
       <div class="region-box-title">Regions</div>
+    <div class="region-box-body">
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Head / Neck</span>
