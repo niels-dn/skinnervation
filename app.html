@@ -33,7 +33,7 @@
 
   html { height:100%; scrollbar-gutter:stable; }
   body { display:flex; flex-direction:column; height:100vh; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Source Code Pro',monospace; }
-  #app { display:flex; flex-direction:column; flex:1; min-height:0; }
+  #app { display:flex; flex-direction:column; flex:1; min-height:0; position:relative; }
 
   /* HEADER */
   header {
@@ -317,12 +317,11 @@
 
 <div id="graph">
   <svg id="svg"></svg>
-  <div id="zoom-btns">
-    <button class="zb" id="z-in">+</button>
-    <button class="zb" id="z-out">−</button>
-    <button class="zb" id="z-fit" title="Fit to screen">⊡</button>
-  </div>
-
+</div>
+<div id="zoom-btns">
+  <button class="zb" id="z-in">+</button>
+  <button class="zb" id="z-out">−</button>
+  <button class="zb" id="z-fit" title="Fit to screen">⊡</button>
 </div>
 
 </div>
@@ -2167,9 +2166,25 @@ searchClear.addEventListener('click', function(){
 });
 
 // ── ZOOM BUTTONS ─────────────────────────────────────────────────────────────
-document.getElementById('z-in') .onclick=()=>svg.transition().duration(220).call(zoom.scaleBy,1.4);
-document.getElementById('z-out').onclick=()=>svg.transition().duration(220).call(zoom.scaleBy,0.72);
-document.getElementById('z-fit').onclick=()=>{ fitVisible(); };
+document.getElementById('z-in').onclick=()=>{
+  if(anatEl.classList.contains('active') && window._anatSvg && window._anatZoom)
+    window._anatSvg.transition().duration(220).call(window._anatZoom.scaleBy,1.4);
+  else svg.transition().duration(220).call(zoom.scaleBy,1.4);
+};
+document.getElementById('z-out').onclick=()=>{
+  if(anatEl.classList.contains('active') && window._anatSvg && window._anatZoom)
+    window._anatSvg.transition().duration(220).call(window._anatZoom.scaleBy,0.72);
+  else svg.transition().duration(220).call(zoom.scaleBy,0.72);
+};
+document.getElementById('z-fit').onclick=()=>{
+  if(anatEl.classList.contains('active') && window._anatSvg && window._anatZoom){
+    const c=document.getElementById('anat-view');
+    const W=c.clientWidth||900, H=c.clientHeight||600;
+    const sc=Math.min(W/VW,H/VH)*0.92;
+    window._anatSvg.transition().duration(300).call(
+      window._anatZoom.transform, d3.zoomIdentity.translate((W-VW*sc)/2,(H-VH*sc)/2).scale(sc));
+  } else fitVisible();
+};
 window.addEventListener('resize',()=>{
   setTimeout(fitVisible, 100);
 });
