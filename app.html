@@ -366,6 +366,19 @@
   <button class="zb" id="z-fit" title="Fit to screen">⊡</button>
 </div>
 
+<button id="info-btn" title="Anatomical variation">!</button>
+
+<div id="info-splash">
+  <div class="info-splash-card">
+    <h4>Anatomical variation</h4>
+    <p>Anatomical variation is inherent to human biology. The territories and
+    pathways shown represent typical patterns and should be interpreted
+    accordingly.</p>
+    <button class="info-splash-ok"
+      onclick="document.getElementById('info-splash').classList.remove('visible')">Ok</button>
+  </div>
+</div>
+
 </div>
 
 <script>
@@ -2234,18 +2247,6 @@ document.getElementById('info-btn').addEventListener('click',()=>{
   document.getElementById('info-splash').classList.add('visible');
 });
 </script>
-
-<button id="info-btn" title="Anatomical variation">!</button>
-
-<div id="info-splash">
-  <div class="info-splash-card">
-    <h4>Anatomical variation</h4>
-    <p>Anatomical variation is inherent to human biology. The territories and
-    pathways shown represent typical patterns and should be interpreted
-    accordingly.</p>
-    <button class="info-splash-ok"
-      onclick="document.getElementById('info-splash').classList.remove('visible')">Ok</button>
-  </div>
 </div>
 <script src="js/nav.js"></script>
 <script src="js/footer.js"></script>
