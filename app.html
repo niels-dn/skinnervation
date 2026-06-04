@@ -504,14 +504,14 @@ N('t13_3','Nervus cutaneus brachii lateralis ramus inferior',TYPE.terminal,'arm'
 N('t13_4','R. superficialis nervi radialis',   TYPE.terminal,'arm','13.4'); E(nRad,'t13_4');
 
 N('t14_1','Ramus palmaris nervi mediani',TYPE.terminal,'arm','14.1'); E(nMed,'t14_1');
-const nDigC=N('nDigC','Nn. digitales palmares\ncommunis',TYPE.nerve,'arm'); E(nMed,nDigC);
-N('t14_2','Nn. digitales palmares\nproprii (med.)',TYPE.terminal,'arm','14.2'); E(nDigC,'t14_2');
+const nDigC=N('nDigC','Rami digitales palmares\ncommunes nervi mediani',TYPE.nerve,'arm'); E(nMed,nDigC);
+N('t14_2','Rami digitales palmares\nproprii nervi mediani',TYPE.terminal,'arm','14.2'); E(nDigC,'t14_2');
 
 N('t16_1','R. palmaris nervi ulnaris',TYPE.terminal,'arm','16.1'); E(nUln,'t16_1');
 N('t16_3','R. dorsalis nervi ulnaris',        TYPE.terminal,'arm','16.3'); E(nUln,'t16_3');
 const nRSupUln=N('nRSupUln','R. superficialis nervi ulnaris',TYPE.branch,'arm'); E(nUln,nRSupUln);
-const nDigU=N('nDigU','Nervus digitalis palmaris\ncommunis (ulnaris)',TYPE.nerve,'arm'); E(nRSupUln,nDigU);
-N('t16_2','Nervi digitales palmares\nproprii (ulnaris)',TYPE.terminal,'arm','16.2'); E(nDigU,'t16_2');
+const nDigU=N('nDigU','Rami digitales palmares\ncommunes nervi ulnaris',TYPE.nerve,'arm'); E(nRSupUln,nDigU);
+N('t16_2','Rami digitales palmares\nproprii nervi ulnaris',TYPE.terminal,'arm','16.2'); E(nDigU,'t16_2');
 
 N('t17_1','N. cutaneus antebrachii medialis',TYPE.terminal,'arm','17.1'); E(plexBr,'t17_1');
 N('t18_1','N. cutaneus brachii medialis',    TYPE.terminal,'arm','18.1'); E(plexBr,'t18_1');
