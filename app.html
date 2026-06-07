@@ -578,24 +578,24 @@ N('t18_1','Nervus cutaneus brachii medialis',    TYPE.terminal,'arm','18.1'); E(
     [T10,'T10','truncus',10],[T11,'T11','truncus',11]
   ];
   segs.forEach(([root,tag,grp,seg])=>{
-    const rpost=N(tag+'post','Ramus posterior nervi spinalis'+tag,TYPE.ramus,grp); E(root,rpost);
-    const rant =N(tag+'ant', 'Ramus anterior nervi spinalis'+tag, TYPE.ramus,grp); E(root,rant);
+    const rpost=N(tag+'post','Ramus posterior nervi spinalis '+tag,TYPE.ramus,grp); E(root,rpost);
+    const rant =N(tag+'ant', 'Ramus anterior nervi spinalis '+tag, TYPE.ramus,grp); E(root,rant);
     if(seg<=6){
-      N(tag+'_medpost','Ramus medialis rami posterioris nervi spinalis'+tag,TYPE.terminal,grp); E(rpost,tag+'_medpost');
+      N(tag+'_medpost','Ramus medialis rami posterioris nervi spinalis '+tag,TYPE.terminal,grp); E(rpost,tag+'_medpost');
     } else {
-      N(tag+'_latpost','Ramus lateralis rami posterioris nervi spinalis'+tag,TYPE.terminal,grp); E(rpost,tag+'_latpost');
+      N(tag+'_latpost','Ramus lateralis rami posterioris nervi spinalis '+tag,TYPE.terminal,grp); E(rpost,tag+'_latpost');
     }
-    const ni=N('nInterc'+seg,'Nervus intercostalis'+tag,TYPE.nerve,grp); E(rant,ni);
+    const ni=N('nInterc'+seg,'Nervus intercostalis '+tag,TYPE.nerve,grp); E(rant,ni);
     if(seg===2){
       N('t20_1','Nervus intercostobrachialis',             TYPE.terminal,grp,'20.1'); E(ni,'t20_1');
       N('t20_2','Ramus cutaneus anterior nervi intercostalis T2',   TYPE.terminal,grp,'20.2'); E(ni,'t20_2');
     } else {
       const b=20+(seg-2);
       // R. cutaneus lateralis n. intercostalis TX (nerve node) with two terminal branches
-      const nRlat=N(tag+'_rlat','Ramus cutaneus lateralis nervi intercostalis'+tag,TYPE.nerve,grp); E(ni,tag+'_rlat');
-      N(tag+'_rlat_ant','Ramus anterior ramus cutaneus lateralis nervi intercostalis'+tag,TYPE.terminal,grp,''+b+'.2a'); E(nRlat,tag+'_rlat_ant');
-      N(tag+'_rlat_post','Ramus posterior ramus cutaneus lateralis nervi intercostalis'+tag,TYPE.terminal,grp,''+b+'.2b'); E(nRlat,tag+'_rlat_post');
-      N(tag+'_rant2','Ramus cutaneus anterior nervi intercostalis'+tag,TYPE.terminal,grp,''+b+'.3'); E(ni,tag+'_rant2');
+      const nRlat=N(tag+'_rlat','Ramus cutaneus lateralis nervi intercostalis '+tag,TYPE.nerve,grp); E(ni,tag+'_rlat');
+      N(tag+'_rlat_ant','Ramus anterior ramus cutaneus lateralis nervi intercostalis '+tag,TYPE.terminal,grp,''+b+'.2a'); E(nRlat,tag+'_rlat_ant');
+      N(tag+'_rlat_post','Ramus posterior ramus cutaneus lateralis nervi intercostalis '+tag,TYPE.terminal,grp,''+b+'.2b'); E(nRlat,tag+'_rlat_post');
+      N(tag+'_rant2','Ramus cutaneus anterior nervi intercostalis '+tag,TYPE.terminal,grp,''+b+'.3'); E(ni,tag+'_rant2');
     }
   });
 })();
