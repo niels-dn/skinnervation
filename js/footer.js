@@ -9,7 +9,7 @@
   footer.innerHTML = `
     <span>${copy}</span>
     <span>
-      Version 1.1
+      Version 1.0
       &nbsp;&middot;&nbsp;
       <a href="legal.html">Legal disclaimer</a>
       &nbsp;&middot;&nbsp;
