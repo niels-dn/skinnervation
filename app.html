@@ -1155,7 +1155,7 @@ const linkSel=mainG.append('g')
       const x1=src.x+NW,y1=src.y+NH/2,x2=tgt.x,y2=tgt.y+NH/2,mx=(x1+x2)/2;
       return`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
     })
-    .attr('stroke','#9a9080');
+    .attr('stroke','#ff0000');
 
 // Snapshot original y-positions BEFORE any filter changes them
 nodes.forEach(nd=>{ nd.origY = nd.y; });
@@ -1173,7 +1173,7 @@ const nodeSel=mainG.append('g')
 
 nodeSel.append('rect')
   .attr('width',NW).attr('height',NH).attr('rx',3)
-  .attr('fill','#f4f1ec');
+  .attr('fill','#00ffff');
 
 nodeSel.append('rect')
   .attr('width',NW).attr('height',NH).attr('rx',3)
@@ -1293,7 +1293,7 @@ function clearHL(){
     sel.selectAll('text').attr('fill', col);
   });
   linkSel.classed('dim',false).classed('hl',false).classed('variable',false)
-         .attr('stroke','#9a9080');
+         .attr('stroke','#ff0000');
   tipPanel.classList.remove('visible');
   tip.innerHTML='';
   // Clear anatomic-view active highlight, if present
