@@ -1155,7 +1155,7 @@ const linkSel=mainG.append('g')
       const x1=src.x+NW,y1=src.y+NH/2,x2=tgt.x,y2=tgt.y+NH/2,mx=(x1+x2)/2;
       return`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
     })
-    .attr('stroke','#ff0000');
+    .attr('stroke','#9a9080');
 
 // Snapshot original y-positions BEFORE any filter changes them
 nodes.forEach(nd=>{ nd.origY = nd.y; });
@@ -1172,10 +1172,12 @@ const nodeSel=mainG.append('g')
     .attr('transform',d=>`translate(${d.x},${d.y})`);
 
 nodeSel.append('rect')
+  .attr('class','node-bg')
   .attr('width',NW).attr('height',NH).attr('rx',3)
-  .attr('fill','#00ffff');
+  .attr('fill','#f4f1ec');
 
 nodeSel.append('rect')
+  .attr('class','node-tint')
   .attr('width',NW).attr('height',NH).attr('rx',3)
   .attr('fill',        d=>HEX[d.type])
   .attr('fill-opacity',d=>d.type===TYPE.root?0.13:d.type===TYPE.terminal?0.10:0.08)
@@ -1285,7 +1287,7 @@ function clearHL(){
     const sel  = d3.select(this);
     const col  = HEX[d.type] || '#555';
     sel.classed('dim',false).classed('hl',false).classed('variable',false);
-    sel.select('rect')
+    sel.select('rect.node-tint')
        .attr('fill', col)
        .attr('fill-opacity', d.type==='root'?0.13:d.type==='terminal'?0.10:0.08)
        .attr('stroke', col)
@@ -1293,7 +1295,7 @@ function clearHL(){
     sel.selectAll('text').attr('fill', col);
   });
   linkSel.classed('dim',false).classed('hl',false).classed('variable',false)
-         .attr('stroke','#ff0000');
+         .attr('stroke','#9a9080');
   tipPanel.classList.remove('visible');
   tip.innerHTML='';
   // Clear anatomic-view active highlight, if present
@@ -1439,7 +1441,7 @@ function doHighlight(id){
     const isSolid    = solidNodes.has(d.id);
     const isVar      = varNodesAll.has(d.id);
     const col        = HEX[d.type] || '#555';
-    const rect       = sel.select('rect');
+    const rect       = sel.select('rect.node-tint');
 
     sel.classed('dim',      !allVisible.has(d.id))
        .classed('hl',        isSelected)
