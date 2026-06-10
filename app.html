@@ -553,7 +553,8 @@ E(plexBr,nUln);
 
 N('t11_1','Nervus cutaneus antebrachii lateralis',TYPE.terminal,'arm','11.1'); E(nMusc,'t11_1');
 N('t13_1','Nervus cutaneus brachii posterior',    TYPE.terminal,'arm','13.1'); E(nRad,'t13_1');
-N('t13_2','Nervus cutaneus lateralis superior brachii',TYPE.terminal,'arm','13.2'); E(nRad,'t13_2');
+const nAxill=N('nAxill','Nervus axillaris',TYPE.nerve,'arm'); E(plexBr,nAxill);
+N('t13_2','Nervus cutaneus lateralis superior brachii',TYPE.terminal,'arm','13.2'); E(nAxill,'t13_2');
 N('t13_3','Nervus cutaneus lateralis inferior brachii',TYPE.terminal,'arm','13.3'); E(nRad,'t13_3');
 N('t13_4','Ramus superficialis nervi radialis',   TYPE.terminal,'arm','13.4'); E(nRad,'t13_4');
 
