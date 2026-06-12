@@ -729,10 +729,11 @@ N('t37_1','Nervi anococcygei',TYPE.terminal,'lowerbody','37.1'); E(plexCocc,'t37
 (function(){
   function abbrevOne(s){
     if(/^\s*Nervi\b/.test(s)) s = s.replace(/^(\s*)Nervi\b/, '$1Nn.');
+    if(/^\s*Rami\b/.test(s))  s = s.replace(/^(\s*)Rami\b/,  '$1Rr.');
     s = s.replace(/\bNervus\b/g,'N.').replace(/\bnervus\b/g,'n.')
          .replace(/\bNervi\b/g,'n.').replace(/\bnervi\b/g,'n.')
          .replace(/\bRamus\b/g,'R.').replace(/\bramus\b/g,'r.')
-         .replace(/\bRami\b/g,'Rr.').replace(/\brami\b/g,'rr.');
+         .replace(/\bRami\b/g,'r.').replace(/\brami\b/g,'r.');
     const repls = [
       [/\bcutane(us|i|a|um)\b/gi,'cut.'],
       [/\bcommun(is|es|e)\b/gi,'com.'],
