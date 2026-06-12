@@ -478,8 +478,8 @@ const nNasoc=N('nNasoc','Nervus nasociliaris',TYPE.nerve,'head');
 E(V1,nFront); E(V1,nNasoc);
 
 const nSupOrb=N('nSupOrb','Nervus supraorbitalis',TYPE.nerve,'head'); E(nFront,nSupOrb);
-N('t1_1','Nervus supraorbitalis ramus medialis',  TYPE.terminal,'head','1.1'); E(nSupOrb,'t1_1');
-N('t1_2','Nervus supraorbitalis ramus lateralis', TYPE.terminal,'head','1.2'); E(nSupOrb,'t1_2');
+N('t1_1','Ramus medialis nervi supraorbitalis',  TYPE.terminal,'head','1.1'); E(nSupOrb,'t1_1');
+N('t1_2','Ramus lateralis nervi supraorbitalis', TYPE.terminal,'head','1.2'); E(nSupOrb,'t1_2');
 N('t1_3','Nervus supratrochlearis',             TYPE.terminal,'head','1.3'); E(nFront,'t1_3');
 N('t1_4','Nervus infratrochlearis',             TYPE.terminal,'head','1.4'); E(nNasoc,'t1_4');
 const nEthm=N('nEthm','Nervus ethmoidalis anterior',TYPE.nerve,'head'); E(nNasoc,nEthm);
