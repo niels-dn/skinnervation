@@ -483,7 +483,7 @@ N('t1_2','Ramus lateralis nervi supraorbitalis', TYPE.terminal,'head','1.2'); E(
 N('t1_3','Nervus supratrochlearis',             TYPE.terminal,'head','1.3'); E(nFront,'t1_3');
 N('t1_4','Nervus infratrochlearis',             TYPE.terminal,'head','1.4'); E(nNasoc,'t1_4');
 const nEthm=N('nEthm','Nervus ethmoidalis anterior',TYPE.nerve,'head'); E(nNasoc,nEthm);
-N('t1_5','Ramus nasalis externus nervi ethmoidei anterioris',TYPE.terminal,'head','1.5'); E(nEthm,'t1_5');
+N('t1_5','Ramus nasalis externus nervi ethmoidalis anterioris',TYPE.terminal,'head','1.5'); E(nEthm,'t1_5');
 N('t1_6','Nervus lacrimalis',      TYPE.terminal,'head','1.6'); E(V1,'t1_6');
 
 const nInfOrb=N('nInfOrb','Nervus infraorbitalis',TYPE.nerve,'head');
@@ -492,8 +492,8 @@ E(V2,nInfOrb); E(V2,nZygom);
 N('t2_1','Rami nasales externi nervi infraorbitalis',       TYPE.terminal,'head','2.1'); E(nInfOrb,'t2_1');
 N('t2_2','Rami labiales superiores nervi infraorbitalis',   TYPE.terminal,'head','2.2'); E(nInfOrb,'t2_2');
 N('t2_3','Rami palpebrales inferiores nervi infraorbitalis',TYPE.terminal,'head','2.3'); E(nInfOrb,'t2_3');
-N('t3_1','Nervus zygomaticotemporalis',TYPE.terminal,'head','3.1'); E(nZygom,'t3_1');
-N('t3_2','Nervus zygomaticofacialis',  TYPE.terminal,'head','3.2'); E(nZygom,'t3_2');
+N('t3_1','Ramus zygomaticotemporalis nervi zygomatici',TYPE.terminal,'head','3.1'); E(nZygom,'t3_1');
+N('t3_2','Ramus zygomaticofacialis nervi zygomatici',  TYPE.terminal,'head','3.2'); E(nZygom,'t3_2');
 
 N('t4_1','Nervus auriculotemporalis',TYPE.terminal,'head','4.1'); E(V3,'t4_1');
 N('t4_2','Nervus buccalis',          TYPE.terminal,'head','4.2'); E(V3,'t4_2');
@@ -646,7 +646,7 @@ N('t31_7','Ramus femoralis nervi genitofemoralis', TYPE.terminal,'lowerbody','31
 // Truncus anterior (L2–L4) → N. obturatorius
 const nObtur=N('nObtur','Nervus obturatorius',TYPE.nerve,'lowerbody'); E(trLumbAnt,nObtur);
 const rObturAnt=N('rObturAnt','Ramus anterior nervi obturatorii',TYPE.branch,'lowerbody'); E(nObtur,rObturAnt);
-N('t31_8','Ramus cutaneus rami anterioris nervi obturatorii',TYPE.terminal,'lowerbody','31.8'); E(rObturAnt,'t31_8');
+N('t31_8','Ramus cutaneus nervi obturatorii',TYPE.terminal,'lowerbody','31.8'); E(rObturAnt,'t31_8');
 
 // Truncus posterior (L2–L4) → N. femoralis, N. cut. fem. lat.
 const trLumbPost=N('trLumbPost','Plexus lumbalis (pars posterior)',   TYPE.plexus,'lowerbody');
@@ -659,7 +659,7 @@ N('t32_1','Rami cutanei intermedii nervi femoralis',     TYPE.terminal,'lowerbod
 N('t32_2','Ramus anterior rami cutanei femoris medialis nervi femoralis',TYPE.terminal,'lowerbody','32.2'); E(nFemoral,'t32_2');
 const nSaph=N('nSaph','Nervus saphenus',TYPE.nerve,'lowerbody'); E(nFemoral,nSaph);
 N('t32_3','Ramus infrapatellaris nervi sapheni',        TYPE.terminal,'lowerbody','32.3'); E(nSaph,'t32_3');
-N('t32_4','Rami cutanei mediales cruris nervi sapheni',  TYPE.terminal,'lowerbody','32.4'); E(nSaph,'t32_4');
+N('t32_4','Rami cutanei cruris mediales nervi sapheni',  TYPE.terminal,'lowerbody','32.4'); E(nSaph,'t32_4');
 
 // Plexus sacralis
 const L5ant=N('L5ant','Ramus anterior nervi spinalis L5',TYPE.ramus,'lowerbody'); E(L5,L5ant);
@@ -683,8 +683,8 @@ const nPerC=N('nPerC','Nervus peroneus communis (nervus fibularis communis)',TYP
 N('t34_1','Nervus cutaneus surae lateralis',TYPE.terminal,'lowerbody','34.1'); E(nPerC,'t34_1');
 const nPerS=N('nPerS','Nervus peroneus superficialis',TYPE.nerve,'lowerbody'); E(nPerC,nPerS);
 const nPerP=N('nPerP','Nervus peroneus profundus',    TYPE.nerve,'lowerbody'); E(nPerC,nPerP);
-N('t34_2a','Nervus cutaneus medialis dorsalis pedis',TYPE.terminal,'lowerbody','34.2a'); E(nPerS,'t34_2a');
-N('t34_2b','Nervus cutaneus intermedius dorsalis pedis',TYPE.terminal,'lowerbody','34.2b'); E(nPerS,'t34_2b');
+N('t34_2a','Nervus cutaneus dorsalis medialis pedis',TYPE.terminal,'lowerbody','34.2a'); E(nPerS,'t34_2a');
+N('t34_2b','Nervus cutaneus dorsalis intermedius pedis',TYPE.terminal,'lowerbody','34.2b'); E(nPerS,'t34_2b');
 N('t34_3','Ramus cutaneus nervi peroneus profundi',       TYPE.terminal,'lowerbody','34.3'); E(nPerP,'t34_3');
 
 const nTib=N('nTib','Nervus tibialis',TYPE.nerve,'lowerbody'); E(nIschi,nTib);
@@ -705,7 +705,7 @@ const nPud=N('nPud','Nervus pudendus',TYPE.nerve,'lowerbody'); E(plexSA,nPud);
 N('t35_1','Nervi perineales',              TYPE.terminal,'lowerbody','35.1'); E(nPud,'t35_1');
 N('t35_2','Nervi scrotales posteriores (m) / Nervi labiales posteriores (f)',TYPE.terminal,'lowerbody','35.2'); E(nPud,'t35_2');
 N('t35_3','Nervus dorsalis penis (m) / Nervus dorsalis clitoridis (f)',TYPE.terminal,'lowerbody','35.3'); E(nPud,'t35_3');
-N('t35_4','Nervus rectalis inferior',         TYPE.terminal,'lowerbody','35.4'); E(nPud,'t35_4');
+N('t35_4','Nervi rectales inferiores',         TYPE.terminal,'lowerbody','35.4'); E(nPud,'t35_4');
 N('t35_5','Nervus cutaneus perforans',         TYPE.terminal,'lowerbody','35.5'); E(S2ant,'t35_5'); E(S3ant,'t35_5');
 
 const S1post=N('S1post','Ramus posterior nervi spinalis S1',TYPE.ramus,'lowerbody'); E(S1,S1post);
