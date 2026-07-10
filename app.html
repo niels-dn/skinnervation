@@ -247,7 +247,7 @@
     max-height:0; padding:0 18px;
     transition:max-height .25s ease, padding .25s ease, flex .25s ease;
   }
-  #tip.visible   { max-height:110px; padding:7px 18px; }
+  #tip.visible   { max-height:140px; padding:7px 18px; }
 
   #tip-inner   { display:flex; flex-direction:column; gap:2px; }
   #tip h3      { font-family:'Libre Baskerville',serif; font-size:.82rem; font-weight:700; color:var(--text); white-space:normal; margin:0 0 2px 0; }
@@ -1632,6 +1632,149 @@ function rootAncestors(id){
 // ── SHARED INFO PANEL RENDERER ───────────────────────────────────────────
 // context: 'pathway' → show "Innervation" button (jump to anat view)
 //          'anatomic' → show "Pathway" button (jump to pathway view)
+// ── English (TA2) name lookup ─────────────────────────────────────────────
+const ENGLISH_OVERRIDES = {
+  'Nervus trigeminus (V)': 'Trigeminal nerve (V)',
+  'Nervus facialis (VII)': 'Facial nerve (VII)',
+  'Nervus vagus (X)': 'Vagus nerve (X)',
+  'Nervus ophthalmicus (V1)': 'Ophthalmic nerve (V1)',
+  'Nervus maxillaris (V2)': 'Maxillary nerve (V2)',
+  'Nervus mandibularis (V3)': 'Mandibular nerve (V3)',
+  'Nervus frontalis': 'Frontal nerve',
+  'Nervus nasociliaris': 'Nasociliary nerve',
+  'Nervus supraorbitalis': 'Supraorbital nerve',
+  'Ramus medialis nervi supraorbitalis': 'Medial branch of supraorbital nerve',
+  'Ramus lateralis nervi supraorbitalis': 'Lateral branch of supraorbital nerve',
+  'Nervus supratrochlearis': 'Supratrochlear nerve',
+  'Nervus infratrochlearis': 'Infratrochlear nerve',
+  'Nervus ethmoidalis anterior': 'Anterior ethmoidal nerve',
+  'Ramus nasalis externus nervi ethmoidalis anterioris': 'External nasal branch of anterior ethmoidal nerve',
+  'Nervus lacrimalis': 'Lacrimal nerve',
+  'Nervus infraorbitalis': 'Infraorbital nerve',
+  'Nervus zygomaticus': 'Zygomatic nerve',
+  'Rami nasales externi nervi infraorbitalis': 'External nasal branches of infraorbital nerve',
+  'Rami labiales superiores nervi infraorbitalis': 'Superior labial branches of infraorbital nerve',
+  'Rami palpebrales inferiores nervi infraorbitalis': 'Inferior palpebral branches of infraorbital nerve',
+  'Ramus zygomaticotemporalis nervi zygomatici': 'Zygomaticotemporal branch of zygomatic nerve',
+  'Ramus zygomaticofacialis nervi zygomatici': 'Zygomaticofacial branch of zygomatic nerve',
+  'Nervus auriculotemporalis': 'Auriculotemporal nerve',
+  'Nervus buccalis': 'Buccal nerve',
+  'Nervus alveolaris inferior': 'Inferior alveolar nerve',
+  'Nervus mentalis': 'Mental nerve',
+  'Nervus auricularis posterior': 'Posterior auricular nerve',
+  'Ramus auricularis nervi vagi': 'Auricular branch of vagus nerve',
+  'Nervus occipitalis major': 'Greater occipital nerve',
+  'Nervus occipitalis tertius': 'Third occipital nerve',
+  'Nervus occipitalis minor': 'Lesser occipital nerve',
+  'Nervus auricularis magnus': 'Great auricular nerve',
+  'Nervus transversus colli': 'Transverse cervical nerve',
+  'Nervi supraclaviculares anteriores': 'Anterior supraclavicular nerves',
+  'Nervi supraclaviculares medii': 'Middle supraclavicular nerves',
+  'Nervi supraclaviculares posteriores': 'Posterior supraclavicular nerves',
+  'Plexus cervicalis (rami superficiales)': 'Cervical plexus (superficial branches)',
+  'Plexus brachialis': 'Brachial plexus',
+  'Nervus musculocutaneus': 'Musculocutaneous nerve',
+  'Nervus radialis': 'Radial nerve',
+  'Nervus axillaris': 'Axillary nerve',
+  'Nervus medianus': 'Median nerve',
+  'Nervus ulnaris': 'Ulnar nerve',
+  'Nervus cutaneus antebrachii lateralis': 'Lateral cutaneous nerve of forearm',
+  'Nervus cutaneus brachii posterior': 'Posterior cutaneous nerve of arm',
+  'Nervus cutaneus lateralis superior brachii': 'Superior lateral cutaneous nerve of arm',
+  'Nervus cutaneus lateralis inferior brachii': 'Inferior lateral cutaneous nerve of arm',
+  'Ramus superficialis nervi radialis': 'Superficial branch of radial nerve',
+  'Ramus palmaris nervi mediani': 'Palmar branch of median nerve',
+  'Rami digitales palmares communes nervi mediani': 'Common palmar digital branches of median nerve',
+  'Rami digitales palmares proprii nervi mediani': 'Proper palmar digital branches of median nerve',
+  'Ramus palmaris nervi ulnaris': 'Palmar branch of ulnar nerve',
+  'Ramus dorsalis nervi ulnaris': 'Dorsal branch of ulnar nerve',
+  'Ramus superficialis nervi ulnaris': 'Superficial branch of ulnar nerve',
+  'Rami digitales palmares communes nervi ulnaris': 'Common palmar digital branches of ulnar nerve',
+  'Rami digitales palmares proprii nervi ulnaris': 'Proper palmar digital branches of ulnar nerve',
+  'Nervus cutaneus antebrachii medialis': 'Medial cutaneous nerve of forearm',
+  'Nervus cutaneus brachii medialis': 'Medial cutaneous nerve of arm',
+  'Nervus intercostobrachialis': 'Intercostobrachial nerve',
+  'Nervus subcostalis (T12)': 'Subcostal nerve (T12)',
+  'Ramus cutaneus lateralis nervi subcostalis': 'Lateral cutaneous branch of subcostal nerve',
+  'Ramus anterior ramus cutaneus lateralis nervi subcostalis': 'Anterior branch of lateral cutaneous branch of subcostal nerve',
+  'Ramus posterior ramus cutaneus lateralis nervi subcostalis': 'Posterior branch of lateral cutaneous branch of subcostal nerve',
+  'Ramus cutaneus anterior nervi subcostalis': 'Anterior cutaneous branch of subcostal nerve',
+  'Plexus lumbalis (pars anterior)': 'Lumbar plexus (anterior part)',
+  'Plexus lumbalis (pars posterior)': 'Lumbar plexus (posterior part)',
+  'Nervus iliohypogastricus': 'Iliohypogastric nerve',
+  'Nervus ilioinguinalis': 'Ilioinguinal nerve',
+  'Ramus cutaneus lateralis nervi iliohypogastrici': 'Lateral cutaneous branch of iliohypogastric nerve',
+  'Ramus cutaneus anterior nervi iliohypogastrici': 'Anterior cutaneous branch of iliohypogastric nerve',
+  'Rami cutanei femoris nervi ilioinguinalis': 'Femoral cutaneous branches of ilioinguinal nerve',
+  'Nervi scrotales anteriores (m) / Nervi labiales anteriores (f)': 'Anterior scrotal nerves (m) / Anterior labial nerves (f)',
+  'Nervus genitofemoralis': 'Genitofemoral nerve',
+  'Ramus genitalis nervi genitofemoralis': 'Genital branch of genitofemoral nerve',
+  'Ramus femoralis nervi genitofemoralis': 'Femoral branch of genitofemoral nerve',
+  'Nervus obturatorius': 'Obturator nerve',
+  'Ramus anterior nervi obturatorii': 'Anterior branch of obturator nerve',
+  'Ramus cutaneus nervi obturatorii': 'Cutaneous branch of obturator nerve',
+  'Nervi clunium superiores': 'Superior cluneal nerves',
+  'Nervus cutaneus femoris lateralis': 'Lateral cutaneous nerve of thigh',
+  'Ramus anterior nervi cutaneus femoris lateralis': 'Anterior branch of lateral cutaneous nerve of thigh',
+  'Ramus posterior nervi cutaneus femoris lateralis': 'Posterior branch of lateral cutaneous nerve of thigh',
+  'Nervus femoralis': 'Femoral nerve',
+  'Rami cutanei intermedii nervi femoralis': 'Intermediate cutaneous branches of femoral nerve',
+  'Ramus anterior rami cutanei femoris medialis nervi femoralis': 'Anterior branch of medial cutaneous branch of femoral nerve',
+  'Nervus saphenus': 'Saphenous nerve',
+  'Ramus infrapatellaris nervi sapheni': 'Infrapatellar branch of saphenous nerve',
+  'Rami cutanei cruris mediales nervi sapheni': 'Medial crural cutaneous branches of saphenous nerve',
+  'Truncus lumbosacralis': 'Lumbosacral trunk',
+  'Plexus sacralis (pars posterior)': 'Sacral plexus (posterior part)',
+  'Plexus sacralis (pars anterior)': 'Sacral plexus (anterior part)',
+  'Nervus ischiadicus': 'Sciatic nerve',
+  'Nervus peroneus communis (nervus fibularis communis)': 'Common peroneal nerve',
+  'Nervus cutaneus surae lateralis': 'Lateral sural cutaneous nerve',
+  'Nervus peroneus superficialis': 'Superficial peroneal nerve',
+  'Nervus peroneus profundus': 'Deep peroneal nerve',
+  'Nervus cutaneus dorsalis medialis pedis': 'Medial dorsal cutaneous nerve of foot',
+  'Nervus cutaneus dorsalis intermedius pedis': 'Intermediate dorsal cutaneous nerve of foot',
+  'Ramus cutaneus nervi peroneus profundi': 'Cutaneous branch of deep peroneal nerve',
+  'Nervus tibialis': 'Tibial nerve',
+  'Nervus cutaneus surae medialis': 'Medial sural cutaneous nerve',
+  'Ramus communicans suralis nervi fibularis communis': 'Sural communicating branch of common peroneal nerve',
+  'Nervus suralis': 'Sural nerve',
+  'Nervus cutaneus dorsalis lateralis pedis': 'Lateral dorsal cutaneous nerve of foot',
+  'Nervus plantaris medialis': 'Medial plantar nerve',
+  'Nervus plantaris lateralis': 'Lateral plantar nerve',
+  'Rami calcanei mediales nervi tibialis': 'Medial calcaneal branches of tibial nerve',
+  'Nervus cutaneus femoris posterior': 'Posterior cutaneous nerve of thigh',
+  'Nervi clunium inferiores': 'Inferior cluneal nerves',
+  'Rami perineales nervi cutaneus femoris posterioris': 'Perineal branches of posterior cutaneous nerve of thigh',
+  'Nervus pudendus': 'Pudendal nerve',
+  'Nervi perineales': 'Perineal nerves',
+  'Nervi scrotales posteriores (m) / Nervi labiales posteriores (f)': 'Posterior scrotal nerves (m) / Posterior labial nerves (f)',
+  'Nervus dorsalis penis (m) / Nervus dorsalis clitoridis (f)': 'Dorsal nerve of penis (m) / Dorsal nerve of clitoris (f)',
+  'Nervi rectales inferiores': 'Inferior rectal nerves',
+  'Nervus cutaneus perforans': 'Perforating cutaneous nerve',
+  'Nervi clunium medii': 'Middle cluneal nerves',
+  'Plexus coccygeus': 'Coccygeal plexus',
+  'Nervi anococcygei': 'Anococcygeal nerves',
+};
+
+function englishName(full){
+  full = full.replace(/\n/g,' ').trim();
+  if(ENGLISH_OVERRIDES[full]) return ENGLISH_OVERRIDES[full];
+  const RULES = [
+    [/^Nervus spinalis (\S+)$/, 'Spinal nerve $1'],
+    [/^Ramus anterior nervi spinalis (\S+)$/, 'Anterior ramus of spinal nerve $1'],
+    [/^Ramus posterior nervi spinalis (\S+)$/, 'Posterior ramus of spinal nerve $1'],
+    [/^Ramus medialis rami posterioris nervi spinalis (\S+)$/, 'Medial branch of posterior ramus of spinal nerve $1'],
+    [/^Ramus lateralis rami posterioris nervi spinalis (\S+)$/, 'Lateral branch of posterior ramus of spinal nerve $1'],
+    [/^Nervus intercostalis (\S+)$/, 'Intercostal nerve $1'],
+    [/^Ramus cutaneus lateralis nervi intercostalis (\S+)$/, 'Lateral cutaneous branch of intercostal nerve $1'],
+    [/^Ramus cutaneus anterior nervi intercostalis (\S+)$/, 'Anterior cutaneous branch of intercostal nerve $1'],
+    [/^Ramus anterior ramus cutaneus lateralis nervi intercostalis (\S+)$/, 'Anterior branch of lateral cutaneous branch of intercostal nerve $1'],
+    [/^Ramus posterior ramus cutaneus lateralis nervi intercostalis (\S+)$/, 'Posterior branch of lateral cutaneous branch of intercostal nerve $1'],
+  ];
+  for(const [re,rep] of RULES){ if(re.test(full)) return full.replace(re,rep); }
+  return null;
+}
+
 function showInfoPanel(d, context){
   const allRoots = rootAncestors(d.id);
   const solidOrigin = allRoots
@@ -1648,6 +1791,8 @@ function showInfoPanel(d, context){
 
   let html=`<h3>${d.fullLabel.replace(/\n/g,' ')}</h3>`;
   html+=`<span class="t-path"><b>Origin:</b> ${origin}${d.idx?' &nbsp;·&nbsp; Index '+d.idx:''}</span>`;
+  const engName = englishName(d.fullLabel);
+  if(engName) html+=`<span class="t-path"><b>English name:</b> ${engName}</span>`;
   tip.innerHTML=html;
   tipPanel.classList.add('visible');
   if(d.type==='terminal' && hasAnatPos(d.id)){
