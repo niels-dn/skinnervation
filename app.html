@@ -2063,10 +2063,22 @@ function buildAnatView(regionNodes){
   // This means NW=188, NH=40 — exactly same as pathway view
 
   const ANAT_COLORS = {
-    't18_1':'#8b6a3a','t13_2':'#3a6b5a','t13_3':'#4a3a8a','t13_1':'#3a6b5a',
-    't17_1':'#8b3a3a','t11_1':'#3a5a8a','t16_3':'#6a3a8a','t13_4':'#3a7a3a',
-    't16_1':'#8b6a3a','t14_1':'#8b3a3a','t16_2':'#6a3a8a','t14_2':'#3a7a3a',
-    't10_1':'#8b6a3a','t12_1':'#4a3a8a','t15_1':'#8b3a3a',
+    // Grouped by supplying nerve — each nerve has its own base hue,
+    // its terminal branches use shades of that hue.
+    // n. radialis (red):
+    't13_1':'#93383e','t13_3':'#b8464d','t13_4':'#c66b71',
+    // n. medianus (gold):
+    't14_1':'#9e7e2d','t14_2':'#d1b160',
+    // n. ulnaris (blue):
+    't16_1':'#3b6390','t16_2':'#497bb5','t16_3':'#6e96c3',
+    // n. musculocutaneus (green):
+    't11_1':'#47a75f',
+    // n. axillaris (purple):
+    't13_2':'#894fa0',
+    // medial cord cutaneous nn. (teal):
+    't17_1':'#41878a','t18_1':'#74babd',
+    // dorsal rami lateral branches (brown):
+    't10_1':'#846347','t12_1':'#a57c59','t15_1':'#b7967a',
   };
 
   // Territory polygons in 1536×1024 space
