@@ -2054,6 +2054,7 @@ const ARM_ANT_TERRITORY_PATHS = {
 };
 
 function buildAnatView(regionNodes){
+  const ANAT_FUZZY_SD = 2.2;  // blur std-dev (outline units) for fuzzy internal territory borders
   const container = document.getElementById('anat-view');
   container.innerHTML = '';
   const W = container.clientWidth  || 900;
@@ -2163,14 +2164,26 @@ function buildAnatView(regionNodes){
     .append('polygon').attr('points', rightArmPts);
 
   // Real hand-drawn ANTERIOR territories (outline 178×429 space → placed via transform)
+  // Internal boundaries are softened with a blur (to show natural overlap/variability);
+  // the outer edge stays sharp by clipping the blurred result to the territories' union.
   const ANT_TERR_TF = 'translate(206.73,84.7473) scale(1.991854)';
+  defs.append('filter').attr('id','armTerrFuzzy')
+      .attr('x','-15%').attr('y','-15%').attr('width','130%').attr('height','130%')
+    .append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation', ANAT_FUZZY_SD);
+  const clipU = defs.append('clipPath').attr('id','armAntTerrUnion').attr('clipPathUnits','userSpaceOnUse');
+  Object.keys(ARM_ANT_TERRITORY_PATHS).forEach(id=>{
+    if(nodeById[id]) clipU.append('path').attr('d', ARM_ANT_TERRITORY_PATHS[id]);
+  });
   const gAntTerr = s.append('g').attr('transform', ANT_TERR_TF);
+  const gAntInner = gAntTerr.append('g')
+      .attr('clip-path','url(#armAntTerrUnion)')
+      .attr('filter','url(#armTerrFuzzy)');
   Object.entries(ARM_ANT_TERRITORY_PATHS).forEach(([id, dPath])=>{
     if(!nodeById[id]) return;
     const col = ANAT_COLORS[id] || '#888';
-    gAntTerr.append('path').attr('d', dPath)
-      .attr('fill', col).attr('fill-opacity', 0.28)
-      .attr('stroke', col).attr('stroke-width', 0.4)
+    gAntInner.append('path').attr('d', dPath)
+      .attr('fill', col).attr('fill-opacity', 0.42)
+      .attr('stroke','none')
       .style('cursor','pointer')
       .on('click', ()=>{
         const nd = nodeById[id];
