@@ -1630,8 +1630,8 @@ function rootAncestors(id){
 }
 
 // ── SHARED INFO PANEL RENDERER ───────────────────────────────────────────
-// context: 'pathway' → show "Anatomic View" button (jump to anat view)
-//          'anatomic' → show "Pathway View" button (jump to pathway view)
+// context: 'pathway' → show "Innervation" button (jump to anat view)
+//          'anatomic' → show "Pathway" button (jump to pathway view)
 function showInfoPanel(d, context){
   const allRoots = rootAncestors(d.id);
   const solidOrigin = allRoots
@@ -2079,7 +2079,7 @@ function buildAnatView(regionNodes){
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
   });
 
-  // If a node was requested for focus (via "Anatomic View" button), zoom to it
+  // If a node was requested for focus (via "Innervation" button), zoom to it
   if(window._anatFocusId){
     const focusId = window._anatFocusId;
     window._anatFocusId = null;
@@ -2637,7 +2637,7 @@ function switchView(mode){
     vtAnatomy.classList.add('on');
     if(legendRow) legendRow.classList.add('hidden');
     // Determine which body region to show: a pending node focus (from the
-    // info panel's "Anatomic View" button) takes priority over whichever
+    // info panel's "Innervation" button) takes priority over whichever
     // region filter button currently happens to be selected.
     let grp = 'arm';
     if(window._anatFocusId && nodeById[window._anatFocusId]){
@@ -2677,7 +2677,7 @@ function hasAnatPos(id){ return id in NODE_POS; }
 function addAnatBtn(id){
   removeAnatBtn();
   const btn = document.createElement('button');
-  btn.id='tip-anat-btn'; btn.textContent='Anatomic View';
+  btn.id='tip-anat-btn'; btn.textContent='Innervation';
   btn.addEventListener('click', ()=>{
     // Remember which node to focus once anatomic view has been built
     window._anatFocusId = id;
@@ -2688,7 +2688,7 @@ function addAnatBtn(id){
     if(vtAnatM2){ vtAnatM2.classList.add('on'); }
     if(vtPathM2){ vtPathM2.classList.remove('on'); }
     // Re-render the info panel in anatomic context so the button now
-    // reads "Pathway View" and the node is marked active in anat view.
+    // reads "Pathway" and the node is marked active in anat view.
     const nd = nodes.find(n=>n.id===id);
     if(nd){
       requestAnimationFrame(()=>{
@@ -2704,7 +2704,7 @@ function addAnatBtn(id){
 function addPathwayBtn(id){
   removeAnatBtn();
   const btn = document.createElement('button');
-  btn.id='tip-anat-btn'; btn.textContent='Pathway View';
+  btn.id='tip-anat-btn'; btn.textContent='Pathway';
   btn.addEventListener('click', ()=>{
     const nd = nodes.find(n=>n.id===id);
     switchView('pathway');
@@ -2713,7 +2713,7 @@ function addPathwayBtn(id){
     if(vtPathM2){ vtPathM2.classList.add('on'); }
     if(vtAnatM2){ vtAnatM2.classList.remove('on'); }
     // Activate the nerve in pathway view (switches region, highlights, zooms,
-    // and re-renders the info panel in pathway context → "Anatomic View" button)
+    // and re-renders the info panel in pathway context → "Innervation" button)
     if(nd) setTimeout(()=>{ zoomToNode(nd); }, 150);
   });
   document.getElementById('tip-inner').appendChild(btn);
@@ -2777,7 +2777,7 @@ function zoomToNode(nd){
   }
   // Activate highlight
   doHighlight(nd.id);
-  // Show info panel (pathway context → "Anatomic View" button)
+  // Show info panel (pathway context → "Innervation" button)
   showInfoPanel(nd, 'pathway');
   activeId=nd.id;
   // Zoom: pan to node centre
