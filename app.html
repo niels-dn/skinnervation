@@ -2182,6 +2182,7 @@ function buildAnatView(regionNodes){
     if(!nodeById[id]) return;
     const col = ANAT_COLORS[id] || '#888';
     gAntInner.append('path').attr('d', dPath)
+      .attr('class','anat-territory').attr('data-nid', id).attr('data-base-op', 0.42)
       .attr('fill', col).attr('fill-opacity', 0.42)
       .attr('stroke','none')
       .style('cursor','pointer')
@@ -2201,6 +2202,7 @@ function buildAnatView(regionNodes){
     const col = ANAT_COLORS[id] || '#888';
     const pointStr = pts.map(p=>p.join(',')).join(' ');
     s.append('polygon').attr('points', pointStr)
+      .attr('class','anat-territory').attr('data-nid', id).attr('data-base-op', 0.28)
       .attr('fill', col).attr('fill-opacity', 0.28)
       .attr('stroke', col).attr('stroke-width', 0.5)
       .attr('clip-path', isAnt ? 'url(#clip-left-arm)' : 'url(#clip-right-arm)')
@@ -2379,6 +2381,7 @@ function buildAnatViewHead(regionNodes){
     const pointStr = pts.map(p=>p.join(',')).join(' ');
     const isAnt = pts[0][0] < VW/2;
     s.append('polygon').attr('points', pointStr)
+      .attr('class','anat-territory').attr('data-nid', id).attr('data-base-op', 0.28)
       .attr('fill', col).attr('fill-opacity', 0.28)
       .attr('stroke', col).attr('stroke-width', 0.5)
       .attr('clip-path', isAnt ? 'url(#clip-head-ant)' : 'url(#clip-head-post)')
@@ -2552,6 +2555,7 @@ function buildAnatViewTruncus(regionNodes){
     const pointStr = pts.map(p=>p.join(',')).join(' ');
     const isAnt = pts[0][0] < VW/2;
     s.append('polygon').attr('points', pointStr)
+      .attr('class','anat-territory').attr('data-nid', id).attr('data-base-op', 0.28)
       .attr('fill', col).attr('fill-opacity', 0.28)
       .attr('stroke', col).attr('stroke-width', 0.5)
       .attr('clip-path', isAnt ? 'url(#clip-truncus-ant)' : 'url(#clip-truncus-post)')
@@ -2726,6 +2730,7 @@ function buildAnatViewLowerBody(regionNodes){
     const pointStr = pts.map(p=>p.join(',')).join(' ');
     const isAnt = pts[0][0] < VW/2;
     s.append('polygon').attr('points', pointStr)
+      .attr('class','anat-territory').attr('data-nid', id).attr('data-base-op', 0.28)
       .attr('fill', col).attr('fill-opacity', 0.28)
       .attr('stroke', col).attr('stroke-width', 0.5)
       .attr('clip-path', isAnt ? 'url(#clip-leg-ant)' : 'url(#clip-leg-post)')
@@ -2946,6 +2951,13 @@ function anatSetActive(id){
   window._anatSvg.selectAll('.anat-node')
     .filter(function(){ return this.__anatId === id; })
     .classed('anat-active', true);
+  // Highlight the matching innervation territory by reducing its transparency
+  window._anatSvg.selectAll('.anat-territory').each(function(){
+    const el = d3.select(this);
+    const base = +el.attr('data-base-op');
+    const target = el.attr('data-nid') === id ? Math.min(base + 0.35, 0.9) : base;
+    el.transition().duration(150).attr('fill-opacity', target);
+  });
 }
 
 function removeAnatBtn(){
