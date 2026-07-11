@@ -1795,12 +1795,9 @@ function showInfoPanel(d, context){
   if(engName) html+=`<span class="t-path"><b>English name:</b> ${engName}</span>`;
   tip.innerHTML=html;
   tipPanel.classList.add('visible');
-  if(d.type==='terminal' && hasAnatPos(d.id)){
-    if(context==='anatomic') addPathwayBtn(d.id);
-    else addAnatBtn(d.id);
-  } else {
-    removeAnatBtn();
-  }
+  // Every nerve gets a view-switch button: Pathway (in anatomic view) or Innervation (in pathway view)
+  if(context==='anatomic') addPathwayBtn(d.id);
+  else addAnatBtn(d.id);
 }
 
 nodeSel.on('click',function(event,d){
@@ -2285,11 +2282,7 @@ function buildAnatView(regionNodes){
   });
 
   // If a node was requested for focus (via "Innervation" button), zoom to it
-  if(window._anatFocusId){
-    const focusId = window._anatFocusId;
-    window._anatFocusId = null;
-    requestAnimationFrame(()=>{ zoomAnatToNode(focusId); });
-  }
+  applyPendingAnatFocus();
 }
 
 function buildAnatViewHead(regionNodes){
@@ -2458,11 +2451,7 @@ function buildAnatViewHead(regionNodes){
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
   });
 
-  if(window._anatFocusId){
-    const focusId = window._anatFocusId;
-    window._anatFocusId = null;
-    requestAnimationFrame(()=>{ zoomAnatToNode(focusId); });
-  }
+  applyPendingAnatFocus();
 }
 
 function buildAnatViewTruncus(regionNodes){
@@ -2632,11 +2621,7 @@ function buildAnatViewTruncus(regionNodes){
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
   });
 
-  if(window._anatFocusId){
-    const focusId = window._anatFocusId;
-    window._anatFocusId = null;
-    requestAnimationFrame(()=>{ zoomAnatToNode(focusId); });
-  }
+  applyPendingAnatFocus();
 }
 
 function buildAnatViewLowerBody(regionNodes){
@@ -2807,11 +2792,7 @@ function buildAnatViewLowerBody(regionNodes){
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
   });
 
-  if(window._anatFocusId){
-    const focusId = window._anatFocusId;
-    window._anatFocusId = null;
-    requestAnimationFrame(()=>{ zoomAnatToNode(focusId); });
-  }
+  applyPendingAnatFocus();
 }
 
 // ── View toggle logic ─────────────────────────────────────────────────────
@@ -2848,7 +2829,9 @@ function switchView(mode){
     // info panel's "Innervation" button) takes priority over whichever
     // region filter button currently happens to be selected.
     let grp = 'arm';
-    if(window._anatFocusId && nodeById[window._anatFocusId]){
+    if(window._anatGroup){
+      grp = window._anatGroup; window._anatGroup = null;
+    } else if(window._anatFocusId && nodeById[window._anatFocusId]){
       grp = nodeById[window._anatFocusId].group;
     } else {
       const onBtn = document.querySelector('.fb.on');
@@ -2887,23 +2870,19 @@ function addAnatBtn(id){
   const btn = document.createElement('button');
   btn.id='tip-anat-btn'; btn.textContent='Innervation';
   btn.addEventListener('click', ()=>{
-    // Remember which node to focus once anatomic view has been built
-    window._anatFocusId = id;
-    // Switch to anatomic view (also mirrors mobile toggle state)
+    const nd = nodes.find(n=>n.id===id);
+    if(!nd) return;
+    // Highlight the node itself if cutaneous (terminal), else every cutaneous
+    // nerve it supplies downstream. Info panel keeps showing this node.
+    window._anatHighlightIds = descendantTerminals(id);
+    window._anatInfoId = id;
+    window._anatFocusId = (nd.type==='terminal') ? id : null;
+    window._anatGroup = nd.group;
     switchView('anatomic');
     const vtAnatM2 = document.getElementById('vt-anatomic-m');
     const vtPathM2 = document.getElementById('vt-pathway-m');
     if(vtAnatM2){ vtAnatM2.classList.add('on'); }
     if(vtPathM2){ vtPathM2.classList.remove('on'); }
-    // Re-render the info panel in anatomic context so the button now
-    // reads "Pathway" and the node is marked active in anat view.
-    const nd = nodes.find(n=>n.id===id);
-    if(nd){
-      requestAnimationFrame(()=>{
-        anatSetActive(id);
-        showInfoPanel(nd, 'anatomic');
-      });
-    }
   });
   document.getElementById('tip-inner').appendChild(btn);
 }
@@ -2945,19 +2924,51 @@ function zoomAnatToNode(id){
 }
 
 // Highlight the active node within anatomic view (visual feedback)
-function anatSetActive(id){
+function anatSetActiveMulti(ids){
   if(!window._anatSvg) return;
+  const idset = new Set(ids);
   window._anatSvg.selectAll('.anat-node').classed('anat-active', false);
   window._anatSvg.selectAll('.anat-node')
-    .filter(function(){ return this.__anatId === id; })
+    .filter(function(){ return idset.has(this.__anatId); })
     .classed('anat-active', true);
-  // Highlight the matching innervation territory by reducing its transparency
   window._anatSvg.selectAll('.anat-territory').each(function(){
     const el = d3.select(this);
     const base = +el.attr('data-base-op');
-    const target = el.attr('data-nid') === id ? Math.min(base + 0.35, 0.9) : base;
+    const target = idset.has(el.attr('data-nid')) ? Math.min(base + 0.35, 0.9) : base;
     el.transition().duration(150).attr('fill-opacity', target);
   });
+}
+function anatSetActive(id){ anatSetActiveMulti([id]); }
+
+// All terminal (cutaneous) nerves supplied downstream by a given node.
+function descendantTerminals(id){
+  const out = new Set(), seen = new Set(), st = [id];
+  while(st.length){
+    const c = st.pop();
+    if(seen.has(c)) continue; seen.add(c);
+    const nd = nodeById[c];
+    if(nd && nd.type === 'terminal') out.add(c);
+    edges.forEach(e=>{ if(e.s === c && !seen.has(e.t)) st.push(e.t); });
+  }
+  return [...out];
+}
+
+// Run after an anatomic view is (re)built: apply any pending highlight/focus.
+function applyPendingAnatFocus(){
+  if(window._anatHighlightIds){
+    const ids = window._anatHighlightIds; window._anatHighlightIds = null;
+    const infoId = window._anatInfoId; window._anatInfoId = null;
+    const focusId = window._anatFocusId; window._anatFocusId = null;
+    requestAnimationFrame(()=>{
+      anatSetActiveMulti(ids);
+      const infoNd = nodes.find(n=>n.id === infoId);
+      if(infoNd) showInfoPanel(infoNd, 'anatomic');
+      if(focusId) zoomAnatToNode(focusId);
+    });
+  } else if(window._anatFocusId){
+    const focusId = window._anatFocusId; window._anatFocusId = null;
+    requestAnimationFrame(()=>{ zoomAnatToNode(focusId); });
+  }
 }
 
 function removeAnatBtn(){
