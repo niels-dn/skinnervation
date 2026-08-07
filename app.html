@@ -175,7 +175,7 @@
     cursor:pointer;
   }
   .anat-node.anat-active rect {
-    fill-opacity:0.88 !important; stroke-width:3.5 !important; stroke:#f0b400 !important;
+    fill-opacity:0.88 !important; stroke-width:3.5 !important; stroke:#2a2018 !important;
   }
   .anat-node.anat-active text {
     fill:#fff !important;
@@ -390,7 +390,7 @@
 //  Groups: head | arm | truncus | lowerbody
 // ═══════════════════════════════════════════════════════════════════════════
 const TYPE = { root:'root', ramus:'ramus', plexus:'plexus', trunk:'trunk', nerve:'nerve', branch:'branch', terminal:'terminal' };
-const ANAT_ACCENT = '#f0b400';  // golden-yellow highlight for active nodes/dermatomes
+const ANAT_ACCENT = '#2a2018';  // neutral dark-ink outline for active nodes/dermatomes (matches page text color)
 const HEX  = { root:'#8b1a1a', ramus:'#2c4a7a', plexus:'#1a6b5a', trunk:'#1a6b5a', nerve:'#2c4a7a', branch:'#2c4a7a', terminal:'#7a4a00' };
 
 // Node dimensions – wider + taller to allow two-line labels
@@ -3024,13 +3024,15 @@ function anatSetActiveMulti(ids){
     const el = d3.select(this);
     const base = +el.attr('data-base-op');
     const isActive = idset.has(el.attr('data-nid'));
-    const target = isActive ? Math.min(base + 0.35, 0.9) : base;
+    // Active: boost opacity + neutral dark outline. Inactive: dim (fade toward background)
+    // so the active dermatome stands out through contrast rather than a clashing accent color.
+    const target = isActive ? Math.min(base + 0.35, 0.9) : base * 0.35;
     const baseStroke = el.attr('data-base-stroke');
     const baseStrokeW = +el.attr('data-base-stroke-width');
     el.transition().duration(150)
       .attr('fill-opacity', target)
       .attr('stroke', isActive ? ANAT_ACCENT : baseStroke)
-      .attr('stroke-width', isActive ? 3 : baseStrokeW);
+      .attr('stroke-width', isActive ? 2.5 : baseStrokeW);
   });
 }
 function anatSetActive(id){ anatSetActiveMulti([id]); }
