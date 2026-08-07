@@ -3054,7 +3054,7 @@ function anatSetActiveMulti(ids){
       const baseStrokeW = +el.attr('data-base-stroke-width');
       el.transition().duration(150)
         .attr('stroke', isActive ? ANAT_ACCENT : baseStroke)
-        .attr('stroke-width', isActive ? 2.5 : baseStrokeW);
+        .attr('stroke-width', isActive ? 1.25 : baseStrokeW);
     }
   });
   // Crisp (non-blurred) outline layer: only these get the active highlight border for
@@ -3064,7 +3064,7 @@ function anatSetActiveMulti(ids){
     const isActive = idset.has(el.attr('data-nid'));
     el.transition().duration(150)
       .attr('stroke', isActive ? ANAT_ACCENT : 'none')
-      .attr('stroke-width', isActive ? 2.5 : 0);
+      .attr('stroke-width', isActive ? 1.25 : 0);
   });
 }
 function anatSetActive(id){ anatSetActiveMulti([id]); }
