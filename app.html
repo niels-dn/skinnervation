@@ -402,23 +402,23 @@ const VW = 1536, VH = 1024;
 const NODE_POS = {
   // Anterior: image x=192, w=384, h=1024 (SVG 143×382, scale ×2.685)
   // Arm midline ≈ x=382, elbow ≈ y=530, wrist ≈ y=750
-  't18_1': [{ x:653.0, y:426.3 }, { x:999.2, y:459.2 }],   // N. cut. brachii medialis
-  't13_2': [{ x:363.7, y:313.6 }, { x:993.5, y:309.9 }],   // N. cut. brachii lat. sup.
-  't13_3': { x:1060.1, y:626.2 },   // N. cut. brachii lat. inf. (posterior)
-  't17_1': [{ x:631.8, y:609.8 }, { x:1079.9, y:672.2 }],   // N. cut. antebrachii med.
-  't11_1': [{ x:320.9, y:603.1 }, { x:1048.8, y:580.2 }],   // N. cut. antebrachii lat.
-  't16_1': { x:543.8, y:802.4 },   // R. palmaris n. ulnaris
-  't14_1': { x:215.3, y:819.2 },   // R. palmaris n. mediani
-  't16_2': { x:532.5, y:868.9 },   // Nn. dig. palm. prop. (ulnaris)
-  't14_2': [{ x:249.9, y:865.2 }, { x:1121.7, y:893.4 }],   // Nn. dig. palm. prop. (medianus)
+  't18_1': [{ x:667.0, y:426.3, side:'ant' }, { x:683.8, y:448.4, side:'post' }],   // N. cut. brachii medialis
+  't13_2': [{ x:349.7, y:313.6, side:'ant' }, { x:1007.5, y:294.9, side:'post' }],   // N. cut. brachii lat. sup.
+  't13_3': { x:1072.0, y:620.4, side:'post' },   // N. cut. brachii lat. inf. (posterior)
+  't17_1': [{ x:645.8, y:609.8, side:'ant' }, { x:734.5, y:644.8, side:'post' }],   // N. cut. antebrachii med.
+  't11_1': [{ x:306.9, y:603.1, side:'ant' }, { x:1062.8, y:580.2, side:'post' }],   // N. cut. antebrachii lat.
+  't16_1': { x:557.8, y:802.4, side:'ant' },   // R. palmaris n. ulnaris
+  't14_1': { x:197.0, y:813.8, side:'ant' },   // R. palmaris n. mediani
+  't16_2': { x:546.5, y:868.9, side:'ant' },   // Nn. dig. palm. prop. (ulnaris)
+  't14_2': [{ x:201.3, y:859.0, side:'ant' }, { x:1135.7, y:873.6, side:'post' }],   // Nn. dig. palm. prop. (medianus)
   // Posterior: image x=940, w=423, h=1024 (SVG 150×363, scale ×2.82)
   // Arm midline ≈ x=1152, elbow ≈ y=480, wrist ≈ y=700
-  't10_1': { x:915.9, y:171.9 },   // R. lat. r. post. C5
-  't13_1': [{ x:369.0, y:426.5 }, { x:991.0, y:413.2 }],   // N. cut. brachii post.
-  't12_1': { x:974.4, y:217.9 },   // R. lat. r. post. C6
-  't15_1': { x:993.1, y:263.9 },   // R. lat. r. post. C7
-  't16_3': { x:1166.4, y:847.4 },   // R. dorsalis n. ulnaris
-  't13_4': [{ x:230.3, y:773.2 }, { x:1164.6, y:801.4 }],   // R. superficialis n. radialis
+  't10_1': { x:568.7, y:171.9, side:'post' },   // R. lat. r. post. C5
+  't13_1': [{ x:355.0, y:426.5, side:'ant' }, { x:1005.0, y:413.2, side:'post' }],   // N. cut. brachii post.
+  't12_1': { x:550.3, y:212.7, side:'post' },   // R. lat. r. post. C6
+  't15_1': { x:550.3, y:253.2, side:'post' },   // R. lat. r. post. C7
+  't16_3': { x:812.8, y:838.5, side:'post' },   // R. dorsalis n. ulnaris
+  't13_4': [{ x:216.3, y:773.2, side:'ant' }, { x:1178.6, y:801.4, side:'post' }],   // R. superficialis n. radialis
 
   // ── Head / Neck ──────────────────────────────────────────────────────────
   // Anterior (face): image x=200, w=613.6, h=638.8 (top y=80)
@@ -2296,7 +2296,7 @@ function buildAnatView(regionNodes){
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
     const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
     posList.forEach(pos=>{
-    const isAnt = pos.x < VW/2;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
 
@@ -2383,7 +2383,7 @@ function buildAnatViewHead(regionNodes){
   Object.entries(NODE_POS).forEach(([id,posRaw])=>{
     if(!(id in ANAT_COLORS)) return;
     const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
-    const isAnt = pos.x < VW/2;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
     const x0 = isAnt ? ANT_X : POST_X;
     const x1 = isAnt ? ANT_X+ANT_W : POST_X+POST_W;
     const yTop = pos.y - 24, yBot = pos.y + 24;
@@ -2473,7 +2473,7 @@ function buildAnatViewHead(regionNodes){
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
     const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
     posList.forEach(pos=>{
-    const isAnt = pos.x < VW/2;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
 
@@ -2558,7 +2558,7 @@ function buildAnatViewTruncus(regionNodes){
   Object.entries(NODE_POS).forEach(([id,posRaw])=>{
     if(!(id in ANAT_COLORS)) return;
     const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
-    const isAnt = pos.x < VW/2;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
     const x0 = isAnt ? ANT_X : POST_X;
     const x1 = isAnt ? ANT_X+ANT_W : POST_X+POST_W;
     const yTop = pos.y - 22, yBot = pos.y + 22;
@@ -2648,7 +2648,7 @@ function buildAnatViewTruncus(regionNodes){
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
     const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
     posList.forEach(pos=>{
-    const isAnt = pos.x < VW/2;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
 
@@ -2734,7 +2734,7 @@ function buildAnatViewLowerBody(regionNodes){
   Object.entries(NODE_POS).forEach(([id,posRaw])=>{
     if(!(id in ANAT_COLORS)) return;
     const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
-    const isAnt = pos.x < VW/2;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
     const x0 = isAnt ? ANT_X : POST_X;
     const x1 = isAnt ? ANT_X+ANT_W : POST_X+POST_W;
     const yTop = pos.y - 24, yBot = pos.y + 24;
@@ -2824,7 +2824,7 @@ function buildAnatViewLowerBody(regionNodes){
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
     const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
     posList.forEach(pos=>{
-    const isAnt = pos.x < VW/2;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
 
