@@ -2270,12 +2270,14 @@ function buildAnatView(regionNodes){
   s.append('image').attr('href', ARM_ANT_SRC)
     .attr('x', 206.73).attr('y', 0)
     .attr('width', 354.55).attr('height', VH)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
   // Posterior arm outline (right)
   s.append('image').attr('href', ARM_POST_SRC)
     .attr('x', 741.28).attr('y', 0)
     .attr('width', 423).attr('height', VH)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
 
   // View labels
   // Title labels — 18px screen size, positioned above arms
@@ -2449,11 +2451,13 @@ function buildAnatViewHead(regionNodes){
   s.append('image').attr('href', HEAD_ANT_SRC)
     .attr('x', ANT_X).attr('y', IMG_Y)
     .attr('width', ANT_W).attr('height', IMG_H)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
   s.append('image').attr('href', HEAD_POST_SRC)
     .attr('x', POST_X).attr('y', IMG_Y)
     .attr('width', POST_W).attr('height', IMG_H)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
 
   // View labels
   const titleFs = (18/sc0).toFixed(1)+'px';
@@ -2624,11 +2628,13 @@ function buildAnatViewTruncus(regionNodes){
   s.append('image').attr('href', TRUNK_ANT_SRC)
     .attr('x', ANT_X).attr('y', IMG_Y)
     .attr('width', ANT_W).attr('height', IMG_H)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
   s.append('image').attr('href', TRUNK_POST_SRC)
     .attr('x', POST_X).attr('y', IMG_Y)
     .attr('width', POST_W).attr('height', IMG_H)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
 
   // View labels
   const titleFs = (18/sc0).toFixed(1)+'px';
@@ -2800,11 +2806,13 @@ function buildAnatViewLowerBody(regionNodes){
   s.append('image').attr('href', LEG_ANT_SRC)
     .attr('x', ANT_X).attr('y', IMG_Y)
     .attr('width', ANT_W).attr('height', IMG_H)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
   s.append('image').attr('href', LEG_POST_SRC)
     .attr('x', POST_X).attr('y', IMG_Y)
     .attr('width', POST_W).attr('height', IMG_H)
-    .attr('preserveAspectRatio','xMidYMid meet');
+    .attr('preserveAspectRatio','xMidYMid meet')
+    .style('pointer-events','none');
 
   // View labels
   const titleFs = (18/sc0).toFixed(1)+'px';
