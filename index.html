@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Skinnervation — Index of Cutaneous Innervation</title>
+<link rel="stylesheet" href="css/skin.css"/>
+<style>
+  #app { display: flex; flex-direction: column; flex: 1; }
+
+  /* ── Hero image ── */
+  .hero-img-wrap {
+    display: flex; justify-content: center;
+    padding: 48px 24px 12px;
+    background: var(--bg);
+  }
+  .hero-logo {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    display: block;
+  }
+
+  /* ── About strip ── */
+  .intro-wrap {
+    padding: 4px 24px 40px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 18px;
+    background: var(--bg);
+    max-width: 640px; margin: 0 auto; width: 100%;
+  }
+  .intro-text {
+    font-size: .82rem; color: #5a5040; line-height: 1.85; margin: 0;
+  }
+  .intro-choose {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.0rem; font-style: italic; color: var(--muted);
+    margin: 0;
+  }
+  .intro-choices {
+    display: flex; align-items: flex-start; gap: 20px;
+    flex-wrap: wrap; justify-content: center; width: 100%;
+  }
+  .choice-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: 4px; padding: 20px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    flex: 1; min-width: 200px; max-width: 260px; text-align: left;
+  }
+  .choice-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .82rem; font-weight: 700; color: var(--text);
+  }
+  .choice-desc {
+    font-size: .77rem; color: #5a5040; line-height: 1.7; margin: 0; flex: 1;
+  }
+  .view-btns {
+    display: flex; gap: 10px; margin-top: 6px; justify-content: center;
+  }
+  .view-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    gap: 8px; padding: 14px 10px 12px;
+    width: 100px; min-height: 100px;
+    background: var(--bg); border: 1.5px solid var(--border); border-radius: 4px;
+    text-decoration: none; color: var(--text);
+    transition: border-color .15s, background .15s;
+  }
+  .view-btn:hover { border-color: var(--accent); background: var(--hover); }
+  .view-btn svg { width: auto; height: 56px; }
+  .view-btn span {
+    font-family: 'Libre Baskerville', serif; font-size: .63rem;
+    color: var(--text); text-align: center; line-height: 1.3;
+    font-variant: small-caps; letter-spacing: .04em;
+  }
+  .choice-right {
+    display: flex; align-items: center; gap: 20px;
+  }
+  .choice-divider {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.0rem; font-style: italic; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .intro-credits {
+    font-size: .63rem; color: var(--muted); margin: 0;
+  }
+
+  footer a { color: var(--muted); text-decoration: underline; }
+
+  @media (max-width: 600px) {
+      .features { margin: 32px auto; }
+  }
+
+  @media (max-width: 540px) {
+    .intro-choices {
+      flex-direction: column;
+      align-items: center;
+    }
+    .choice-right {
+      flex-direction: column;
+      align-items: center;
+    }
+    .choice-card {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  /* ── Mobile warning splash ── */
+  #mobile-splash {
+    display: none;
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(42, 35, 24, 0.45);
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  #mobile-splash.visible { display: flex; }
+  .mobile-splash-card {
+    background: #faf3dc; border: 1.5px solid #e0c96a;
+    border-radius: 4px; padding: 22px 20px 18px;
+    max-width: 340px; width: 100%;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .mobile-splash-body { overflow: hidden; }
+  .mobile-splash-icon {
+    float: right; width: 56px; height: 56px;
+    margin: 0 0 8px 12px;
+  }
+  .mobile-splash-body h4 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: .95rem; font-weight: 700; color: #5a4700;
+    margin: 0 0 14px;
+  }
+  .mobile-splash-body p {
+    font-size: .85rem; color: #6b5800; line-height: 1.65;
+    margin: 0 0 8px; text-align: left;
+  }
+  .mobile-splash-body p:last-child { margin-bottom: 0; }
+  .mobile-splash-ok {
+    align-self: flex-end;
+    padding: 5px 20px; border-radius: 3px;
+    background: #c8a000; border: none; color: #fff;
+    font-family: 'Libre Baskerville', serif; font-size: .85rem;
+    cursor: pointer; transition: background .13s;
+  }
+  .mobile-splash-ok:hover { background: #a88600; }
+
+  .donate-nudge {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    margin-top: 20px;
+  }
+  .donate-nudge p {
+    font-size: .77rem; color: var(--muted); text-align: center; line-height: 1.7; margin: 0;
+  }
+  .donate-btn { font-size: .68rem; }
+
+  <!-- Favicons -->
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="16x16"  href="assets/favicon-16x16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32"  href="assets/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="96x96"  href="assets/favicon-96x96.png"/>
+  <link rel="apple-touch-icon" sizes="180x180"     href="assets/apple-touch-icon.png"/>
+  <link rel="manifest"                              href="site.webmanifest"/>
+  <meta name="msapplication-config"               content="browserconfig.xml"/>
+  <meta name="theme-color"                        content="#f4f1ec"/>
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="hero-img-wrap">
+    <picture>
+      <source srcset="assets/skinnervation-logo-hero.webp" type="image/webp"/>
+      <img src="assets/skinnervation-logo-hero.png"
+           alt="Skinnervation — Index of Cutaneous Innervation"
+           class="hero-logo"/>
+    </picture>
+  </div>
+
+  <div class="intro-wrap">
+    <p class="intro-text">
+      Skinnervation is a free, open-access reference for the cutaneous innervation
+      of the human body. Trace any cutaneous nerve from spinal root to skin,
+      explore innervation territories, and search across all regions.
+    </p>
+
+    <p class="intro-choose">Choose how to get started:</p>
+
+    <div class="intro-choices">
+
+      <div class="choice-card">
+        <div class="choice-title">Nerve index</div>
+        <p class="choice-desc">Browse or search the full nerve overview directly.</p>
+        <div class="view-btns">
+          <a class="view-btn" href="app.html">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Root node -->
+            <circle cx="8" cy="24" r="4" fill="#8b1a1a"/>
+            <!-- Mid nodes -->
+            <circle cx="24" cy="12" r="3.5" fill="#1a6b5a"/>
+            <circle cx="24" cy="36" r="3.5" fill="#1a6b5a"/>
+            <!-- Terminal nodes -->
+            <circle cx="40" cy="8" r="3" fill="#7a4a00"/>
+            <circle cx="40" cy="20" r="3" fill="#7a4a00"/>
+            <circle cx="40" cy="32" r="3" fill="#7a4a00"/>
+            <circle cx="40" cy="42" r="3" fill="#7a4a00"/>
+            <!-- Edges -->
+            <path d="M12 22 C16 18 18 14 20.5 13" stroke="#c8bfb0" stroke-width="1.5"/>
+            <path d="M12 26 C16 30 18 34 20.5 35" stroke="#c8bfb0" stroke-width="1.5"/>
+            <path d="M27.5 10.5 C31 9 34 8.5 37 8" stroke="#c8bfb0" stroke-width="1.5"/>
+            <path d="M27.5 13 C31 16 34 18 37 19" stroke="#c8bfb0" stroke-width="1.5"/>
+            <path d="M27.5 35 C31 33 34 32 37 32" stroke="#c8bfb0" stroke-width="1.5"/>
+            <path d="M27.5 37.5 C31 39 34 41 37 42" stroke="#c8bfb0" stroke-width="1.5"/>
+          </svg>
+            <span>Pathway<br/>view</span>
+          </a>
+          <a class="view-btn" href="app.html?view=anatomic">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 302.805 302.805" role="img" aria-label="Anatomic view">
+  <g fill="#5a3a1a" opacity="0.55">
+    <path d="M252.719,58.932l-38.85-7.402h0.001c-9.817-1.871-16.943-10.482-16.943-20.477V14.997c0-8.27-6.728-14.997-14.996-14.997h-61.057c-8.269,0-14.996,6.728-14.996,14.997v16.056c0,9.994-7.125,18.605-16.941,20.477l-38.852,7.402C25.829,63.555,8.95,85.607,10.823,110.229l13.596,178.718c0.593,7.771,7.161,13.857,14.954,13.857h224.059c7.795,0,14.362-6.088,14.953-13.858l13.597-178.717C293.854,85.607,276.976,63.555,252.719,58.932z M277.024,109.091l-13.593,178.714l-32.772,0l-7.243-34.654l25.274-110.566c0.923-4.037-1.603-8.06-5.641-8.982c-4.038-0.926-8.06,1.603-8.982,5.641l-25.64,112.165c-0.241,1.054-0.251,2.147-0.03,3.205l6.937,33.192l-127.866,0.002l6.937-33.194c0.221-1.058,0.211-2.151-0.03-3.205l-25.64-112.165c-0.923-4.038-4.941-6.565-8.982-5.641c-4.038,0.923-6.563,4.945-5.641,8.982l25.274,110.566l-7.243,34.656l-32.768,0L25.78,109.091c-1.294-17.003,10.362-32.231,27.112-35.425l38.852-7.402c16.881-3.218,29.134-18.026,29.134-35.211L120.874,15l61.053-0.003v16.056c0,17.186,12.253,31.993,29.135,35.211l38.85,7.402C266.662,76.859,278.318,92.088,277.024,109.091z"/>
+    <path d="M151.402,89.462c-3.313,0-6,2.687-6,6v129.945c0,3.313,2.687,6,6,6s6-2.687,6-6V95.462C157.402,92.148,154.716,89.462,151.402,89.462z"/>
+  </g>
+</svg>
+            <span>Anatomic<br/>view</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="choice-right">
+        <div class="choice-divider">or</div>
+        <div class="choice-card">
+          <div class="choice-title">Guide</div>
+          <p class="choice-desc">Learn how to navigate and interpret the nerve index.</p>
+          <div class="view-btns" style="justify-content:center;">
+            <a class="view-btn" href="guide.html">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Guide">
+  <g fill="#5a3a1a">
+    <path d="M24.008,32.038L9.541,27.904c-0.527-0.146-1.084,0.155-1.236,0.688c-0.151,0.53,0.156,1.084,0.688,1.236l14.467,4.134C23.551,33.987,23.643,34,23.734,34c0.435,0,0.835-0.286,0.961-0.726C24.847,32.744,24.539,32.19,24.008,32.038z"/>
+    <path d="M24.008,39.038L9.541,34.905c-0.527-0.146-1.084,0.155-1.236,0.688c-0.151,0.531,0.156,1.084,0.688,1.236l14.467,4.133C23.551,40.987,23.643,41,23.734,41c0.435,0,0.835-0.286,0.961-0.726C24.847,39.743,24.539,39.19,24.008,39.038z"/>
+    <path d="M24.008,25.038L9.541,20.904c-0.527-0.146-1.084,0.155-1.236,0.688c-0.151,0.53,0.156,1.084,0.688,1.236l14.467,4.134C23.551,26.987,23.643,27,23.734,27c0.435,0,0.835-0.286,0.961-0.726C24.847,25.744,24.539,25.19,24.008,25.038z"/>
+    <path d="M24.008,18.038L9.541,13.904c-0.527-0.146-1.084,0.155-1.236,0.688c-0.151,0.53,0.156,1.084,0.688,1.236l14.467,4.134C23.551,19.987,23.643,20,23.734,20c0.435,0,0.835-0.286,0.961-0.726C24.847,18.744,24.539,18.19,24.008,18.038z"/>
+    <path d="M39.963,33.962c0.092,0,0.184-0.013,0.275-0.038l14.467-4.134c0.531-0.152,0.839-0.706,0.688-1.236c-0.152-0.532-0.708-0.832-1.236-0.688L39.689,32c-0.531,0.152-0.839,0.706-0.688,1.236C39.128,33.676,39.528,33.962,39.963,33.962z"/>
+    <path d="M54.459,34.905l-14.467,4.133c-0.531,0.152-0.839,0.705-0.688,1.236C39.431,40.714,39.831,41,40.266,41c0.092,0,0.184-0.013,0.275-0.038l14.467-4.133c0.531-0.152,0.839-0.705,0.688-1.236C55.543,35.061,54.987,34.761,54.459,34.905z"/>
+    <path d="M54.459,20.904l-14.467,4.134c-0.531,0.152-0.839,0.706-0.688,1.236C39.431,26.714,39.831,27,40.266,27c0.092,0,0.184-0.013,0.275-0.038l14.467-4.134c0.531-0.152,0.839-0.706,0.688-1.236C55.543,21.06,54.987,20.758,54.459,20.904z"/>
+    <path d="M54.459,13.904l-14.467,4.134c-0.531,0.152-0.839,0.706-0.688,1.236C39.431,19.714,39.831,20,40.266,20c0.092,0,0.184-0.013,0.275-0.038l14.467-4.134c0.531-0.152,0.839-0.706,0.688-1.236C55.543,14.06,54.987,13.76,54.459,13.904z"/>
+    <path d="M63.219,0.414c-0.354-0.271-0.784-0.413-1.221-0.413c-0.172,0-0.345,0.022-0.514,0.066L32,7.93L2.516,0.067c-0.17-0.045-0.343-0.066-0.515-0.066c-0.437,0-0.866,0.142-1.22,0.413C0.289,0.793,0,1.379,0,2v49.999c0,0.906,0.609,1.699,1.484,1.933l25.873,6.899C28.089,62.685,29.887,64,32,64s3.911-1.315,4.643-3.169l25.873-6.899C63.391,53.698,64,52.905,64,51.999V2C64,1.379,63.711,0.793,63.219,0.414z M32,54c0.173,0,0.347-0.022,0.516-0.067L62,46.07v1.954l-30,7.941L2,48.024V46.07l29.484,7.862C31.653,53.978,31.827,54,32,54z M1.998,2.001c0,0,0.001,0,0.003,0V2L31,9.733v42L2,44L1.998,2.001z M34.979,59.205c-0.079,1.143-0.785,2.111-1.788,2.546l-0.676,0.181c-0.169,0.045-0.343,0.067-0.516,0.067s-0.347-0.022-0.516-0.067l-0.676-0.181c-1.003-0.435-1.709-1.403-1.788-2.546L2,51.999v-1.906l29.744,7.874C31.828,57.989,31.914,58,32,58s0.172-0.011,0.256-0.033L62,50.093v1.906L34.979,59.205z M33,51.733v-42L62,2v42L33,51.733z"/>
+  </g>
+</svg>
+              <span>Read the<br/>guide</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="donate-nudge">
+      <p>Skinnervation is free and open-access.<br/>If you find it useful, consider supporting the project.</p>
+      <a class="skin-btn-ghost donate-btn"
+         href="https://buymeacoffee.com/skinnervation" target="_blank" rel="noopener">
+        &#9749;&nbsp;Buy us a coffee
+      </a>
+    </div>
+
+    <div class="donate-nudge">
+      <p>Comments and corrections are welcome.</p>
+      <a class="skin-btn-ghost donate-btn"
+         href="mailto:comments@skinnervation.com">
+        ✉&nbsp;comments@skinnervation.com
+      </a>
+    </div>
+
+  </div>
+
+  </div>
+
+
+
+  
+
+</div>
+<div id="mobile-splash">
+  <div class="mobile-splash-card">
+    <div class="mobile-splash-body">
+      <svg class="mobile-splash-icon" viewBox="0 0 24 24" fill="none"
+           stroke="#c8a000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <h4>Welcome to Skinnervation</h4>
+      <p>It looks like you are visiting from a device with a small screen.</p>
+      <p>While Skinnervation can be used on a mobile device, a tablet or desktop will give you a better experience navigating the nerve index.</p>
+    </div>
+    <button class="mobile-splash-ok" onclick="sessionStorage.setItem('splashSeen','1');document.getElementById('mobile-splash').classList.remove('visible')">Ok</button>
+  </div>
+</div>
+<script>
+  if(window.innerWidth <= 640 && !sessionStorage.getItem('splashSeen')){
+    document.getElementById('mobile-splash').classList.add('visible');
+  }
+</script>
+<script src="js/nav.js"></script>
+<script src="js/footer.js"></script>
+</body>
+</html>
