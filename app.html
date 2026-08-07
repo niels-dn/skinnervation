@@ -2207,7 +2207,7 @@ function buildAnatView(regionNodes){
     const col = ANAT_COLORS[id] || '#888';
     gAntInner.append('path').attr('d', dPath)
       .attr('class','anat-territory').attr('data-nid', id).attr('data-base-op', 0.42)
-      .attr('data-base-stroke','none').attr('data-base-stroke-width', 0)
+      .attr('data-base-stroke','none').attr('data-base-stroke-width', 0).attr('data-outline-managed','true')
       .attr('fill', col).attr('fill-opacity', 0.42)
       .attr('stroke','none')
       .style('cursor','pointer')
@@ -2216,6 +2216,15 @@ function buildAnatView(regionNodes){
         const nd = nodeById[id];
         if(nd){ anatSetActive(nd.id); doHighlight(nd.id); showInfoPanel(nd, 'anatomic'); }
       });
+  });
+  // Crisp (non-blurred) outline layer, drawn ON TOP of the blurred fill, for the active highlight border
+  const gAntOutline = gAntTerr.append('g');
+  Object.entries(ARM_ANT_TERRITORY_PATHS).forEach(([id, dPath])=>{
+    if(!nodeById[id]) return;
+    gAntOutline.append('path').attr('d', dPath)
+      .attr('class','anat-territory-outline').attr('data-nid', id)
+      .attr('fill','none').attr('stroke','none').attr('stroke-width', 0)
+      .attr('pointer-events','none');
   });
 
   // Real hand-drawn POSTERIOR territories (outline 199×402 space → placed via transform)
@@ -2233,7 +2242,7 @@ function buildAnatView(regionNodes){
     const col = ANAT_COLORS[id] || '#888';
     gPostInner.append('path').attr('d', dPath)
       .attr('class','anat-territory').attr('data-nid', id).attr('data-base-op', 0.42)
-      .attr('data-base-stroke','none').attr('data-base-stroke-width', 0)
+      .attr('data-base-stroke','none').attr('data-base-stroke-width', 0).attr('data-outline-managed','true')
       .attr('fill', col).attr('fill-opacity', 0.42)
       .attr('stroke','none')
       .style('cursor','pointer')
@@ -2242,6 +2251,15 @@ function buildAnatView(regionNodes){
         const nd = nodeById[id];
         if(nd){ anatSetActive(nd.id); doHighlight(nd.id); showInfoPanel(nd, 'anatomic'); }
       });
+  });
+  // Crisp (non-blurred) outline layer for the active highlight border
+  const gPostOutline = gPostTerr.append('g');
+  Object.entries(ARM_POST_TERRITORY_PATHS).forEach(([id, dPath])=>{
+    if(!nodeById[id]) return;
+    gPostOutline.append('path').attr('d', dPath)
+      .attr('class','anat-territory-outline').attr('data-nid', id)
+      .attr('fill','none').attr('stroke','none').attr('stroke-width', 0)
+      .attr('pointer-events','none');
   });
 
   // Remaining band territories: posterior side + any anterior nerve not yet drawn.
@@ -3024,15 +3042,29 @@ function anatSetActiveMulti(ids){
     const el = d3.select(this);
     const base = +el.attr('data-base-op');
     const isActive = idset.has(el.attr('data-nid'));
-    // Active: boost opacity + neutral dark outline. Inactive: dim (fade toward background)
-    // so the active dermatome stands out through contrast rather than a clashing accent color.
+    // Active: boost opacity. Inactive: dim (fade toward background) so the active
+    // dermatome stands out through contrast rather than a clashing accent color.
     const target = isActive ? Math.min(base + 0.35, 0.9) : base * 0.35;
-    const baseStroke = el.attr('data-base-stroke');
-    const baseStrokeW = +el.attr('data-base-stroke-width');
+    el.transition().duration(150).attr('fill-opacity', target);
+    // Elements with a companion crisp outline layer (the blurred real-drawn arm paths)
+    // never get their own stroke — the separate unblurred layer below handles that,
+    // so the highlight border doesn't inherit the fuzzy blur.
+    if(el.attr('data-outline-managed') !== 'true'){
+      const baseStroke = el.attr('data-base-stroke');
+      const baseStrokeW = +el.attr('data-base-stroke-width');
+      el.transition().duration(150)
+        .attr('stroke', isActive ? ANAT_ACCENT : baseStroke)
+        .attr('stroke-width', isActive ? 2.5 : baseStrokeW);
+    }
+  });
+  // Crisp (non-blurred) outline layer: only these get the active highlight border for
+  // territories whose fill lives inside a blurred group.
+  window._anatSvg.selectAll('.anat-territory-outline').each(function(){
+    const el = d3.select(this);
+    const isActive = idset.has(el.attr('data-nid'));
     el.transition().duration(150)
-      .attr('fill-opacity', target)
-      .attr('stroke', isActive ? ANAT_ACCENT : baseStroke)
-      .attr('stroke-width', isActive ? 2.5 : baseStrokeW);
+      .attr('stroke', isActive ? ANAT_ACCENT : 'none')
+      .attr('stroke-width', isActive ? 2.5 : 0);
   });
 }
 function anatSetActive(id){ anatSetActiveMulti([id]); }
