@@ -402,23 +402,23 @@ const VW = 1536, VH = 1024;
 const NODE_POS = {
   // Anterior: image x=192, w=384, h=1024 (SVG 143×382, scale ×2.685)
   // Arm midline ≈ x=382, elbow ≈ y=530, wrist ≈ y=750
-  't18_1': { x:653.0,  y:426.3  },   // N. cut. brachii medialis
-  't13_2': { x:363.7,  y:313.6  },   // N. cut. brachii lat. sup.
-  't13_3': { x:1056.9, y:614.4  },   // N. cut. brachii lat. inf. (posterior)
-  't17_1': { x:631.8,  y:609.8  },   // N. cut. antebrachii med.
-  't11_1': { x:320.9,  y:603.1  },   // N. cut. antebrachii lat.
-  't16_1': { x:543.8,  y:802.4  },   // R. palmaris n. ulnaris
-  't14_1': { x:222.0,  y:789.8  },   // R. palmaris n. mediani
-  't16_2': { x:532.5,  y:868.9  },   // Nn. dig. palm. prop. (ulnaris)
-  't14_2': { x:215.3,  y:859.0  },   // Nn. dig. palm. prop. (medianus)
+  't18_1': [{ x:653.0, y:426.3 }, { x:999.2, y:459.2 }],   // N. cut. brachii medialis
+  't13_2': [{ x:363.7, y:313.6 }, { x:993.5, y:309.9 }],   // N. cut. brachii lat. sup.
+  't13_3': { x:1060.1, y:626.2 },   // N. cut. brachii lat. inf. (posterior)
+  't17_1': [{ x:631.8, y:609.8 }, { x:1079.9, y:672.2 }],   // N. cut. antebrachii med.
+  't11_1': [{ x:320.9, y:603.1 }, { x:1048.8, y:580.2 }],   // N. cut. antebrachii lat.
+  't16_1': { x:543.8, y:802.4 },   // R. palmaris n. ulnaris
+  't14_1': { x:215.3, y:819.2 },   // R. palmaris n. mediani
+  't16_2': { x:532.5, y:868.9 },   // Nn. dig. palm. prop. (ulnaris)
+  't14_2': [{ x:249.9, y:865.2 }, { x:1121.7, y:893.4 }],   // Nn. dig. palm. prop. (medianus)
   // Posterior: image x=940, w=423, h=1024 (SVG 150×363, scale ×2.82)
   // Arm midline ≈ x=1152, elbow ≈ y=480, wrist ≈ y=700
-  't10_1': { x:915.9,  y:171.9  },   // R. lat. r. post. C5
-  't13_1': { x:991.0, y:413.2  },   // N. cut. brachii post.
-  't12_1': { x:974.4,  y:217.9  },   // R. lat. r. post. C6
-  't15_1': { x:993.1,  y:263.9  },   // R. lat. r. post. C7
-  't16_3': { x:1166.4,  y:847.4  },   // R. dorsalis n. ulnaris
-  't13_4': { x:1164.6, y:801.4  },   // R. superficialis n. radialis
+  't10_1': { x:915.9, y:171.9 },   // R. lat. r. post. C5
+  't13_1': [{ x:369.0, y:426.5 }, { x:991.0, y:413.2 }],   // N. cut. brachii post.
+  't12_1': { x:974.4, y:217.9 },   // R. lat. r. post. C6
+  't15_1': { x:993.1, y:263.9 },   // R. lat. r. post. C7
+  't16_3': { x:1166.4, y:847.4 },   // R. dorsalis n. ulnaris
+  't13_4': [{ x:230.3, y:773.2 }, { x:1164.6, y:801.4 }],   // R. superficialis n. radialis
 
   // ── Head / Neck ──────────────────────────────────────────────────────────
   // Anterior (face): image x=200, w=613.6, h=638.8 (top y=80)
@@ -2290,10 +2290,12 @@ function buildAnatView(regionNodes){
 
   // Nodes — NW=188, NH=40 exactly like pathway view
   const regionIds = new Set(regionNodes.map(n=>n.id));
-  Object.entries(NODE_POS).forEach(([id, pos])=>{
+  Object.entries(NODE_POS).forEach(([id, posRaw])=>{
     if(!nodeById[id] || !regionIds.has(id)) return;
     const nd = nodeById[id];
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
+    const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
+    posList.forEach(pos=>{
     const isAnt = pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
@@ -2334,6 +2336,7 @@ function buildAnatView(regionNodes){
         .text(line);
     });
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
+    });
   });
 
   // If a node was requested for focus (via "Innervation" button), zoom to it
@@ -2377,8 +2380,9 @@ function buildAnatViewHead(regionNodes){
   // Territory bands — simplified full-width strips per node, matching its
   // label's y-position, clipped to the relevant side's bounding box.
   const TERRITORIES = {};
-  Object.entries(NODE_POS).forEach(([id,pos])=>{
+  Object.entries(NODE_POS).forEach(([id,posRaw])=>{
     if(!(id in ANAT_COLORS)) return;
+    const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
     const isAnt = pos.x < VW/2;
     const x0 = isAnt ? ANT_X : POST_X;
     const x1 = isAnt ? ANT_X+ANT_W : POST_X+POST_W;
@@ -2463,10 +2467,12 @@ function buildAnatViewHead(regionNodes){
 
   // Nodes — NW=188, NH=40 exactly like pathway view
   const regionIds = new Set(regionNodes.map(n=>n.id));
-  Object.entries(NODE_POS).forEach(([id, pos])=>{
+  Object.entries(NODE_POS).forEach(([id, posRaw])=>{
     if(!nodeById[id] || !regionIds.has(id)) return;
     const nd = nodeById[id];
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
+    const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
+    posList.forEach(pos=>{
     const isAnt = pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
@@ -2505,6 +2511,7 @@ function buildAnatViewHead(regionNodes){
         .text(line);
     });
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
+    });
   });
 
   applyPendingAnatFocus();
@@ -2548,8 +2555,9 @@ function buildAnatViewTruncus(regionNodes){
   // Territory bands — simplified full-width strips per node, matching its
   // label's y-position, clipped to the relevant side's bounding box.
   const TERRITORIES = {};
-  Object.entries(NODE_POS).forEach(([id,pos])=>{
+  Object.entries(NODE_POS).forEach(([id,posRaw])=>{
     if(!(id in ANAT_COLORS)) return;
+    const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
     const isAnt = pos.x < VW/2;
     const x0 = isAnt ? ANT_X : POST_X;
     const x1 = isAnt ? ANT_X+ANT_W : POST_X+POST_W;
@@ -2634,10 +2642,12 @@ function buildAnatViewTruncus(regionNodes){
 
   // Nodes — NW=188, NH=40 exactly like pathway view
   const regionIds = new Set(regionNodes.map(n=>n.id));
-  Object.entries(NODE_POS).forEach(([id, pos])=>{
+  Object.entries(NODE_POS).forEach(([id, posRaw])=>{
     if(!nodeById[id] || !regionIds.has(id)) return;
     const nd = nodeById[id];
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
+    const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
+    posList.forEach(pos=>{
     const isAnt = pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
@@ -2676,6 +2686,7 @@ function buildAnatViewTruncus(regionNodes){
         .text(line);
     });
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
+    });
   });
 
   applyPendingAnatFocus();
@@ -2720,8 +2731,9 @@ function buildAnatViewLowerBody(regionNodes){
   // Territory bands — simplified full-width strips per node, matching its
   // label's y-position, clipped to the relevant side's bounding box.
   const TERRITORIES = {};
-  Object.entries(NODE_POS).forEach(([id,pos])=>{
+  Object.entries(NODE_POS).forEach(([id,posRaw])=>{
     if(!(id in ANAT_COLORS)) return;
+    const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
     const isAnt = pos.x < VW/2;
     const x0 = isAnt ? ANT_X : POST_X;
     const x1 = isAnt ? ANT_X+ANT_W : POST_X+POST_W;
@@ -2806,10 +2818,12 @@ function buildAnatViewLowerBody(regionNodes){
 
   // Nodes — NW=188, NH=40 exactly like pathway view
   const regionIds = new Set(regionNodes.map(n=>n.id));
-  Object.entries(NODE_POS).forEach(([id, pos])=>{
+  Object.entries(NODE_POS).forEach(([id, posRaw])=>{
     if(!nodeById[id] || !regionIds.has(id)) return;
     const nd = nodeById[id];
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
+    const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
+    posList.forEach(pos=>{
     const isAnt = pos.x < VW/2;
     const rx = isAnt ? pos.x - NW : pos.x;
     const ry = pos.y - NH/2;
@@ -2848,6 +2862,7 @@ function buildAnatViewLowerBody(regionNodes){
         .text(line);
     });
     g.append('title').text(nd.fullLabel.replace(/\n/g,' '));
+    });
   });
 
   applyPendingAnatFocus();
@@ -2966,7 +2981,8 @@ function addPathwayBtn(id){
 
 // Zoom anatomic view to a given node id (called after buildAnatView completes)
 function zoomAnatToNode(id){
-  const pos = NODE_POS[id];
+  const posRaw = NODE_POS[id];
+  const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
   if(!pos || !window._anatZoom || !window._anatSvg) return;
   const cont = document.getElementById('anat-view');
   const W = cont.clientWidth  || 1536;
