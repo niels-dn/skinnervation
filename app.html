@@ -2162,6 +2162,7 @@ function buildAnatView(regionNodes){
   const tx0 = (W - VW*sc0) / 2;
   const ty0 = (H - VH*sc0) / 2;
   svg.call(anatZoom.transform, d3.zoomIdentity.translate(tx0, ty0).scale(sc0));
+  svg.on('click', clearAnatHL);
 
   const s = anatG;
 
@@ -2434,6 +2435,7 @@ function buildAnatViewHead(regionNodes){
   const tx0 = (W - VW*sc0) / 2;
   const ty0 = (H - VH*sc0) / 2;
   svg.call(anatZoom.transform, d3.zoomIdentity.translate(tx0, ty0).scale(sc0));
+  svg.on('click', clearAnatHL);
 
   const s = anatG;
 
@@ -2612,6 +2614,7 @@ function buildAnatViewTruncus(regionNodes){
   const tx0 = (W - VW*sc0) / 2;
   const ty0 = (H - VH*sc0) / 2;
   svg.call(anatZoom.transform, d3.zoomIdentity.translate(tx0, ty0).scale(sc0));
+  svg.on('click', clearAnatHL);
 
   const s = anatG;
 
@@ -2791,6 +2794,7 @@ function buildAnatViewLowerBody(regionNodes){
   const tx0 = (W - VW*sc0) / 2;
   const ty0 = (H - VH*sc0) / 2;
   svg.call(anatZoom.transform, d3.zoomIdentity.translate(tx0, ty0).scale(sc0));
+  svg.on('click', clearAnatHL);
 
   const s = anatG;
 
@@ -3031,6 +3035,26 @@ function zoomAnatToNode(id){
 }
 
 // Highlight the active node within anatomic view (visual feedback)
+function clearAnatHL(){
+  if(!window._anatSvg) return;
+  window._anatSvg.selectAll('.anat-node').classed('anat-active', false);
+  window._anatSvg.selectAll('.anat-territory').each(function(){
+    const el = d3.select(this);
+    const base = +el.attr('data-base-op');
+    el.transition().duration(150).attr('fill-opacity', base);
+    if(el.attr('data-outline-managed') !== 'true'){
+      el.transition().duration(150)
+        .attr('stroke', el.attr('data-base-stroke'))
+        .attr('stroke-width', +el.attr('data-base-stroke-width'));
+    }
+  });
+  window._anatSvg.selectAll('.anat-territory-outline').each(function(){
+    d3.select(this).transition().duration(150).attr('stroke','none').attr('stroke-width',0);
+  });
+  tipPanel.classList.remove('visible');
+  tip.innerHTML='';
+}
+
 function anatSetActiveMulti(ids){
   if(!window._anatSvg) return;
   const idset = new Set(ids);
