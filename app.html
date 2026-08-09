@@ -1259,9 +1259,15 @@ function fitAll(){
   svg.call(zoom.transform,d3.zoomIdentity.translate((vw-TOTAL_W*sc)/2, ty).scale(sc));
 }
 setTimeout(()=>{
-  applyGroupFilter('arm');
-  if(new URLSearchParams(location.search).get('view')==='anatomic'){
-    setTimeout(()=>{ switchView('anatomic'); }, 300);
+  // Optional deep-link params: ?region=head|arm|truncus|lowerbody &view=anatomic
+  const qs = new URLSearchParams(location.search);
+  const validRegions = ['head','arm','truncus','lowerbody'];
+  const reqRegion = qs.get('region');
+  const startRegion = validRegions.includes(reqRegion) ? reqRegion : 'arm';
+  applyGroupFilter(startRegion);
+  document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on', b.dataset.g===startRegion));
+  if(qs.get('view')==='anatomic'){
+    setTimeout(()=>{ window._anatGroup = startRegion; switchView('anatomic'); }, 300);
   }
 }, 80);
 // Pass nodes to mobile UI
