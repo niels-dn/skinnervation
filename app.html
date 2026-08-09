@@ -2439,22 +2439,21 @@ function buildAnatViewHead(regionNodes){
   // above (title) and below (neck/shoulder labels) within the same fit.
 
   const ANAT_COLORS = {
-    // Trigeminal V1 (ophthalmic)
-    't1_1':'#3a5a8a','t1_2':'#3a5a8a','t1_3':'#3a5a8a','t1_4':'#3a5a8a','t1_5':'#3a5a8a','t1_6':'#3a5a8a',
-    // Trigeminal V2 — infraorbital
-    't2_1':'#3a7a3a','t2_2':'#3a7a3a','t2_3':'#3a7a3a',
-    // Trigeminal V2 — zygomatic
-    't3_1':'#3a8a7a','t3_2':'#3a8a7a',
-    // Trigeminal V3
-    't4_1':'#8b6a3a','t4_2':'#8b6a3a','t4_3':'#8b6a3a',
-    // Posterior auricular (CN VII) / auricular branch of vagus (CN X)
-    't5_1':'#8b3a3a','t6_1':'#8b3a3a',
-    // Dorsal rami C2–C4 (occipitalis major/tertius + lateral branches)
-    't7_1':'#6a3a8a','t7_2':'#6a3a8a','t8_1':'#6a3a8a','t8_2':'#6a3a8a','t9_1':'#6a3a8a',
-    // Plexus cervicalis, rami superficiales (occipitalis minor, auricularis magnus,
-    // transversus colli, supraclaviculares)
-    't7_3':'#4a3a8a','t7_4':'#4a3a8a','t7_5':'#4a3a8a',
-    't8_3a':'#4a3a8a','t8_3b':'#4a3a8a','t8_3c':'#4a3a8a',
+    // N. ophthalmicus (V1):
+    't1_1':'#1d3c66','t1_2':'#2b5188','t1_3':'#3967a8','t1_4':'#527fbf','t1_5':'#7799c8','t1_6':'#9bb2d4',
+    // N. maxillaris (V2):
+    't2_1':'#236b41','t2_2':'#348f5a','t2_3':'#47b274','t3_1':'#6fbf91','t3_2':'#97cdae',
+    // N. mandibularis (V3):
+    't4_1':'#7e5424','t4_2':'#b07b3e','t4_3':'#c4a077',
+    // N. facialis (VII):
+    't5_1':'#a0353e',
+    // N. vagus (X):
+    't6_1':'#723e98',
+    // Plexus cervicalis (rami superficiales): occipitalis minor, auricularis magnus,
+    // transversus colli, supraclaviculares ant./medii/post.
+    't7_3':'#1d5a66','t7_4':'#2b7888','t7_5':'#3996a8','t8_3a':'#52acbf','t8_3b':'#77bbc8','t8_3c':'#9bcad4',
+    // Øvrige (dorsal rami C2–C4: occipitalis major/tertius + lateral branches):
+    't7_1':'#6e6820','t7_2':'#928a2f','t8_1':'#b4aa40','t8_2':'#c2ba65','t9_1':'#cec88c',
   };
 
   // Image placement within the shared 1536×1024 canvas
