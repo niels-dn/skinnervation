@@ -20,18 +20,20 @@
   /* ── Steps ── */
   .steps { list-style:none; padding:0; margin:0 0 34px; counter-reset:step; }
   .steps li {
-    position:relative; padding:0 0 0 40px; margin:0 0 14px;
-    font-size:.9rem; color:#5a5040; line-height:1.55;
+    counter-increment:step;
+    display:flex; align-items:flex-start; gap:16px;
+    margin:0 0 18px;
+    font-size:.9rem; color:#5a5040; line-height:1.5;
   }
   .steps li:last-child { margin-bottom:0; }
   .steps li::before {
-    counter-increment:step; content:counter(step);
-    position:absolute; left:0; top:-1px;
-    width:26px; height:26px; border-radius:50%;
-    background:var(--accent); color:#fff;
-    font-family:'Source Code Pro',monospace; font-size:.78rem; font-weight:600;
-    display:flex; align-items:center; justify-content:center;
+    content:counter(step);
+    flex:0 0 auto; width:.8em;
+    font-family:'Libre Baskerville',serif; font-weight:700;
+    font-size:2.6rem; line-height:1; color:var(--accent);
+    text-align:center;
   }
+  .steps li > span { flex:1 1 auto; padding-top:.35em; }
   .steps b { color:var(--text); font-weight:700; }
 
   /* ── Figure ── */
@@ -152,10 +154,10 @@
     </p>
 
     <ol class="steps">
-      <li><b>Pick a body region</b> in the toolbar — Head/Neck, Upper limb, Truncus or Lower body.</li>
-      <li><b>Click a nerve</b> to trace its pathway from spinal cord to skin.</li>
-      <li><b>Switch to Innervation</b> to see the skin area that nerve supplies.</li>
-      <li><b>Or click a skin area</b> directly to find out which nerve supplies it.</li>
+      <li><span><b>Pick a body region</b> in the toolbar — Head/Neck, Upper limb, Truncus or Lower body.</span></li>
+      <li><span><b>Click a nerve</b> to trace its pathway from spinal cord to skin.</span></li>
+      <li><span><b>Switch to Innervation</b> to see the skin area that nerve supplies.</span></li>
+      <li><span><b>Or click a skin area</b> directly to find out which nerve supplies it.</span></li>
     </ol>
 
     <figure>
