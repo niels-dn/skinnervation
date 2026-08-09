@@ -112,6 +112,18 @@
     font-size: .85rem; color: #5a5040; line-height: 1.6;
     padding: 9px 20px 9px 0;
   }
+  .region-links { margin-top:7px; display:flex; gap:7px; flex-wrap:wrap; }
+  .region-links a {
+    display:inline-block;
+    font-family:'Source Code Pro',monospace; font-size:.7rem;
+    color:var(--text); text-decoration:none;
+    background:#f4f1ec; border:1px solid var(--border); border-radius:3px;
+    padding:3px 10px; line-height:1.5;
+    transition:background .12s, border-color .12s;
+  }
+  .region-links a:hover, .region-links a:focus {
+    background:var(--accent); border-color:var(--accent); color:#fff;
+  }
   @media (max-width: 540px) {
     .region-box-body, .region-row,
     .region-label, .region-desc { display: block; }
@@ -186,28 +198,48 @@
           <span class="region-name">Head / Neck</span>
           <span class="region-levels">CN V, VII, X · C2–C4</span>
         </div>
-        <span class="region-desc">Trigeminal, facial and vagal cutaneous branches, with the cervical plexus supplying the posterior scalp, neck and upper shoulder.</span>
+        <div class="region-desc">Trigeminal, facial and vagal cutaneous branches, with the cervical plexus supplying the posterior scalp, neck and upper shoulder.
+          <div class="region-links">
+            <a href="app.html?region=head">Pathway</a>
+            <a href="app.html?region=head&amp;view=anatomic">Innervation</a>
+          </div>
+        </div>
       </div>
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Upper limb</span>
           <span class="region-levels">C5–T1</span>
         </div>
-        <span class="region-desc">Brachial plexus derivatives covering the arm, forearm and hand.</span>
+        <div class="region-desc">Brachial plexus derivatives covering the arm, forearm and hand.
+          <div class="region-links">
+            <a href="app.html?region=arm">Pathway</a>
+            <a href="app.html?region=arm&amp;view=anatomic">Innervation</a>
+          </div>
+        </div>
       </div>
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Truncus</span>
           <span class="region-levels">T2–T11</span>
         </div>
-        <span class="region-desc">Intercostal nerves and their lateral and anterior cutaneous branches, forming segmental bands across thorax and abdomen.</span>
+        <div class="region-desc">Intercostal nerves and their lateral and anterior cutaneous branches, forming segmental bands across thorax and abdomen.
+          <div class="region-links">
+            <a href="app.html?region=truncus">Pathway</a>
+            <a href="app.html?region=truncus&amp;view=anatomic">Innervation</a>
+          </div>
+        </div>
       </div>
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Lower body</span>
           <span class="region-levels">T12–Co</span>
         </div>
-        <span class="region-desc">Lumbar, sacral and coccygeal plexus branches supplying the lower abdomen, perineum, gluteal region and lower limb.</span>
+        <div class="region-desc">Lumbar, sacral and coccygeal plexus branches supplying the lower abdomen, perineum, gluteal region and lower limb.
+          <div class="region-links">
+            <a href="app.html?region=lowerbody">Pathway</a>
+            <a href="app.html?region=lowerbody&amp;view=anatomic">Innervation</a>
+          </div>
+        </div>
       </div>
     </div>
     </div>
