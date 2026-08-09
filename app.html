@@ -3085,28 +3085,9 @@ function anatSetActiveMulti(ids){
     const base = +el.attr('data-base-op');
     const isActive = idset.has(el.attr('data-nid'));
     // Active: boost opacity. Inactive: dim (fade toward background) so the active
-    // dermatome stands out through contrast rather than a clashing accent color.
+    // dermatome stands out through contrast alone — no outline is drawn.
     const target = isActive ? Math.min(base + 0.35, 0.9) : base * 0.35;
     el.transition().duration(150).attr('fill-opacity', target);
-    // Elements with a companion crisp outline layer (the blurred real-drawn arm paths)
-    // never get their own stroke — the separate unblurred layer below handles that,
-    // so the highlight border doesn't inherit the fuzzy blur.
-    if(el.attr('data-outline-managed') !== 'true'){
-      const baseStroke = el.attr('data-base-stroke');
-      const baseStrokeW = +el.attr('data-base-stroke-width');
-      el.transition().duration(150)
-        .attr('stroke', isActive ? ANAT_ACCENT : baseStroke)
-        .attr('stroke-width', isActive ? 1.25 : baseStrokeW);
-    }
-  });
-  // Crisp (non-blurred) outline layer: only these get the active highlight border for
-  // territories whose fill lives inside a blurred group.
-  window._anatSvg.selectAll('.anat-territory-outline').each(function(){
-    const el = d3.select(this);
-    const isActive = idset.has(el.attr('data-nid'));
-    el.transition().duration(150)
-      .attr('stroke', isActive ? ANAT_ACCENT : 'none')
-      .attr('stroke-width', isActive ? 1.25 : 0);
   });
 }
 function anatSetActive(id){ anatSetActiveMulti([id]); }
