@@ -3158,14 +3158,6 @@ function clearAnatHL(){
     const el = d3.select(this);
     const base = +el.attr('data-base-op');
     el.transition().duration(150).attr('fill-opacity', base);
-    if(el.attr('data-outline-managed') !== 'true'){
-      el.transition().duration(150)
-        .attr('stroke', el.attr('data-base-stroke'))
-        .attr('stroke-width', +el.attr('data-base-stroke-width'));
-    }
-  });
-  window._anatSvg.selectAll('.anat-territory-outline').each(function(){
-    d3.select(this).transition().duration(150).attr('stroke','none').attr('stroke-width',0);
   });
   tipPanel.classList.remove('visible');
   tip.innerHTML='';
