@@ -5,73 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Guide — Skinnervation</title>
 <link rel="stylesheet" href="css/skin.css"/>
-<style>/* v2 */
+<style>/* v3 — quick-start guide */
   #app { display:flex; flex-direction:column; flex:1; }
-  main { flex:1; padding:40px 24px; max-width:720px; margin:0 auto; width:100%; }
+  main { flex:1; padding:36px 24px 48px; max-width:760px; margin:0 auto; width:100%; }
   h1 {
     font-family:'Libre Baskerville',serif;
     font-size:1.25rem; font-weight:700; color:var(--text);
-    margin:0 0 8px;
+    margin:0 0 6px;
   }
-  .intro {
-    font-size:.85rem; color:#5a5040; line-height:1.75;
-    margin:0 0 36px;
+  .lede {
+    font-size:.85rem; color:#5a5040; line-height:1.7; margin:0 0 30px;
   }
-  /* View section cards */
-  .view-section {
+
+  /* ── Steps ── */
+  .steps { list-style:none; padding:0; margin:0 0 34px; counter-reset:step; }
+  .steps li {
+    position:relative; padding:0 0 0 40px; margin:0 0 14px;
+    font-size:.9rem; color:#5a5040; line-height:1.55;
+  }
+  .steps li:last-child { margin-bottom:0; }
+  .steps li::before {
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:-1px;
+    width:26px; height:26px; border-radius:50%;
+    background:var(--accent); color:#fff;
+    font-family:'Source Code Pro',monospace; font-size:.78rem; font-weight:600;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .steps b { color:var(--text); font-weight:700; }
+
+  /* ── Figure ── */
+  figure { margin:0 0 34px; }
+  figure img {
+    width:100%; height:auto; display:block;
+    border:1.5px solid var(--border); border-radius:4px; background:var(--panel);
+  }
+  figcaption {
+    font-size:.72rem; color:var(--muted); font-style:italic;
+    font-family:'Libre Baskerville',serif; margin-top:7px; text-align:center;
+  }
+
+  /* ── Two view cards ── */
+  .view-cards { display:flex; gap:18px; margin:0 0 30px; }
+  .vcard {
+    flex:1; min-width:0;
     border:1.5px solid var(--border); border-radius:4px;
-    background:var(--panel); margin-bottom:24px; overflow:hidden;
+    background:var(--panel); overflow:hidden;
+    display:flex; flex-direction:column;
   }
-  .view-section-header {
-    padding:16px 24px 12px;
-    border-bottom:1px solid var(--border);
-    display:flex; align-items:baseline; gap:12px;
+  .vcard img { width:100%; height:150px; object-fit:cover; object-position:center; display:block; border-bottom:1px solid var(--border); }
+  .vcard-body { padding:12px 16px 14px; }
+  .vcard h2 {
+    font-family:'Libre Baskerville',serif;
+    font-size:.9rem; font-weight:700; color:var(--text); margin:0 0 5px;
   }
-  .view-section-header h2 {
+  .vcard p { font-size:.8rem; color:#5a5040; line-height:1.55; margin:0; }
+  @media (max-width:600px){
+    .view-cards { flex-direction:column; gap:14px; }
+    .vcard img { height:170px; }
+  }
+
+  /* ── Note ── */
+  .note {
+    border-left:3px solid var(--accent);
+    padding:10px 0 10px 16px; margin:0 0 38px;
+    font-size:.82rem; color:#5a5040; line-height:1.65;
+  }
+  .note b { color:var(--text); }
+
+  /* ── Regions ── */
+  .regions-intro {
+    font-size:.85rem; color:#5a5040; line-height:1.7; margin:0 0 14px;
+  }
+  h2.section {
     font-family:'Libre Baskerville',serif;
     font-size:.95rem; font-weight:700; color:var(--text);
-    margin:0;
+    margin:0 0 10px;
   }
-  .view-tag {
-    font-size:.60rem; color:var(--muted); font-style:italic;
-    font-family:'Libre Baskerville',serif;
-  }
-  .view-section-body { padding:18px 24px 20px; }
-  .view-section-body p {
-    font-size:.85rem; color:#5a5040; line-height:1.75; margin:0 0 10px;
-  }
-  .view-section-body p:last-child { margin-bottom:0; }
-  .view-section-body h3 {
-    font-family:'Libre Baskerville',serif;
-    font-size:.88rem; font-weight:700; color:var(--text);
-    margin:16px 0 6px;
-  }
-  .view-section-body h3:first-child { margin-top:0; }
-
-  /* General sections */
-  .skin-prose h3 {
-    font-family:'Libre Baskerville',serif;
-    font-size:.88rem; font-weight:700; color:var(--text);
-    margin:28px 0 8px;
-  }
-  .skin-prose p {
-    font-size:.85rem; color:#5a5040; line-height:1.75; margin:0 0 10px;
-  }
-  .skin-prose hr {
-    border:none; border-top:1px solid #ddd8ce; margin:28px 0;
-  }
-  .skin-prose a { color:var(--accent); text-decoration:underline; }
-
-  /* ── Region overview box ── */
   .region-box {
     background: var(--panel); border: 1.5px solid var(--border);
-    border-radius: 4px; overflow: hidden; margin-bottom: 24px;
-  }
-  .region-box-title {
-    font-family: 'Libre Baskerville', serif;
-    font-size: .95rem; font-weight: 700; color: var(--text);
-    padding: 12px 20px 10px;
-    border-bottom: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden;
   }
   .region-box-body { display: table; width: 100%; border-collapse: collapse; }
   .region-row { display: table-row; }
@@ -81,8 +94,7 @@
   }
   .region-label {
     display: table-cell; vertical-align: top;
-    white-space: nowrap;
-    padding: 9px 16px 9px 20px;
+    white-space: nowrap; padding: 9px 16px 9px 20px;
   }
   .region-name {
     display: block;
@@ -93,8 +105,7 @@
   .region-levels {
     display: block;
     font-size: .72rem; color: var(--muted);
-    font-family: 'Source Code Pro', monospace;
-    line-height: 1.5;
+    font-family: 'Source Code Pro', monospace; line-height: 1.5;
   }
   .region-desc {
     display: table-cell; vertical-align: top;
@@ -122,111 +133,81 @@
 <body>
 <div id="app">
   <main>
-    <h1>Guide</h1>
-
-    <p class="intro" style="margin-top:28px;">
-      Skinnervation presents cutaneous innervation in two complementary views, toggled in the toolbar.
+    <h1>Quick start</h1>
+    <p class="lede">
+      Skinnervation maps the cutaneous innervation of the whole body — from spinal
+      root to the patch of skin it supplies.
     </p>
 
-    <!-- Pathway View -->
-    <div class="view-section">
-      <div class="view-section-header">
-        <h2>Pathway View</h2>
+    <ol class="steps">
+      <li><b>Pick a body region</b> in the toolbar — Head/Neck, Upper limb, Truncus or Lower body.</li>
+      <li><b>Click a nerve</b> to trace its pathway from spinal cord to skin.</li>
+      <li><b>Switch to Innervation</b> to see the skin area that nerve supplies.</li>
+      <li><b>Or click a skin area</b> directly to find out which nerve supplies it.</li>
+    </ol>
+
+    <figure>
+      <img src="assets/guide-toolbar.png" alt="The Skinnervation toolbar, with the region buttons, view switch and search field marked"/>
+      <figcaption>The toolbar — everything you need to navigate.</figcaption>
+    </figure>
+
+    <div class="view-cards">
+      <div class="vcard">
+        <img src="assets/guide-pathway.png" alt="Pathway view showing a nerve network diagram"/>
+        <div class="vcard-body">
+          <h2>Pathway</h2>
+          <p>The nerve's course as a diagram — spinal root to cutaneous branch.</p>
+        </div>
       </div>
-      <div class="view-section-body">
-        <p>
-          The Pathway View shows the hierarchical structure of peripheral nerve
-          innervation as a network diagram — from spinal root to terminal
-          cutaneous branch — for one body region at a time.
-        </p>
-
-        <h3>Browsing</h3>
-        <p>
-          Use the region buttons — Head/Neck, Upper limb, Truncus, Lower body —
-          or search by nerve name or index number to navigate directly to any nerve.
-        </p>
-
-        <h3>Interaction</h3>
-        <p>
-          Click any node to highlight its full innervation pathway, upstream
-          toward the spinal cord and downstream toward the skin. The info panel
-          shows the nerve's full anatomical name, spinal origin, and index number.
-          A dashed border on a node or edge indicates variable innervation —
-          present in some individuals but not all.
-        </p>
-      </div>
-    </div>
-
-    <!-- Anatomic View -->
-    <div class="view-section">
-      <div class="view-section-header">
-        <h2>Anatomic View</h2>
-      </div>
-      <div class="view-section-body">
-        <p>
-          The Anatomic View shows the approximate cutaneous territories of
-          peripheral nerves overlaid on anatomical outlines of the relevant body
-          region, seen from the anterior and posterior aspects.
-        </p>
-
-        <h3>Switching views</h3>
-        <p>
-          When a terminal cutaneous nerve is selected in Pathway View, an
-          <em>Anatomic View</em> button appears in the info panel.
-          Clicking it switches to Anatomic View with the selected nerve in focus.
-        </p>
-
-        <h3>Interaction</h3>
-        <p>
-          Click any nerve label to open its info panel. A <em>Pathway View</em>
-          button in the panel returns you to Pathway View with that nerve
-          highlighted.
-        </p>
-
-        <h3>Territories</h3>
-        <p>
-          The territories shown are approximations. Significant individual
-          variation exists, particularly at borders, and should be interpreted
-          in a clinical context.
-        </p>
+      <div class="vcard">
+        <img src="assets/guide-innervation.png" alt="Innervation view showing cutaneous territories drawn on the arm"/>
+        <div class="vcard-body">
+          <h2>Innervation</h2>
+          <p>The nerve's skin territory, drawn on the body from front and back.</p>
+        </div>
       </div>
     </div>
 
-    <p class="intro">
-      The nerve index covers the cutaneous innervation of the entire human body, which is divided in four anatomical regions. Select a region using
-      the filter buttons in the toolbar to explore its cutaneous innervation.
+    <p class="note">
+      <b>Note:</b> Cutaneous territories are approximations. Individual variation is
+      considerable, particularly at borders, and findings should always be interpreted
+      in clinical context.
+    </p>
+
+    <h2 class="section">Regions</h2>
+    <p class="regions-intro">
+      The index is divided into four anatomical regions:
     </p>
 
     <div class="region-box">
-      <div class="region-box-title">Regions</div>
     <div class="region-box-body">
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Head / Neck</span>
-          <span class="region-levels">Cranial nerves V, VII and X<br/>Spinal nerves C2–C4</span>
+          <span class="region-levels">CN V, VII, X · C2–C4</span>
         </div>
-        <span class="region-desc">Trigeminal, facial and vagal cutaneous branches, together with the cervical plexus supplying the posterior scalp, neck and upper shoulder.</span>
+        <span class="region-desc">Trigeminal, facial and vagal cutaneous branches, with the cervical plexus supplying the posterior scalp, neck and upper shoulder.</span>
       </div>
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Upper limb</span>
-          <span class="region-levels">Spinal nerves C5–T1</span>
+          <span class="region-levels">C5–T1</span>
         </div>
-        <span class="region-desc">Brachial plexus derivatives covering the entire arm, forearm, and hand, including medial cutaneous, musculocutaneous, radial, median and ulnar contributions.</span>
+        <span class="region-desc">Brachial plexus derivatives covering the arm, forearm and hand.</span>
       </div>
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Truncus</span>
-          <span class="region-levels">Spinal nerves T2–T11</span>
+          <span class="region-levels">T2–T11</span>
         </div>
-        <span class="region-desc">Intercostal nerves and their lateral and anterior cutaneous branches, forming segmental dermatomal bands across the thorax and abdomen.</span>
+        <span class="region-desc">Intercostal nerves and their lateral and anterior cutaneous branches, forming segmental bands across thorax and abdomen.</span>
       </div>
       <div class="region-row">
         <div class="region-label">
           <span class="region-name">Lower body</span>
-          <span class="region-levels">Spinal nerves T12–Co</span>
+          <span class="region-levels">T12–Co</span>
         </div>
-        <span class="region-desc">Lumbar, sacral and coccygeal plexus branches supplying the lower abdomen, perineum, gluteal region, and the entire lower limb.</span>
+        <span class="region-desc">Lumbar, sacral and coccygeal plexus branches supplying the lower abdomen, perineum, gluteal region and lower limb.</span>
       </div>
     </div>
     </div>
