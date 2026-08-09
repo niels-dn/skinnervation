@@ -114,7 +114,11 @@
     font-size: .85rem; color: #5a5040; line-height: 1.6;
     padding: 9px 20px 9px 0;
   }
-  .region-links { margin-top:7px; display:flex; gap:7px; flex-wrap:wrap; }
+  .region-links { margin-top:7px; display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+  .region-links-label {
+    font-family:'Source Code Pro',monospace; font-size:.7rem;
+    color:var(--muted); margin-right:2px;
+  }
   .region-links a {
     display:inline-block;
     font-family:'Source Code Pro',monospace; font-size:.7rem;
@@ -201,7 +205,7 @@
           <span class="region-levels">CN V, VII, X · C2–C4</span>
         </div>
         <div class="region-desc">Trigeminal, facial and vagal cutaneous branches, with the cervical plexus supplying the posterior scalp, neck and upper shoulder.
-          <div class="region-links">
+          <div class="region-links"><span class="region-links-label">Go to:</span>
             <a href="app.html?region=head">Pathway</a>
             <a href="app.html?region=head&amp;view=anatomic">Innervation</a>
           </div>
@@ -213,7 +217,7 @@
           <span class="region-levels">C5–T1</span>
         </div>
         <div class="region-desc">Brachial plexus derivatives covering the arm, forearm and hand.
-          <div class="region-links">
+          <div class="region-links"><span class="region-links-label">Go to:</span>
             <a href="app.html?region=arm">Pathway</a>
             <a href="app.html?region=arm&amp;view=anatomic">Innervation</a>
           </div>
@@ -225,7 +229,7 @@
           <span class="region-levels">T2–T11</span>
         </div>
         <div class="region-desc">Intercostal nerves and their lateral and anterior cutaneous branches, forming segmental bands across thorax and abdomen.
-          <div class="region-links">
+          <div class="region-links"><span class="region-links-label">Go to:</span>
             <a href="app.html?region=truncus">Pathway</a>
             <a href="app.html?region=truncus&amp;view=anatomic">Innervation</a>
           </div>
@@ -237,7 +241,7 @@
           <span class="region-levels">T12–Co</span>
         </div>
         <div class="region-desc">Lumbar, sacral and coccygeal plexus branches supplying the lower abdomen, perineum, gluteal region and lower limb.
-          <div class="region-links">
+          <div class="region-links"><span class="region-links-label">Go to:</span>
             <a href="app.html?region=lowerbody">Pathway</a>
             <a href="app.html?region=lowerbody&amp;view=anatomic">Innervation</a>
           </div>
