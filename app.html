@@ -323,6 +323,14 @@
 </style>
 </head>
 <body>
+<script>
+  // If the page was deep-linked straight into Innervation view, hide the
+  // Pathway graph via CSS immediately — before it's ever painted — so there
+  // is no flash of Pathway content while the rest of the script initializes.
+  if (new URLSearchParams(location.search).get('view') === 'anatomic') {
+    document.write('<style>#graph{display:none !important}</style>');
+  }
+</script>
 <div id="app">
 
 <div id="toolbar">
@@ -1264,10 +1272,14 @@ setTimeout(()=>{
   const validRegions = ['head','arm','truncus','lowerbody'];
   const reqRegion = qs.get('region');
   const startRegion = validRegions.includes(reqRegion) ? reqRegion : 'arm';
-  applyGroupFilter(startRegion);
-  document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on', b.dataset.g===startRegion));
   if(qs.get('view')==='anatomic'){
-    setTimeout(()=>{ window._anatGroup = startRegion; switchView('anatomic'); }, 300);
+    // Go straight to Innervation view — switchView() itself hides Pathway
+    // synchronously and applies the region filter, so Pathway is never shown.
+    window._anatGroup = startRegion;
+    switchView('anatomic');
+  } else {
+    applyGroupFilter(startRegion);
+    document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on', b.dataset.g===startRegion));
   }
 }, 80);
 // Pass nodes to mobile UI
