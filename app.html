@@ -2391,38 +2391,37 @@ function buildAnatView(regionNodes){
       textEls.push(t);
     });
 
-    // Underline each line individually (matches that line's own measured width)
+    // Measure all lines (no per-line underline) to find the widest extent
     let maxRight = -Infinity, maxLeft = Infinity;
-    let lastLineLeftX = null, lastLineRightX = null;
-    textEls.forEach((t,i)=>{
+    textEls.forEach(t=>{
       const w = t.node().getComputedTextLength();
       const tLeft  = anchor==='end' ? pos.x - w : (anchor==='middle' ? pos.x - w/2 : pos.x);
       const tRight = tLeft + w;
-      const uY = startY + i*lineH + fs*0.38;
-      g.append('line').attr('class','anat-leader-underline')
-        .attr('x1', tLeft).attr('x2', tRight).attr('y1', uY).attr('y2', uY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1);
       maxRight = Math.max(maxRight, tRight); maxLeft = Math.min(maxLeft, tLeft);
-      if(i===lines.length-1){ lastLineLeftX = tLeft; lastLineRightX = tRight; }
     });
-    const lastUY = startY + (lines.length-1)*lineH + fs*0.38;
+
+    // ONE connector bar beneath the whole label block, with more clearance than a
+    // text underline would have — the leader line(s) attach directly to its ends.
+    const barY = startY + (lines.length-1)*lineH + fs*0.75;
+    g.append('line').attr('class','anat-leader-underline')
+      .attr('x1', maxLeft).attr('x2', maxRight).attr('y1', barY).attr('y2', barY)
+      .attr('stroke', LEADER_COL).attr('stroke-width', 1);
 
     if(isCentered){
-      // Two leader lines originate from the label's BOTTOM line: left edge → anterior
-      // dot, right edge → posterior dot (dots[0]=ant, dots[1]=post)
+      // Two leader lines run from each dot to the corresponding end of the bar
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[0].dx).attr('y1', dotList[0].dy)
-        .attr('x2', lastLineLeftX).attr('y2', lastUY)
+        .attr('x2', maxLeft).attr('y2', barY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[1].dx).attr('y1', dotList[1].dy)
-        .attr('x2', lastLineRightX).attr('y2', lastUY)
+        .attr('x2', maxRight).attr('y2', barY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
     } else {
-      const nearX = isAnt ? lastLineRightX : lastLineLeftX;
+      const nearX = isAnt ? maxRight : maxLeft;
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', pos.dx).attr('y1', pos.dy)
-        .attr('x2', nearX).attr('y2', lastUY)
+        .attr('x2', nearX).attr('y2', barY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
     }
 
