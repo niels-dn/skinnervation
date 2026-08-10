@@ -2393,7 +2393,7 @@ function buildAnatView(regionNodes){
 
     // Underline each line individually (matches that line's own measured width)
     let maxRight = -Infinity, maxLeft = Infinity;
-    let firstLineLeftX = null, firstLineRightX = null;
+    let lastLineLeftX = null, lastLineRightX = null;
     textEls.forEach((t,i)=>{
       const w = t.node().getComputedTextLength();
       const tLeft  = anchor==='end' ? pos.x - w : (anchor==='middle' ? pos.x - w/2 : pos.x);
@@ -2403,26 +2403,26 @@ function buildAnatView(regionNodes){
         .attr('x1', tLeft).attr('x2', tRight).attr('y1', uY).attr('y2', uY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
       maxRight = Math.max(maxRight, tRight); maxLeft = Math.min(maxLeft, tLeft);
-      if(i===0){ firstLineLeftX = tLeft; firstLineRightX = tRight; }
+      if(i===lines.length-1){ lastLineLeftX = tLeft; lastLineRightX = tRight; }
     });
-    const firstUY = startY + fs*0.38;
+    const lastUY = startY + (lines.length-1)*lineH + fs*0.38;
 
     if(isCentered){
-      // Two leader lines: label's first-line left edge → anterior dot,
-      // first-line right edge → posterior dot (dots[0]=ant, dots[1]=post)
+      // Two leader lines originate from the label's BOTTOM line: left edge → anterior
+      // dot, right edge → posterior dot (dots[0]=ant, dots[1]=post)
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[0].dx).attr('y1', dotList[0].dy)
-        .attr('x2', firstLineLeftX).attr('y2', firstUY)
+        .attr('x2', lastLineLeftX).attr('y2', lastUY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[1].dx).attr('y1', dotList[1].dy)
-        .attr('x2', firstLineRightX).attr('y2', firstUY)
+        .attr('x2', lastLineRightX).attr('y2', lastUY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
     } else {
-      const nearX = isAnt ? firstLineRightX : firstLineLeftX;
+      const nearX = isAnt ? lastLineRightX : lastLineLeftX;
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', pos.dx).attr('y1', pos.dy)
-        .attr('x2', nearX).attr('y2', firstUY)
+        .attr('x2', nearX).attr('y2', lastUY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
     }
 
