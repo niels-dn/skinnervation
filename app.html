@@ -3209,16 +3209,42 @@ function addPathwayBtn(id){
 
 // Zoom anatomic view to a given node id (called after buildAnatView completes)
 function zoomAnatToNode(id){
-  const posRaw = NODE_POS[id];
-  const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
-  if(!pos || !window._anatZoom || !window._anatSvg) return;
+  if(!window._anatZoom || !window._anatSvg) return;
   const cont = document.getElementById('anat-view');
   const W = cont.clientWidth  || 1536;
   const H = cont.clientHeight || 900;
-  const sc = Math.min(W/VW, H/VH)*0.92;
-  const scale = Math.min(sc*2.4, 3.2);
-  const tx = W/2 - pos.x*scale - (NW*scale)/2;
-  const ty = H/2 - pos.y*scale - (NH*scale)/2;
+  const sc0 = Math.min(W/VW, H/VH)*0.92;
+
+  // Prefer real rendered geometry (dot-line regions: arm, head/neck) so the bounding
+  // box always includes every territory dot AND the label text, however they're
+  // arranged (single side, centred/bilateral, above/below the outline, etc.).
+  const g = Array.from(document.querySelectorAll('.anat-node')).find(gg => gg.__anatId === id);
+  const dotLineEls = g ? g.querySelectorAll('.anat-dot, .anat-label-text') : [];
+  let minX,minY,maxX,maxY;
+  if(g && dotLineEls.length){
+    minX=Infinity; minY=Infinity; maxX=-Infinity; maxY=-Infinity;
+    dotLineEls.forEach(el=>{
+      const b = el.getBBox();
+      minX=Math.min(minX,b.x); maxX=Math.max(maxX,b.x+b.width);
+      minY=Math.min(minY,b.y); maxY=Math.max(maxY,b.y+b.height);
+    });
+  } else {
+    // Fallback for regions still on the box-label system (truncus, lower body)
+    const posRaw = NODE_POS[id];
+    const pos = Array.isArray(posRaw) ? posRaw[0] : posRaw;
+    if(!pos) return;
+    const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
+    const rx = isAnt ? pos.x-NW : pos.x;
+    minX=rx; maxX=rx+NW; minY=pos.y-NH/2; maxY=pos.y+NH/2;
+  }
+
+  const boxW = maxX-minX, boxH = maxY-minY;
+  const cx = (minX+maxX)/2, cy = (minY+maxY)/2;
+  const PAD = 60;
+  const scaleToFit = Math.min(W/(boxW+PAD*2), H/(boxH+PAD*2));
+  const scale = Math.max(sc0, Math.min(scaleToFit, 3.2));
+  const tx = W/2 - cx*scale;
+  const ty = H/2 - cy*scale;
   window._anatSvg.transition().duration(450).call(
     window._anatZoom.transform,
     d3.zoomIdentity.translate(tx,ty).scale(scale)
