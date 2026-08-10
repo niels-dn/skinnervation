@@ -2395,39 +2395,45 @@ function buildAnatView(regionNodes){
     const barY = startY + (lines.length-1)*lineH + fs*0.75;
     g.append('line').attr('class','anat-leader-underline')
       .attr('x1', maxLeft).attr('x2', maxRight).attr('y1', barY).attr('y2', barY)
-      .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
+      .attr('stroke', LEADER_COL).attr('stroke-width', 1.6)
+      .style('pointer-events','none');
 
     if(isCentered){
       // Two leader lines run from each dot to the corresponding end of the bar
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[0].dx).attr('y1', dotList[0].dy)
         .attr('x2', maxLeft).attr('y2', barY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6)
+        .style('pointer-events','none');
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[1].dx).attr('y1', dotList[1].dy)
         .attr('x2', maxRight).attr('y2', barY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6)
+        .style('pointer-events','none');
     } else {
       const nearX = isAnt ? maxRight : maxLeft;
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', pos.dx).attr('y1', pos.dy)
         .attr('x2', nearX).attr('y2', barY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6)
+        .style('pointer-events','none');
     }
 
     // Dots drawn LAST so they sit on top of the leader lines — the line appears
     // to emerge from the dot's edge rather than crossing through its middle.
+    // Not clickable: only the label text and the dermatome territory activate a nerve.
     dotList.forEach(d=>{
       g.append('circle').attr('class','anat-dot')
         .attr('cx', d.dx).attr('cy', d.dy).attr('r', 5)
-        .attr('fill', col).attr('stroke', LEADER_COL).attr('stroke-width', 1.2);
+        .attr('fill', col).attr('stroke', LEADER_COL).attr('stroke-width', 1.2)
+        .style('pointer-events','none');
     });
 
-    // Generous invisible hit-area (dots + lines + label) for reliable tapping on mobile
-    const allX = [maxLeft, maxRight, ...dotList.map(d=>d.dx)];
-    const allY = [startY - lineH/2, startY + totalH, ...dotList.map(d=>d.dy)];
-    const hx0 = Math.min(...allX) - 6, hx1 = Math.max(...allX) + 6;
-    const hy0 = Math.min(...allY) - 9, hy1 = Math.max(...allY) + 9;
+    // Hit-area scoped to the LABEL TEXT only (small padding) — deliberately excludes
+    // the dots and leader lines, so overlapping lines from other nerves can never
+    // steal a tap meant for this label.
+    const hx0 = maxLeft - 6, hx1 = maxRight + 6;
+    const hy0 = startY - lineH/2 - 6, hy1 = startY + totalH + 6;
     g.insert('rect', ':first-child')
       .attr('x', hx0).attr('y', hy0).attr('width', hx1-hx0).attr('height', hy1-hy0)
       .attr('fill', '#000').attr('opacity', 0);
@@ -2684,7 +2690,8 @@ function buildAnatViewHead(regionNodes){
     const barY = startY + (lines.length-1)*lineH + fs*0.75;
     g.append('line').attr('class','anat-leader-underline')
       .attr('x1', maxLeft).attr('x2', maxRight).attr('y1', barY).attr('y2', barY)
-      .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
+      .attr('stroke', LEADER_COL).attr('stroke-width', 1.6)
+      .style('pointer-events','none');
 
     if(isCentered){
       // Generalized: each dot connects to whichever bar-end (left/right) is nearer
@@ -2694,26 +2701,31 @@ function buildAnatViewHead(regionNodes){
         g.append('line').attr('class','anat-leader-line')
           .attr('x1', d.dx).attr('y1', d.dy)
           .attr('x2', target).attr('y2', barY)
-          .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
+          .attr('stroke', LEADER_COL).attr('stroke-width', 1.6)
+          .style('pointer-events','none');
       });
     } else {
       const nearX = isAnt ? maxRight : maxLeft;
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', pos.dx).attr('y1', pos.dy)
         .attr('x2', nearX).attr('y2', barY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6)
+        .style('pointer-events','none');
     }
 
+    // Not clickable: only the label text and the dermatome territory activate a nerve.
     dotList.forEach(d=>{
       g.append('circle').attr('class','anat-dot')
         .attr('cx', d.dx).attr('cy', d.dy).attr('r', 5)
-        .attr('fill', col).attr('stroke', LEADER_COL).attr('stroke-width', 1.2);
+        .attr('fill', col).attr('stroke', LEADER_COL).attr('stroke-width', 1.2)
+        .style('pointer-events','none');
     });
 
-    const allX = [maxLeft, maxRight, ...dotList.map(d=>d.dx)];
-    const allY = [startY - lineH/2, startY + totalH, ...dotList.map(d=>d.dy)];
-    const hx0 = Math.min(...allX) - 6, hx1 = Math.max(...allX) + 6;
-    const hy0 = Math.min(...allY) - 9, hy1 = Math.max(...allY) + 9;
+    // Hit-area scoped to the LABEL TEXT only (small padding) — deliberately excludes
+    // the dots and leader lines, so overlapping lines from other nerves can never
+    // steal a tap meant for this label.
+    const hx0 = maxLeft - 6, hx1 = maxRight + 6;
+    const hy0 = startY - lineH/2 - 6, hy1 = startY + totalH + 6;
     g.insert('rect', ':first-child')
       .attr('x', hx0).attr('y', hy0).attr('width', hx1-hx0).attr('height', hy1-hy0)
       .attr('fill', '#000').attr('opacity', 0);
