@@ -185,7 +185,7 @@
   .anat-node.anat-active .anat-dot { r:7.5; stroke-width:2; stroke:#2a2018 !important; }
   .anat-node.anat-active .anat-label-text { font-weight:700 !important; fill:#2a2018 !important; }
   .anat-node.anat-active .anat-leader-line,
-  .anat-node.anat-active .anat-leader-underline { stroke:#2a2018 !important; stroke-width:1.5 !important; }
+  .anat-node.anat-active .anat-leader-underline { stroke:#2a2018 !important; stroke-width:2.4 !important; }
   .anat-node text {
     font-family:'Libre Baskerville',serif;
     pointer-events:none;
@@ -2395,24 +2395,24 @@ function buildAnatView(regionNodes){
     const barY = startY + (lines.length-1)*lineH + fs*0.75;
     g.append('line').attr('class','anat-leader-underline')
       .attr('x1', maxLeft).attr('x2', maxRight).attr('y1', barY).attr('y2', barY)
-      .attr('stroke', LEADER_COL).attr('stroke-width', 1);
+      .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
 
     if(isCentered){
       // Two leader lines run from each dot to the corresponding end of the bar
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[0].dx).attr('y1', dotList[0].dy)
         .attr('x2', maxLeft).attr('y2', barY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1);
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', dotList[1].dx).attr('y1', dotList[1].dy)
         .attr('x2', maxRight).attr('y2', barY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1);
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
     } else {
       const nearX = isAnt ? maxRight : maxLeft;
       g.append('line').attr('class','anat-leader-line')
         .attr('x1', pos.dx).attr('y1', pos.dy)
         .attr('x2', nearX).attr('y2', barY)
-        .attr('stroke', LEADER_COL).attr('stroke-width', 1);
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1.6);
     }
 
     // Dots drawn LAST so they sit on top of the leader lines — the line appears
