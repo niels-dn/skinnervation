@@ -417,23 +417,23 @@ const VW = 1536, VH = 1024;
 const NODE_POS = {
   // Anterior: image x=192, w=384, h=1024 (SVG 143×382, scale ×2.685)
   // Arm midline ≈ x=382, elbow ≈ y=530, wrist ≈ y=750
-  't18_1': [{ x:359.4, y:426.3, side:'ant', dx:434.7, dy:428.0 }, { x:1003.1, y:448.4, side:'post', dx:908.1, dy:454.0 }],   // N. cut. brachii medialis
-  't13_2': [{ x:353.7, y:313.6, side:'ant', dx:400.9, dy:304.7 }, { x:1003.5, y:294.9, side:'post', dx:955.8, dy:287.0 }],   // N. cut. brachii lat. sup.
+  't18_1': { x:651.28, y:443.1, dots:[{ dx:434.7, dy:428.0 }, { dx:908.1, dy:454.0 }] },   // N. cut. brachii medialis
+  't13_2': { x:651.28, y:295.9, dots:[{ dx:400.9, dy:304.7 }, { dx:955.8, dy:287.0 }] },   // N. cut. brachii lat. sup.
   't13_3': { x:1065.5, y:614.4, side:'post', dx:991.5, dy:617.1 },   // N. cut. brachii lat. inf. (posterior)
-  't17_1': [{ x:307.3, y:624.1, side:'ant', dx:415.6, dy:594.2 }, { x:1075.1, y:644.8, side:'post', dx:965.6, dy:641.1 }],   // N. cut. antebrachii med.
-  't11_1': [{ x:311.9, y:603.1, side:'ant', dx:360.9, dy:611.5 }, { x:1058.1, y:580.2, side:'post', dx:1025.7, dy:596.9 }],   // N. cut. antebrachii lat.
-  't16_1': { x:201.0, y:815.2, side:'ant', dx:338.8, dy:795.9 },   // R. palmaris n. ulnaris
-  't14_1': { x:212.0, y:794.2, side:'ant', dx:296.8, dy:789.7 },   // R. palmaris n. mediani
-  't16_2': { x:244.5, y:895.0, side:'ant', dx:318.9, dy:875.7 },   // Nn. dig. palm. prop. (ulnaris)
-  't14_2': [{ x:239.2, y:859.0, side:'ant', dx:284.7, dy:863.0 }, { x:1131.7, y:873.6, side:'post', dx:1143.2, dy:821.2 }],   // Nn. dig. palm. prop. (medianus)
+  't17_1': { x:651.28, y:640.2, dots:[{ dx:415.6, dy:594.2 }, { dx:965.6, dy:641.1 }] },   // N. cut. antebrachii med.
+  't11_1': { x:651.28, y:604.2, dots:[{ dx:360.9, dy:611.5 }, { dx:1025.7, dy:596.9 }] },   // N. cut. antebrachii lat.
+  't16_1': { x:202.0, y:810.8, side:'ant', dx:338.8, dy:795.9 },   // R. palmaris n. ulnaris
+  't14_1': { x:215.3, y:789.8, side:'ant', dx:296.8, dy:789.7 },   // R. palmaris n. mediani
+  't16_2': { x:240.2, y:868.9, side:'ant', dx:318.9, dy:875.7 },   // Nn. dig. palm. prop. (ulnaris)
+  't14_2': { x:651.28, y:842.1, dots:[{ dx:284.7, dy:863.0 }, { dx:1143.2, dy:821.2 }] },   // Nn. dig. palm. prop. (medianus)
   // Posterior: image x=940, w=423, h=1024 (SVG 150×363, scale ×2.82)
   // Arm midline ≈ x=1152, elbow ≈ y=480, wrist ≈ y=700
   't10_1': { x:920.2, y:171.9, side:'post', dx:771.6, dy:170.2 },   // R. lat. r. post. C5
-  't13_1': [{ x:358.4, y:447.3, side:'ant', dx:400.8, dy:433.3 }, { x:1001.0, y:413.2, side:'post', dx:942.3, dy:396.0 }],   // N. cut. brachii post.
+  't13_1': { x:651.28, y:414.6, dots:[{ dx:400.8, dy:433.3 }, { dx:942.3, dy:396.0 }] },   // N. cut. brachii post.
   't12_1': { x:975.2, y:207.9, side:'post', dx:774.4, dy:197.9 },   // R. lat. r. post. C6
   't15_1': { x:995.0, y:243.9, side:'post', dx:775.8, dy:220.5 },   // R. lat. r. post. C7
   't16_3': { x:1176.4, y:838.5, side:'post', dx:1055.4, dy:844.6 },   // R. dorsalis n. ulnaris
-  't13_4': [{ x:223.9, y:773.2, side:'ant', dx:270.1, dy:768.1 }, { x:1170.4, y:801.4, side:'post', dx:1092.5, dy:812.1 }],   // R. superficialis n. radialis
+  't13_4': { x:651.28, y:790.1, dots:[{ dx:270.1, dy:768.1 }, { dx:1092.5, dy:812.1 }] },   // R. superficialis n. radialis
 
   // ── Head / Neck ──────────────────────────────────────────────────────────
   // Anterior (face): image x=200, w=613.6, h=638.8 (top y=80)
@@ -2337,19 +2337,23 @@ function buildAnatView(regionNodes){
     .attr('text-anchor','middle').attr('class','anat-view-label')
     .attr('font-size', titleFs).attr('fill','#2a2018').text('Posterior');
 
-  // Nodes — PROTOTYPE: dot at territory + neutral leader line + text label (no box)
+  // Nodes — PROTOTYPE: dot(s) at territory + neutral leader line(s) + one text label
+  // Nerves present on only one side: single dot, label in that side's margin.
+  // Nerves present on both sides: ONE centred label (in the gap) with TWO leader
+  // lines, one to each side's dot.
   const regionIds = new Set(regionNodes.map(n=>n.id));
-  const LEADER_COL = '#a89c88';  // neutral leader-line / underline colour
-  const LABEL_COL  = '#6b6154';  // neutral label-text colour (independent of nerve group colour)
+  const LEADER_COL = '#a89c88';
+  const LABEL_COL  = '#6b6154';
   Object.entries(NODE_POS).forEach(([id, posRaw])=>{
     if(!nodeById[id] || !regionIds.has(id)) return;
     const nd = nodeById[id];
     const col = ANAT_COLORS[id] || HEX[nd.type] || '#888';
     const posList = Array.isArray(posRaw) ? posRaw : [posRaw];
     posList.forEach(pos=>{
-    if(pos.dx===undefined) return;  // needs dot coords; skip legacy-format entries
+    const isCentered = Array.isArray(pos.dots);
+    if(!isCentered && pos.dx===undefined) return;  // needs dot coords; skip legacy entries
     const isAnt = pos.side ? pos.side==='ant' : pos.x < VW/2;
-    const anchor = isAnt ? 'end' : 'start';
+    const anchor = isCentered ? 'middle' : (isAnt ? 'end' : 'start');
 
     const g = s.append('g').attr('class','anat-node')
       .style('cursor','pointer')
@@ -2361,12 +2365,15 @@ function buildAnatView(regionNodes){
         showInfoPanel(nd, 'anatomic');
       });
 
-    // Dot at the territory's representative point — keeps the nerve's group colour
-    g.append('circle').attr('class','anat-dot')
-      .attr('cx', pos.dx).attr('cy', pos.dy).attr('r', 5)
-      .attr('fill', col).attr('stroke', 'var(--bg)').attr('stroke-width', 1.2);
+    // Dot(s) at the territory's representative point(s) — keep the nerve's group colour
+    const dotList = isCentered ? pos.dots : [{dx:pos.dx, dy:pos.dy}];
+    dotList.forEach(d=>{
+      g.append('circle').attr('class','anat-dot')
+        .attr('cx', d.dx).attr('cy', d.dy).attr('r', 5)
+        .attr('fill', col).attr('stroke', 'var(--bg)').attr('stroke-width', 1.2);
+    });
 
-    // Label text — neutral colour, may wrap onto a second line for long names
+    // Label text — neutral colour, may wrap onto multiple lines for long names
     const fs = 12.5;
     const lineH = fs * 1.2;
     const lines = wrapLabel(nd.label.replace(/\n/g,' '));
@@ -2385,29 +2392,45 @@ function buildAnatView(regionNodes){
     });
 
     // Underline each line individually (matches that line's own measured width)
-    let maxRight = -Infinity, maxLeft = Infinity, firstLineNearX = null;
+    let maxRight = -Infinity, maxLeft = Infinity;
+    let firstLineLeftX = null, firstLineRightX = null;
     textEls.forEach((t,i)=>{
       const w = t.node().getComputedTextLength();
-      const tLeft  = anchor==='end' ? pos.x - w : pos.x;
+      const tLeft  = anchor==='end' ? pos.x - w : (anchor==='middle' ? pos.x - w/2 : pos.x);
       const tRight = tLeft + w;
       const uY = startY + i*lineH + fs*0.38;
       g.append('line').attr('class','anat-leader-underline')
         .attr('x1', tLeft).attr('x2', tRight).attr('y1', uY).attr('y2', uY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
       maxRight = Math.max(maxRight, tRight); maxLeft = Math.min(maxLeft, tLeft);
-      if(i===0) firstLineNearX = isAnt ? tRight : tLeft;
+      if(i===0){ firstLineLeftX = tLeft; firstLineRightX = tRight; }
     });
-
-    // Leader line: dot → near edge of the first (top) line's underline
     const firstUY = startY + fs*0.38;
-    g.append('line').attr('class','anat-leader-line')
-      .attr('x1', pos.dx).attr('y1', pos.dy)
-      .attr('x2', firstLineNearX).attr('y2', firstUY)
-      .attr('stroke', LEADER_COL).attr('stroke-width', 1);
 
-    // Generous invisible hit-area (dot + line + label) for reliable tapping on mobile
-    const hx0 = Math.min(pos.dx, maxLeft) - 6, hx1 = Math.max(pos.dx, maxRight) + 6;
-    const hy0 = Math.min(pos.dy, startY - lineH/2) - 9, hy1 = Math.max(pos.dy, startY + totalH) + 9;
+    if(isCentered){
+      // Two leader lines: label's first-line left edge → anterior dot,
+      // first-line right edge → posterior dot (dots[0]=ant, dots[1]=post)
+      g.append('line').attr('class','anat-leader-line')
+        .attr('x1', dotList[0].dx).attr('y1', dotList[0].dy)
+        .attr('x2', firstLineLeftX).attr('y2', firstUY)
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1);
+      g.append('line').attr('class','anat-leader-line')
+        .attr('x1', dotList[1].dx).attr('y1', dotList[1].dy)
+        .attr('x2', firstLineRightX).attr('y2', firstUY)
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1);
+    } else {
+      const nearX = isAnt ? firstLineRightX : firstLineLeftX;
+      g.append('line').attr('class','anat-leader-line')
+        .attr('x1', pos.dx).attr('y1', pos.dy)
+        .attr('x2', nearX).attr('y2', firstUY)
+        .attr('stroke', LEADER_COL).attr('stroke-width', 1);
+    }
+
+    // Generous invisible hit-area (dots + lines + label) for reliable tapping on mobile
+    const allX = [maxLeft, maxRight, ...dotList.map(d=>d.dx)];
+    const allY = [startY - lineH/2, startY + totalH, ...dotList.map(d=>d.dy)];
+    const hx0 = Math.min(...allX) - 6, hx1 = Math.max(...allX) + 6;
+    const hy0 = Math.min(...allY) - 9, hy1 = Math.max(...allY) + 9;
     g.insert('rect', ':first-child')
       .attr('x', hx0).attr('y', hy0).attr('width', hx1-hx0).attr('height', hy1-hy0)
       .attr('fill', '#000').attr('opacity', 0);
