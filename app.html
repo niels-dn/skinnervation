@@ -182,7 +182,7 @@
   }
   /* Prototype: dot + leader-line labels (arm) */
   .anat-node .anat-dot { transition: r .12s, stroke-width .12s; }
-  .anat-node.anat-active .anat-dot { r:7.5; stroke-width:2; }
+  .anat-node.anat-active .anat-dot { r:7.5; stroke-width:2; stroke:#2a2018 !important; }
   .anat-node.anat-active .anat-label-text { font-weight:700 !important; fill:#2a2018 !important; }
   .anat-node.anat-active .anat-leader-line,
   .anat-node.anat-active .anat-leader-underline { stroke:#2a2018 !important; stroke-width:1.5 !important; }
@@ -2365,13 +2365,8 @@ function buildAnatView(regionNodes){
         showInfoPanel(nd, 'anatomic');
       });
 
-    // Dot(s) at the territory's representative point(s) — keep the nerve's group colour
+    // Dot list (drawn later, on top of the leader lines — see below)
     const dotList = isCentered ? pos.dots : [{dx:pos.dx, dy:pos.dy}];
-    dotList.forEach(d=>{
-      g.append('circle').attr('class','anat-dot')
-        .attr('cx', d.dx).attr('cy', d.dy).attr('r', 5)
-        .attr('fill', col).attr('stroke', 'var(--bg)').attr('stroke-width', 1.2);
-    });
 
     // Label text — neutral colour, may wrap onto multiple lines for long names
     const fs = 12.5;
@@ -2424,6 +2419,14 @@ function buildAnatView(regionNodes){
         .attr('x2', nearX).attr('y2', barY)
         .attr('stroke', LEADER_COL).attr('stroke-width', 1);
     }
+
+    // Dots drawn LAST so they sit on top of the leader lines — the line appears
+    // to emerge from the dot's edge rather than crossing through its middle.
+    dotList.forEach(d=>{
+      g.append('circle').attr('class','anat-dot')
+        .attr('cx', d.dx).attr('cy', d.dy).attr('r', 5)
+        .attr('fill', col).attr('stroke', LEADER_COL).attr('stroke-width', 1.2);
+    });
 
     // Generous invisible hit-area (dots + lines + label) for reliable tapping on mobile
     const allX = [maxLeft, maxRight, ...dotList.map(d=>d.dx)];
