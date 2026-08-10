@@ -2558,7 +2558,7 @@ function buildAnatViewHead(regionNodes){
   const ANT_TERR_TF = 'translate(200.0258,80.0000) scale(3.708609)';
   defs.append('filter').attr('id','headTerrFuzzy')
       .attr('x','-15%').attr('y','-15%').attr('width','130%').attr('height','130%')
-    .append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation', 2.2);
+    .append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation', 1.0);
   const clipUAnt = defs.append('clipPath').attr('id','headAntTerrUnion').attr('clipPathUnits','userSpaceOnUse');
   Object.keys(HEAD_ANT_TERRITORY_PATHS).forEach(id=>{
     if(nodeById[id]) clipUAnt.append('path').attr('d', HEAD_ANT_TERRITORY_PATHS[id]);
