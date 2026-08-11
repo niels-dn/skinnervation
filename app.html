@@ -257,12 +257,16 @@
   }
   #region-title-roots {
     font-family:'Source Code Pro',monospace; font-size:.7rem; color:var(--muted);
-    white-space:nowrap;
+    text-align:right; max-width:46%;
   }
   @media (max-width:600px){
-    #region-title { padding:7px 12px; gap:7px; }
+    #region-title {
+      padding:7px 12px; gap:4px;
+      flex-direction:column; align-items:flex-start;
+    }
     #region-title-name { font-size:.92rem; }
     #region-title-view { font-size:.76rem; }
+    #region-title-roots { text-align:left; max-width:100%; }
   }
   #legend-row::-webkit-scrollbar { display:none; }
   #legend-row.hidden { display:none !important; }
@@ -1872,10 +1876,10 @@ svg.on('click',clearHL);
 // ═══════════════════════════════════════════════════════════════════════════
 
 const REGION_META = {
-  head:      { name:'Head / Neck', roots:'CN V, VII, X · C2–C4' },
-  arm:       { name:'Upper limb',  roots:'C5–T1' },
-  truncus:   { name:'Truncus',     roots:'T2–T11' },
-  lowerbody: { name:'Lower body',  roots:'T12–Co' },
+  head:      { name:'Head / Neck', roots:'Cranial nerves V, VII and X. Spinal nerves C2–C4.' },
+  arm:       { name:'Upper limb',  roots:'Spinal nerves C5–T1.' },
+  truncus:   { name:'Truncus',     roots:'Spinal nerves T2–T11.' },
+  lowerbody: { name:'Lower body',  roots:'Spinal nerves T12–Co.' },
 };
 function updateRegionTitle(){
   const onBtn = document.querySelector('.fb.on');
