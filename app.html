@@ -239,6 +239,28 @@
     border-bottom:1px solid var(--border); flex-shrink:0;
     overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
   }
+  #region-title {
+    display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+    padding:9px 18px; background:var(--panel);
+    border-bottom:1px solid var(--border); flex-shrink:0;
+  }
+  #region-title-name {
+    font-family:'Libre Baskerville',serif; font-size:1.05rem; font-weight:700;
+    color:var(--text);
+  }
+  #region-title-view {
+    font-family:'Source Code Pro',monospace; font-size:.72rem; font-weight:600;
+    color:#5a3a1a; border:1px solid var(--border); border-radius:3px;
+    padding:2px 8px; background:var(--bg); letter-spacing:.02em;
+  }
+  #region-title-roots {
+    font-family:'Source Code Pro',monospace; font-size:.7rem; color:var(--muted);
+    margin-left:auto;
+  }
+  @media (max-width:600px){
+    #region-title { padding:7px 12px; gap:7px; }
+    #region-title-name { font-size:.92rem; }
+  }
   #legend-row::-webkit-scrollbar { display:none; }
   #legend-row.hidden { display:none !important; }
 
@@ -361,6 +383,12 @@
   <div class="leg"><div class="leg-dot" style="background:#1a6b5a"></div>Plexus</div>
   <div class="leg"><div class="leg-dot" style="background:#2c4a7a"></div>Connecting nerve</div>
   <div class="leg"><div class="leg-dot" style="background:#7a4a00"></div>Cutaneous innervation</div>
+</div>
+
+<div id="region-title">
+  <span id="region-title-name"></span>
+  <span id="region-title-view"></span>
+  <span id="region-title-roots"></span>
 </div>
 
 <div id="tip">
@@ -1837,6 +1865,24 @@ svg.on('click',clearHL);
 //  so they always start at the top of the screen (y = MY).
 // ═══════════════════════════════════════════════════════════════════════════
 
+const REGION_META = {
+  head:      { name:'Head / Neck', roots:'CN V, VII, X · C2–C4' },
+  arm:       { name:'Upper limb',  roots:'C5–T1' },
+  truncus:   { name:'Truncus',     roots:'T2–T11' },
+  lowerbody: { name:'Lower body',  roots:'T12–Co' },
+};
+function updateRegionTitle(){
+  const onBtn = document.querySelector('.fb.on');
+  const grp = onBtn ? onBtn.dataset.g : 'arm';
+  const meta = REGION_META[grp] || REGION_META.arm;
+  const isAnat = anatEl.classList.contains('active');
+  const nameEl = document.getElementById('region-title-name');
+  const viewEl = document.getElementById('region-title-view');
+  const rootsEl = document.getElementById('region-title-roots');
+  if(nameEl) nameEl.textContent = meta.name;
+  if(viewEl) viewEl.textContent = isAnat ? 'Innervation' : 'Pathway';
+  if(rootsEl) rootsEl.textContent = meta.roots;
+}
 function applyGroupFilter(g){
   clearHL();
 
@@ -1894,6 +1940,7 @@ function applyGroupFilter(g){
 
   // ── 5. Fit view to the re-laid-out content ───────────────────────────────
   setTimeout(fitVisible, 60);
+  updateRegionTitle();
 }
 
 document.querySelectorAll('.fb').forEach(btn=>{
@@ -3150,6 +3197,7 @@ function switchView(mode){
     vtAnatomy.classList.remove('on');
     if(legendRow) legendRow.classList.remove('hidden');
   }
+  updateRegionTitle();
 }
 
 vtPathway.addEventListener('click', ()=>{ clearHL(); switchView('pathway'); });
