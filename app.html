@@ -240,26 +240,29 @@
     overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
   }
   #region-title {
-    display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
     padding:9px 18px; background:var(--panel);
     border-bottom:1px solid var(--border); flex-shrink:0;
+  }
+  .region-title-heading {
+    display:flex; flex-direction:column; gap:1px;
   }
   #region-title-name {
     font-family:'Libre Baskerville',serif; font-size:1.05rem; font-weight:700;
     color:var(--text);
   }
   #region-title-view {
-    font-family:'Source Code Pro',monospace; font-size:.72rem; font-weight:600;
-    color:#5a3a1a; border:1px solid var(--border); border-radius:3px;
-    padding:2px 8px; background:var(--bg); letter-spacing:.02em;
+    font-family:'Libre Baskerville',serif; font-style:italic; font-weight:400;
+    font-size:.82rem; color:var(--muted);
   }
   #region-title-roots {
     font-family:'Source Code Pro',monospace; font-size:.7rem; color:var(--muted);
-    margin-left:auto;
+    white-space:nowrap;
   }
   @media (max-width:600px){
     #region-title { padding:7px 12px; gap:7px; }
     #region-title-name { font-size:.92rem; }
+    #region-title-view { font-size:.76rem; }
   }
   #legend-row::-webkit-scrollbar { display:none; }
   #legend-row.hidden { display:none !important; }
@@ -377,18 +380,21 @@
   </div>
   <div id="node-tooltip"></div>
 </div>
+
+<div id="region-title">
+  <div class="region-title-heading">
+    <span id="region-title-name"></span>
+    <span id="region-title-view"></span>
+  </div>
+  <span id="region-title-roots"></span>
+</div>
+
 <div id="legend-row">
   <span class="fb-label">Legend:</span>
   <div class="leg"><div class="leg-dot" style="background:#8b1a1a"></div>Root</div>
   <div class="leg"><div class="leg-dot" style="background:#1a6b5a"></div>Plexus</div>
   <div class="leg"><div class="leg-dot" style="background:#2c4a7a"></div>Connecting nerve</div>
   <div class="leg"><div class="leg-dot" style="background:#7a4a00"></div>Cutaneous innervation</div>
-</div>
-
-<div id="region-title">
-  <span id="region-title-name"></span>
-  <span id="region-title-view"></span>
-  <span id="region-title-roots"></span>
 </div>
 
 <div id="tip">
