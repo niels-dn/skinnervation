@@ -3407,11 +3407,27 @@ function zoomToNode(nd){
   // Show info panel (pathway context → "Innervation" button)
   showInfoPanel(nd, 'pathway');
   activeId=nd.id;
-  // Zoom: pan to node centre
+
+  // Zoom: fit the WHOLE highlighted pathway (root → … → terminal, including any
+  // variable branches) in view, not just the clicked node itself.
+  const pathIds = new Set([...lastSolidNodes, ...lastVarNodesAll, nd.id]);
+  const pathNodes = nodes.filter(n => pathIds.has(n.id));
   const vw=svgEl.clientWidth||1400, vh=svgEl.clientHeight||700;
-  const scale=2.2;
-  const tx=vw/2 - nd.x*scale - (NW*scale)/2;
-  const ty=vh/2 - nd.y*scale - (NH*scale)/2;
+
+  let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+  pathNodes.forEach(n=>{
+    minX=Math.min(minX,n.x); maxX=Math.max(maxX,n.x+NW);
+    minY=Math.min(minY,n.y); maxY=Math.max(maxY,n.y+NH);
+  });
+  if(!isFinite(minX)){ minX=nd.x; maxX=nd.x+NW; minY=nd.y; maxY=nd.y+NH; }
+
+  const boxW=maxX-minX, boxH=maxY-minY;
+  const cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  const PAD=70;
+  const scaleToFit = Math.min(vw/(boxW+PAD*2), vh/(boxH+PAD*2));
+  const scale = Math.max(0.5, Math.min(scaleToFit, 2.2));
+  const tx = vw/2 - cx*scale;
+  const ty = vh/2 - cy*scale;
   svg.transition().duration(380).call(
     zoom.transform,
     d3.zoomIdentity.translate(tx,ty).scale(scale)
