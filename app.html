@@ -746,10 +746,11 @@ N('t18_1','Nervus cutaneus brachii medialis',    TYPE.terminal,'arm','18.1'); E(
   segs.forEach(([root,tag,grp,seg])=>{
     const rpost=N(tag+'post','Ramus posterior nervi spinalis '+tag,TYPE.ramus,grp); E(root,rpost);
     const rant =N(tag+'ant', 'Ramus anterior nervi spinalis '+tag, TYPE.ramus,grp); E(root,rant);
+    const rpostIdx = (seg===2 ? 19 : 20+(seg-2))+'.1';
     if(seg<=6){
-      N(tag+'_medpost','Ramus medialis rami posterioris nervi spinalis '+tag,TYPE.terminal,grp); E(rpost,tag+'_medpost');
+      N(tag+'_medpost','Ramus medialis rami posterioris nervi spinalis '+tag,TYPE.terminal,grp,rpostIdx); E(rpost,tag+'_medpost');
     } else {
-      N(tag+'_latpost','Ramus lateralis rami posterioris nervi spinalis '+tag,TYPE.terminal,grp); E(rpost,tag+'_latpost');
+      N(tag+'_latpost','Ramus lateralis rami posterioris nervi spinalis '+tag,TYPE.terminal,grp,rpostIdx); E(rpost,tag+'_latpost');
     }
     const ni=N('nInterc'+seg,'Nervus intercostalis '+tag,TYPE.nerve,grp); E(rant,ni);
     if(seg===2){
