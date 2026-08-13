@@ -2851,24 +2851,29 @@ function buildAnatViewTruncus(regionNodes){
   // arm), so they use most of the vertical space like the arm does.
 
   const ANAT_COLORS = {};
-  // Posterior ramus terminal cutaneous branch (medialis T2–T6 / lateralis T7–T11)
-  ['T2_medpost','T3_medpost','T4_medpost','T5_medpost','T6_medpost',
-   'T7_latpost','T8_latpost','T9_latpost','T10_latpost','T11_latpost']
-    .forEach(id=>ANAT_COLORS[id]='#6a3a8a');
-  // Lateral cutaneous branch — anterior division
-  ['T3_rlat_ant','T4_rlat_ant','T5_rlat_ant','T6_rlat_ant','T7_rlat_ant',
-   'T8_rlat_ant','T9_rlat_ant','T10_rlat_ant','T11_rlat_ant']
-    .forEach(id=>ANAT_COLORS[id]='#3a7a3a');
-  // Lateral cutaneous branch — posterior division
-  ['T3_rlat_post','T4_rlat_post','T5_rlat_post','T6_rlat_post','T7_rlat_post',
-   'T8_rlat_post','T9_rlat_post','T10_rlat_post','T11_rlat_post']
-    .forEach(id=>ANAT_COLORS[id]='#3a8a7a');
-  // Anterior cutaneous nerve (terminal continuation near the midline)
-  ['t20_2','T3_rant2','T4_rant2','T5_rant2','T6_rant2','T7_rant2',
-   'T8_rant2','T9_rant2','T10_rant2','T11_rant2']
-    .forEach(id=>ANAT_COLORS[id]='#3a5a8a');
-  // Intercostobrachialis (atypical — travels to the medial arm)
-  ANAT_COLORS['t20_1']='#8b3a3a';
+  // Grouped by spinal nerve level (T2–T11): each level's branches share a hue,
+  // shaded from dark (posterior) to light (anterior); hues repeat every 5 levels
+  // (T2/T7, T3/T8, T4/T9, T5/T10, T6/T11) with good separation between repeats.
+  // T2:
+  ANAT_COLORS['T2_medpost']='#6c2228'; ANAT_COLORS['t20_1']='#b2424b'; ANAT_COLORS['t20_2']='#ce8c92';
+  // T3:
+  ANAT_COLORS['T3_medpost']='#636c22'; ANAT_COLORS['T3_rlat_post']='#909b36'; ANAT_COLORS['T3_rlat_ant']='#b2be58'; ANAT_COLORS['T3_rant2']='#c6ce8c';
+  // T4:
+  ANAT_COLORS['T4_medpost']='#226c39'; ANAT_COLORS['T4_rlat_post']='#369b56'; ANAT_COLORS['T4_rlat_ant']='#58be78'; ANAT_COLORS['T4_rant2']='#8ccea1';
+  // T5:
+  ANAT_COLORS['T5_medpost']='#22466c'; ANAT_COLORS['T5_rlat_post']='#36679b'; ANAT_COLORS['T5_rlat_ant']='#5889be'; ANAT_COLORS['T5_rant2']='#8cacce';
+  // T6:
+  ANAT_COLORS['T6_medpost']='#57226c'; ANAT_COLORS['T6_rlat_post']='#7f369b'; ANAT_COLORS['T6_rlat_ant']='#a158be'; ANAT_COLORS['T6_rant2']='#bb8cce';
+  // T7:
+  ANAT_COLORS['T7_latpost']='#6c2228'; ANAT_COLORS['T7_rlat_post']='#9b363f'; ANAT_COLORS['T7_rlat_ant']='#be5861'; ANAT_COLORS['T7_rant2']='#ce8c92';
+  // T8:
+  ANAT_COLORS['T8_latpost']='#636c22'; ANAT_COLORS['T8_rlat_post']='#909b36'; ANAT_COLORS['T8_rlat_ant']='#b2be58'; ANAT_COLORS['T8_rant2']='#c6ce8c';
+  // T9:
+  ANAT_COLORS['T9_latpost']='#226c39'; ANAT_COLORS['T9_rlat_post']='#369b56'; ANAT_COLORS['T9_rlat_ant']='#58be78'; ANAT_COLORS['T9_rant2']='#8ccea1';
+  // T10:
+  ANAT_COLORS['T10_latpost']='#22466c'; ANAT_COLORS['T10_rlat_post']='#36679b'; ANAT_COLORS['T10_rlat_ant']='#5889be'; ANAT_COLORS['T10_rant2']='#8cacce';
+  // T11:
+  ANAT_COLORS['T11_latpost']='#57226c'; ANAT_COLORS['T11_rlat_post']='#7f369b'; ANAT_COLORS['T11_rlat_ant']='#a158be'; ANAT_COLORS['T11_rant2']='#bb8cce';
 
   // Image placement within the shared 1536×1024 canvas
   // Anterior: x=200, y=20, w=342.3, h=980
