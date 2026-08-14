@@ -128,6 +128,7 @@
 
   /* GRAPH */
   #graph { flex:1; overflow:hidden; position:relative; cursor:grab; }
+  html.preload-hide-graph #graph { display:none; }
   #anat-view:not(.active) { display:none !important; }
   #graph:active { cursor:grabbing; }
   svg { width:100%; height:100%; }
@@ -355,10 +356,14 @@
 <body>
 <script>
   // If the page was deep-linked straight into Innervation view, hide the
-  // Pathway graph via CSS immediately — before it's ever painted — so there
-  // is no flash of Pathway content while the rest of the script initializes.
+  // Pathway graph immediately — before it's ever painted — so there is no
+  // flash of Pathway content while the rest of the script initializes.
+  // Uses a class (removed by switchView) rather than an injected
+  // `!important` stylesheet, which could never be overridden afterwards and
+  // left #graph permanently display:none if the user switched back to
+  // Pathway view — the graph then measured 0×0 and rendered nothing.
   if (new URLSearchParams(location.search).get('view') === 'anatomic') {
-    document.write('<style>#graph{display:none !important}</style>');
+    document.documentElement.classList.add('preload-hide-graph');
   }
 </script>
 <div id="app">
@@ -1982,6 +1987,10 @@ function fitVisible(){
   if(minX===Infinity){fitAll();return;}
   const padX=60, padY=50;
   const cw=maxX-minX+2*padX, ch=maxY-minY+2*padY;
+  // Guard: if the container hasn't been laid out yet (hidden / mid-transition)
+  // vw can be 0 or tiny, which would make the scale zero or NEGATIVE — the graph
+  // would then be mirrored/collapsed and nothing would be visible. Retry shortly.
+  if(!(vw > 2*padX)){ setTimeout(fitVisible, 120); return; }
   // Always fit to full width; top-align
   const sc = (vw - 2 * padX) / (maxX - minX);
   const ox = padX - minX * sc;
@@ -3327,6 +3336,9 @@ function switchView(mode){
     // Use rAF so container has real dimensions before building
     requestAnimationFrame(()=>{ renderAnatomicForGroup(grp); });
   } else {
+    // Drop the deep-link preload guard before showing the graph, otherwise it
+    // would keep #graph at display:none and the graph would measure 0×0.
+    document.documentElement.classList.remove('preload-hide-graph');
     graphEl.style.display = '';
     anatEl.classList.remove('active');
     vtPathway.classList.add('on');
