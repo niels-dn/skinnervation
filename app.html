@@ -560,9 +560,10 @@ const NODE_POS = {
   't31_8':    { x:200,  y:520  },   // R. cut. n. obturatorii
   't33_1a':   { x:200,  y:579  },   // R. ant. n. cut. femoris lat.
   't32_1':    { x:200,  y:638  },   // Rr. cut. intermedii n. femoralis
-  't32_2':    { x:200,  y:696  },   // R. ant. r. cut. femoris med. n. femoralis
-  't32_3':    { x:200,  y:755  },   // R. infrapatellaris n. sapheni
-  't32_4':    { x:200,  y:814  },   // Rr. cut. cruris med. n. sapheni
+  't32_2a':   { x:200,  y:696  },   // R. ant. r. cut. femoris med. n. femoralis
+  't32_2b':   { x:200,  y:755  },   // R. post. r. cut. femoris med. n. femoralis
+  't32_3':    { x:200,  y:814  },   // R. infrapatellaris n. sapheni
+  't32_4':    { x:200,  y:873  },   // Rr. cut. cruris med. n. sapheni
   't34_2a':   { x:200,  y:872  },   // N. cut. dors. med. pedis
   't34_2b':   { x:200,  y:931  },   // N. cut. dors. intermed. pedis
   't34_3':    { x:200,  y:990  },   // R. cut. n. peroneus prof.
@@ -827,7 +828,8 @@ N('t33_1a','Ramus anterior nervi cutaneus femoris lateralis',TYPE.terminal,'lowe
 N('t33_1b','Ramus posterior nervi cutaneus femoris lateralis',TYPE.terminal,'lowerbody','33.1b'); E(nCutFemLat,'t33_1b');
 const nFemoral=N('nFemoral','Nervus femoralis',TYPE.nerve,'lowerbody'); E(trLumbPost,nFemoral);
 N('t32_1','Rami cutanei intermedii nervi femoralis',     TYPE.terminal,'lowerbody','32.1'); E(nFemoral,'t32_1');
-N('t32_2','Ramus anterior rami cutanei femoris medialis nervi femoralis',TYPE.terminal,'lowerbody','32.2'); E(nFemoral,'t32_2');
+N('t32_2a','Ramus anterior rami cutanei femoris medialis nervi femoralis',TYPE.terminal,'lowerbody','32.2a'); E(nFemoral,'t32_2a');
+N('t32_2b','Ramus posterior rami cutanei femoris medialis nervi femoralis',TYPE.terminal,'lowerbody','32.2b'); E(nFemoral,'t32_2b');
 const nSaph=N('nSaph','Nervus saphenus',TYPE.nerve,'lowerbody'); E(nFemoral,nSaph);
 N('t32_3','Ramus infrapatellaris nervi sapheni',        TYPE.terminal,'lowerbody','32.3'); E(nSaph,'t32_3');
 N('t32_4','Rami cutanei cruris mediales nervi sapheni',  TYPE.terminal,'lowerbody','32.4'); E(nSaph,'t32_4');
@@ -3130,7 +3132,7 @@ function buildAnatViewLowerBody(regionNodes){
   // Lateral cutaneous nerve of the thigh
   ['t33_1a','t33_1b'].forEach(id=>ANAT_COLORS[id]='#4a3a8a');
   // Femoral / saphenous (anterior + medial thigh/leg)
-  ['t32_1','t32_2','t32_3','t32_4'].forEach(id=>ANAT_COLORS[id]='#5a8a3a');
+  ['t32_1','t32_2a','t32_2b','t32_3','t32_4'].forEach(id=>ANAT_COLORS[id]='#5a8a3a');
   // Gluteal / posterior thigh (clunium + post. femoral cutaneous + perforans)
   ['t30_1','t30_2a','t30_2b','t31_1','nCFP','t34_10','t34_11','t35_5','t36_1']
     .forEach(id=>ANAT_COLORS[id]='#8b6a3a');
